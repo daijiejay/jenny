@@ -1,0 +1,59 @@
+#服务名称
+spring.application.name: api-sys
+#服务端口号
+server.port: 12801
+
+#eureka注册中心地址
+eureka.client.serviceUrl.defaultZone: http://127.0.0.1:8761/eureka/
+#是否设置注册优些IP地址
+eureka.instance.preferIpAddress: true
+
+#启用默认执行超时
+hystrix.command.default.execution.timeout.enabled: true
+#开启重试机制
+spring.cloud.loadbalancer.retry.enabled: true
+#断路器的超时时间,断路器的超时时间需要大于ribbon的超时时间，不然不会触发重试。
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+#设置线程池大小
+hystrix.threadpool.default.coreSize: 100
+#请求连接的超时时间
+ribbon.ConnectTimeout: 5000
+#请求处理的超时时间
+ribbon.ReadTimeout: 5000
+##对所有操作请求都进行重试
+#ribbon.OkToRetryOnAllOperations: true
+##对当前实例的重试次数
+#ribbon.MaxAutoRetries: 1
+##对下个实例的重试次数
+#ribbon.MaxAutoRetriesNextServer: 2
+
+#对象转json串时，去除为null的属性
+spring.jackson.default-property-inclusion: non_null
+#指定jackson日期转换格式
+spring.jackson.date-format: yyyy-MM-dd HH\:mm\:ss
+#指定jackson日期转换时区
+spring.jackson.time-zone: Asia/Shanghai
+
+#是否开启redis集群
+shiro.redis.cluster: false
+#服务地址
+shiro.redis.address: 127.0.0.1:6379
+#访问密码，没有则不用设置
+#shiro.redis.password: 
+#默认连接超时时间
+shiro.redis.connectionTimeout: 5000
+#返回值的超时时间
+shiro.redis.timeout: 5000
+#默认存储超时时间
+shiro.redis.expire: 360000
+#出现异常最大重试次数
+shiro.redis.maxAttempts: 1
+
+#开启ajax远程调用
+http.remoteAjaxEanble: true
+#开启请求参数body转param，提供者用实体接收参数时省去了@RequestBody注解
+http.bodyByParamEanble: true
+
+logging.level.org.daijie.jenny: DEBUG
+
+feign.sys: cloud-sys

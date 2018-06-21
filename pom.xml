@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.daijie</groupId>
+	<artifactId>jenny</artifactId>
+	<version>1.0.0-RELEASE</version>
+	<packaging>pom</packaging>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+		<daijie.version>1.1.1-RELEASE</daijie.version>
+		<daijie.jenny.version>1.0.0-RELEASE</daijie.jenny.version>
+		<!-- 打包跳过单元测试 -->
+		<skipTests>true</skipTests>
+	</properties>
+	<build />
+	<modules>
+		<module>jenny-common</module>
+		<module>jenny-web</module>
+		<module>jenny-cloud</module>
+		<module>jenny-api</module>
+		<module>jenny-server</module>
+	</modules>
+</project>

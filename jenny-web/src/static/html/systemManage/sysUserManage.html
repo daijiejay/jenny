@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>系统用户管理</title>
+		<link href="../../css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link href="../../css/bootstrap-table.css" rel='stylesheet' type='text/css' />
+		<link href="../../css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../css/font-awesome.css" rel="stylesheet">
+		<script src="../../js/jquery-1.11.1.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/serializeJson.js"></script>
+		<script src="../../js/jquery.validate.min.js"></script>
+		<script src="../../js/jquery.validate.messages_cn.js"></script>
+		<script src="../../js/custom.validate.js"></script>
+		<script src="../../js/bootstrap.js"></script>
+		<script src="../../js/bootstrap-table.js"></script>
+		<script src="../../js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../js/systemManage/sysUserManage.js"></script>
+	</head>
+
+	<body>
+		<div class="table-search froms">
+			<div class="row">
+				<div class="widget-shadow">
+					<div class="form-title">
+						<i class="fa fa-tasks"></i><span>查询条件</span>
+					</div>
+					<div class="form-body" data-example-id="simple-form-inline">
+						<form class="form-inline">
+							<div class="form-group">
+								<label for="userName">用户名称：</label>
+								<input type="text" class="form-control" id="userName" placeholder="用户名称">
+							</div>
+							<div class="form-group">
+								<label for="mobile">手机号：</label>
+								<input type="email" class="form-control" id="mobile" placeholder="手机号">
+							</div>
+							<button type="button" class="btn btn-default query">查询</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<table class="table table-hover" id="sysUserTable">
+		</table>
+	</body>
+
+</html>
+
+<div id="toolbar" class="btn-group">
+	<a href="addSysUser.html" class="btn btn-primary" data-toggle="modal" data-target="#addSysUser">添加</a>
+</div>
+
+<div class="modal fade" id="addSysUser" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 80%;">
+		<div class="modal-content">
+
+		</div>
+	</div>
+</div>

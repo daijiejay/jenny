@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.daijie.jenny.common.mapper.sys.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="org.daijie.jenny.common.model.sys.SysMenu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="parent_code" jdbcType="VARCHAR" property="parentCode" />
+    <result column="mapping" jdbcType="VARCHAR" property="mapping" />
+    <result column="authority_types" jdbcType="VARCHAR" property="authorityTypes" />
+    <result column="enable" jdbcType="BIT" property="enable" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, menu_code, menu_name, level, parent_code, mapping, authority_types, enable
+  </sql>
+</mapper>
