@@ -17,33 +17,34 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(description="系统用户管理")
 @FeignClient(value="${feign.sys}")
+@RequestMapping(value = "/sysfeign/sysuser")
 public interface SysUserFeign {
 	
 	@ApiOperation(notes = "获取全部用户", value = "获取全部用户")
-	@RequestMapping(value = "/sysuser/all", method = RequestMethod.POST)
+	@RequestMapping(value = "/query/all", method = RequestMethod.POST)
 	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserPageRequest);
 	
 	@ApiOperation(notes = "根据系统用户ID获取用户信息", value = "根据系统用户ID获取用户信息")
-	@RequestMapping(value = "/sysuser/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/query/{id}", method = RequestMethod.GET)
 	public ModelResult<SysUserResponse> getUserById(@PathVariable(name = "id") Integer id);
 	
 	@ApiOperation(notes = "根据系统用户名获取用户", value = "根据系统用户名获取用户")
-	@RequestMapping(value = "/sysuser/username/{username}", method = RequestMethod.GET)
+	@RequestMapping(value = "/query/username/{username}", method = RequestMethod.GET)
 	public ModelResult<SysUserResponse> getUserByUsername(@PathVariable(name = "username") String username);
 
 	@ApiOperation(notes = "根据系统用户ID获取用户密码", value = "根据系统用户ID获取用户密码")
-	@RequestMapping(value = "/sysuser/password/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/query/password/{id}", method = RequestMethod.GET)
 	public ModelResult<SysUserPasswordResponse> getUserPasswordById(@PathVariable(name = "id") Integer id);
 
 	@ApiOperation(notes = "添加用户", value = "添加用户")
-	@RequestMapping(value = "/sysuser/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelResult<SysUserResponse> addUser(SysUserAddRequest sysUserRequest);
 
 	@ApiOperation(notes = "更新用户", value = "更新用户")
-	@RequestMapping(value = "/sysuser/update", method = RequestMethod.PUT)
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ModelResult<SysUserResponse> updateUser(SysUserUpdateRequest sysUserRequest);
 
 	@ApiOperation(notes = "删除用户", value = "删除用户")
-	@RequestMapping(value = "/sysuser/delete/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public ModelResult<SysUserResponse> deleteUser(@PathVariable(name = "id") Integer id);
 }

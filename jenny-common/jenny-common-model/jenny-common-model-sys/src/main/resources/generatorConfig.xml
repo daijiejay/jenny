@@ -45,8 +45,8 @@
             <property name="trimStrings" value="true"/>  
         </javaModelGenerator> 
         
-        <sqlMapGenerator targetPackage="mybatis-mapper" targetProject="src/main/resources">
-        </sqlMapGenerator>   
+        <!-- <sqlMapGenerator targetPackage="mybatis-mapper" targetProject="src/main/resources">
+        </sqlMapGenerator>    -->
         
         <javaClientGenerator type="XMLMAPPER" targetPackage="org.daijie.jenny.common.mapper.sys" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>  

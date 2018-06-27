@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(description="系统菜单管理")
 @RestController
-@RequestMapping("sysmeun")
+@RequestMapping(value = "sysmeun")
 public class SysMeunController {
 	
 	@Autowired

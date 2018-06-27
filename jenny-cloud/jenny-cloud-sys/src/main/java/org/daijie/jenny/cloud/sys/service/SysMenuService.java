@@ -14,6 +14,7 @@ import org.daijie.jenny.common.feign.sys.request.SysMenuRequest;
 import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
 import org.daijie.jenny.common.mapper.sys.SysMenuMapper;
 import org.daijie.jenny.common.model.sys.SysMenu;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageHelper;
@@ -49,14 +50,14 @@ public class SysMenuService implements SysMenuFeign {
 	public ModelResult<SysMenuResponse> updateMenu(SysMenuRequest sysMenuRequest) {
 		SysMenu sysMenu = new SysMenu();
 		BeanUtil.copyProperties(sysMenuRequest, sysMenu);
-		sysMenuMapper.updateByExampleSelective(sysMenu, ExampleBuilder.create(SysMenu.class).andEqualTo("menuCode", sysMenuRequest.getMenuCode()));
+		sysMenuMapper.updateByExampleSelective(sysMenu, ExampleBuilder.create(SysMenu.class).andEqualTo("menuCode", sysMenuRequest.getMenuCode()).build());
 		SysMenuResponse sysMenuResponse = new SysMenuResponse();
 		BeanUtil.copyProperties(sysMenu, sysMenuResponse);
 		return Result.build(sysMenuResponse);
 	}
 
 	@Override
-	public ModelResult<SysMenuResponse> deleteMenu(String menuCode) {
+	public ModelResult<SysMenuResponse> deleteMenu(@PathVariable(name = "menuCode") String menuCode) {
 		List<SysMenu> list = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("menuCode", menuCode).build());
 		if (list.size() == 1) {
 			sysMenuMapper.deleteByPrimaryKey(list.get(0).getId());

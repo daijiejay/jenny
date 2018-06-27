@@ -3,6 +3,8 @@ package org.daijie.jenny.common.feign.sys.request;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
@@ -29,6 +31,7 @@ public class SysUserUpdateRequest implements Serializable {
 	@ApiModelProperty(value = "邮箱")
 	private String email;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@ApiModelProperty(value = "生日")
 	private Date birthday;
 

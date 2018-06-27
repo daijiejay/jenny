@@ -34,7 +34,7 @@ public class SysUserResponse implements Serializable {
 	@ApiModelProperty(value = "头像")
 	private String portrait;
 
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@ApiModelProperty(value = "创建时间", required = true)
 	private Date createTime;
 

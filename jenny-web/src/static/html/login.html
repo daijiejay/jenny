@@ -1,28 +1,47 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>jenny后台管理系统</title>
 
-<link href="../css/bootstrap.min.css" rel="stylesheet">
-<link href="../css/signin.css" rel="stylesheet">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>jenny后台管理系统</title>
 
-</head>
+		<link href="../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../css/signin.css" rel="stylesheet">
+		<link href="../css/layer.css" rel="stylesheet">
+		<link href="../css/layui.css" rel="stylesheet">
+		<script src="../js/jquery-1.11.1.min.js"></script>
+		<script src="../js/bootstrap.js"></script>
+		<script src="../js/serializeJson.js"></script>
+		<script src="../js/jquery.initForm.js"></script>
+		<script src="../js/jquery.validate.min.js"></script>
+		<script src="../js/jquery.validate.messages_cn.js"></script>
+		<script src="../js/custom.validate.js"></script>
+		<script src="../js/common.js"></script>
+		<script src="../js/layer.js"></script>
+		<script src="../js/jsencrypt.min.js"></script>
+		<script src="../js/login.js"></script>
 
-<body>
+	</head>
 
-<div class="signin">
-	<div class="signin-head"><img src="../images/test/head_120.png" alt="" class="img-circle"></div>
-	<form class="form-signin" role="form">
-		<input type="text" class="form-control" placeholder="用户名" required autofocus />
-		<input type="password" class="form-control" placeholder="密码" required />
-		<button class="btn btn-lg btn-warning btn-block" type="submit">登录</button>
-		<label class="checkbox">
-			<input type="checkbox" value="remember-me"> 记住我
-		</label>
-	</form>
-</div>
-</body>
+	<body class="login-body">
+		<div class="signin">
+			<div class="signin-head"><img src="../images/test/head_120.png" alt="" class="img-circle"></div>
+			<form class="form-signin" role="form">
+				<div class="form-group has-success has-feedback"> 
+					<input type="text" class="form-control" id="username" name="username" placeholder="用户名" aria-describedby="inputSuccess2Status" required autofocus autocomplete="off">
+				</div>
+				<div class="form-group has-success has-feedback"> 
+					<input type="password" id="password" name="password" class="form-control" placeholder="密码" required aria-describedby="inputSuccess2Status"/>
+				</div>
+				<button class="btn btn-lg btn-success btn-block" type="button" id="login">登录</button>
+				<label class="checkbox">
+					<input type="checkbox" value="remember-me"> 记住我
+				</label>
+			</form>
+		</div>
+	</body>
+
 </html>

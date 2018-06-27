@@ -15,6 +15,7 @@ import org.daijie.jenny.common.feign.sys.response.SysRoleResponse;
 import org.daijie.jenny.common.mapper.sys.SysRoleMapper;
 import org.daijie.jenny.common.model.sys.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageHelper;
@@ -51,15 +52,15 @@ public class SysRoleService implements SysRoleFeign {
 	public ModelResult<SysRoleResponse> updateRole(SysRoleRequest sysRoleRequest) {
 		SysRole role = new SysRole();
 		BeanUtil.copyProperties(sysRoleRequest, role);
-		sysRoleMapper.updateByExampleSelective(role, ExampleBuilder.create(SysRole.class).andEqualTo("roleCode", sysRoleRequest.getRoleCode()));
+		sysRoleMapper.updateByExampleSelective(role, ExampleBuilder.create(SysRole.class).andEqualTo("roleCode", sysRoleRequest.getRoleCode()).build());
 		SysRoleResponse sysRoleResponse = new SysRoleResponse();
 		BeanUtil.copyProperties(role, sysRoleResponse);
 		return Result.build(sysRoleResponse);
 	}
 
 	@Override
-	public ModelResult<SysRoleResponse> deleteRole(String roleCode) {
-		List<SysRole> list = sysRoleMapper.selectByExample(ExampleBuilder.create(SysRole.class).andEqualTo("roleCode", roleCode));
+	public ModelResult<SysRoleResponse> deleteRole(@PathVariable(name = "roleCode") String roleCode) {
+		List<SysRole> list = sysRoleMapper.selectByExample(ExampleBuilder.create(SysRole.class).andEqualTo("roleCode", roleCode).build());
 		if (list.size() == 1) {
 			sysRoleMapper.deleteByPrimaryKey(list.get(0).getId());
 			SysRoleResponse sysRoleResponse = new SysRoleResponse();

@@ -2,14 +2,12 @@ package org.daijie.jenny.api.sys;
 
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
-import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.core.util.encrypt.PasswordUtil;
 import org.daijie.jenny.common.feign.sys.SysUserFeign;
 import org.daijie.jenny.common.feign.sys.request.SysUserAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysUserResponse;
-import org.daijie.shiro.authc.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(description="系统用户管理")
 @RestController
-@RequestMapping("sysuser")
+@RequestMapping(value = "sysuser")
 public class SysUserController {
 
 	@Autowired
@@ -74,10 +72,21 @@ public class SysUserController {
 		return sysUserFeign.deleteUser(id);
 	}
 	
-	@ApiOperation(notes = "获取加密公钥", value = "获取加密公钥")
-	@RequestMapping(value = "/publicKey", method = RequestMethod.GET)
-	public ModelResult<String> getPublicKey() {
-		String publicKey = Auth.getPublicKey();
-		return Result.build(publicKey);
+	@ApiOperation(notes = "禁用用户", value = "禁用用户")
+	@RequestMapping(value = "/enable", method = RequestMethod.PUT)
+	public ModelResult<SysUserResponse> enableUser(Integer id) {
+		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();
+		sysUserRequest.setId(id);
+		sysUserRequest.setEnable(true);
+		return sysUserFeign.updateUser(sysUserRequest);
+	}
+	
+	@ApiOperation(notes = "启用用户", value = "启用用户")
+	@RequestMapping(value = "/notenable", method = RequestMethod.PUT)
+	public ModelResult<SysUserResponse> notenableUser(Integer id) {
+		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();
+		sysUserRequest.setId(id);
+		sysUserRequest.setEnable(false);
+		return sysUserFeign.updateUser(sysUserRequest);
 	}
 }

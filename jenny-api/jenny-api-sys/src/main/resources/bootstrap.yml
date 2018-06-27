@@ -49,11 +49,24 @@ shiro.redis.expire: 360000
 #出现异常最大重试次数
 shiro.redis.maxAttempts: 1
 
+#是否开启kisso cookie机制
+shiro.kissoEnable: false
+#加密随机码
+kisso.config.signkey: C691d971EJ3H376G81
+#cookie名称
+kisso.config.cookieName: token
+#cookie的作用域，只支持域名，本地可以配置host
+kisso.config.cookieDomain: daijie.org
+#允许跨域请求的地址集
+http.accessControlAllowOrigin: http://127.0.0.1:8020,http://daijie.org:8020
+#允许设置headers的字段名
+http.accessControlAllowHeaders: Content-Type,Access-Control-Allow-Headers,Access-Control-Allow-Origin,Authorization,X-Requested-With
+
 #开启ajax远程调用
 http.remoteAjaxEanble: true
 #开启请求参数body转param，提供者用实体接收参数时省去了@RequestBody注解
 http.bodyByParamEanble: true
 
-logging.level.org.daijie.jenny: DEBUG
+logging.level.org.daijie: DEBUG
 
 feign.sys: cloud-sys

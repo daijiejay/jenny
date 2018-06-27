@@ -8,24 +8,44 @@ $(function() {
 	});
 
 	//绑定模态框展示的方法 
-	$('#addSysUser').on('show.bs.modal', function(event) {
-		//      var button = $(event.relatedTarget) // 触发事件的按钮  
-		//      var recipient = button.data('whatever') // 解析出whatever内容  
+	$('#saveSysUser').on('shown.bs.modal', function(event) {
+		var button = $(event.relatedTarget); // 触发事件的按钮  
+		var userCode = button.attr('userCode');
 		var modal = $(this) //获得模态框本身
-		//		var form = modal.find('form');
 		modal.find('form input').each(function() {
-			$(this).val("");
+			if (userCode) {
+				var row = $("#sysUserTable").bootstrapTable('getRowByUniqueId', userCode);
+				modal.find('form').initForm(row);
+				modal.find('.modal-title').html('编辑');
+				modal.find('button.save').attr('action', 'update')
+				modal.find('button.save').click(function() {
+					validUpdate(modal.find('form'));
+					if(modal.find('form').valid()) {
+						save(modal.find('form'), $(this).attr('action'));
+					}
+				});
+			} else {
+				modal.find('.modal-title').html('添加');
+				modal.find('button.save').attr('action', 'add')
+				$(this).val("");
+				modal.find('button.save').click(function() {
+					validAdd(modal.find('form'));
+					if(modal.find('form').valid()) {
+						save(modal.find('form'), $(this).attr('action'));
+					}
+				});
+			}
 			var ele = $(this).parent('.input-group').parent();
 			if(ele.find('label.error')) {
 				ele.find('label.error').remove();
 			}
 		})
-		$(document).delegate('#addSysUser button.save', "click", function() {
-			valid(modal.find('form'));
-			if(modal.find('form').valid()) {
-				save(modal.find('form'));
-			}
-		});
+//		$(document).delegate('#saveSysUser button.save', "click", function() {
+//			valid(modal.find('form'));
+//			if(modal.find('form').valid()) {
+//				save(modal.find('form'), $(this).attr('action'));
+//			}
+//		});
 	})
 });
 
@@ -102,7 +122,7 @@ function queryParams(params) {
 //操作按扭
 function operateFormatter(value, row, index) { //赋予的参数
 	return [
-		'<a class="btn active" data-toggle="modal" data-target="#addSysUser" href="addSysUser.html">编辑</a>',
+		'<a userCode="'+row.userCode+'" class="btn active" data-toggle="modal" data-target="#saveSysUser" href="saveSysUser.html">编辑</a>',
 		'<a class="btn active" href="#">禁用</a>',
 		'<a class="btn active" href="#">启用</a>',
 		'<a class="btn active" href="#">删除</a>',
@@ -118,19 +138,17 @@ function booleanFormatter(value, row, index) {
 }
 
 //保存用户
-function save(form) {
+function save(form, action) {
+	var method = action == 'add' ? 'post' : 'put';
 	var formData = form.serializeJson();
-	request('post', formData, '/sysuser/add', function(result) {
-		if(!result.success) {
-			return;
-		}
-		$('#addSysUser').modal('hide');
+	request(method, formData, '/sysuser/'+action, function(result) {
+		$('#saveSysUser').modal('hide');
 		$("#sysUserTable").bootstrapTable('refresh');
 	});
 }
 
-//用户表单检验
-function valid(form) {
+//用户添加表单检验
+function validAdd(form) {
 	form.validate({
 		ignore: "",
 		rules: {
@@ -144,6 +162,39 @@ function valid(form) {
 			},
 			password: {
 				required: true,
+				isPassword: true
+			},
+			email: {
+				email: true
+			},
+			birthday: {
+				date: true
+			}
+		},
+		errorPlacement: function(error, element) {
+			var ele = element.parent('.input-group').parent();
+			if(ele.find('label.error')) {
+				ele.find('label.error').remove();
+			}
+			ele.append(error[0].outerHTML);
+		}
+	});
+}
+
+//用户修改表单检验
+function validUpdate(form) {
+	form.validate({
+		ignore: "",
+		rules: {
+			userName: {
+				required: true,
+				maxlength: 20
+			},
+			mobile: {
+				required: true,
+				isMobile: true
+			},
+			password: {
 				isPassword: true
 			},
 			email: {

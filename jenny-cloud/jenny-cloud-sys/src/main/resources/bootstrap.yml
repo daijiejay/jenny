@@ -61,5 +61,5 @@ spring.jackson.time-zone: Asia/Shanghai
 #开启请求参数body转param，提供者用实体接收参数时省去了@RequestBody注解
 http.bodyByParamEanble: true
 
-logging.level.org.daijie.jenny: DEBUG
+logging.level.org.daijie: DEBUG
 

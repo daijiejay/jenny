@@ -63,6 +63,9 @@ jQuery.validator.addMethod("isZipCode", function(value, element) {
 
 //密码 最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
 jQuery.validator.addMethod("isPassword", function(value, element) {
+	if (value.length == 0) {
+		return true;
+	}
     var reg1 = /[~!@#$%^&*()_+{}:<>?*-.`,.\/;\[\]=]{1}/;
     var reg2 = /[a-z]+/;
     var reg3 = /[A-Z]+/;

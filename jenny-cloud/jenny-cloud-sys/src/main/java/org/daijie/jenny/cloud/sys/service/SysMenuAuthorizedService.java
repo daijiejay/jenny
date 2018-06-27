@@ -18,6 +18,8 @@ import org.daijie.jenny.common.model.sys.SysMenu;
 import org.daijie.jenny.common.model.sys.SysRoleAuthorized;
 import org.daijie.jenny.common.model.sys.SysUserAuthorized;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -66,7 +68,7 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 	}
 
 	@Override
-	public ModelResult<SysRoleMenuResponse> getMenuByRoles(String... roleCodes) {
+	public ModelResult<SysRoleMenuResponse> getMenuByRoles(@RequestParam(name = "roleCodes") String... roleCodes) {
 		SysRoleMenuResponse menuResponse = getMenuAll().getData();
 		List<SysRoleAuthorized> roleAuthorities = sysRoleAuthorizedMapper
 				.selectByExample(ExampleBuilder.create(SysMenu.class).andIn("roleCode", Arrays.asList(roleCodes)).build());
@@ -90,7 +92,7 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 	}
 
 	@Override
-	public ModelResult<SysRoleMenuResponse> getMenuByUser(String usercode) {
+	public ModelResult<SysRoleMenuResponse> getMenuByUser(@PathVariable(name = "usercode") String usercode) {
 		List<SysUserAuthorized> list = sysUserAuthorizedMapper
 				.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("userCode", usercode).build());
 		String[] roleCodes = new String[list.size()];

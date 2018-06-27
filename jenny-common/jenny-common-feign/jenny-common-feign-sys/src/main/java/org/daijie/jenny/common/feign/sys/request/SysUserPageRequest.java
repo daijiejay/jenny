@@ -42,6 +42,9 @@ public class SysUserPageRequest extends Page implements ExampleConditions {
 
 	@ApiModelProperty(value = "是否禁用")
 	private Boolean enable;
+	
+	@ApiModelProperty(value = "是否删除")
+	private Boolean cancel;
 
 	public String getUserCode() {
 		return userCode;
@@ -129,5 +132,13 @@ public class SysUserPageRequest extends Page implements ExampleConditions {
 
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
+	}
+
+	public Boolean getCancel() {
+		return cancel;
+	}
+
+	public void setCancel(Boolean cancel) {
+		this.cancel = cancel;
 	}
 }

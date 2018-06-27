@@ -45,4 +45,11 @@ public class SysLoginController {
 		Auth.logOut();
 		return Result.build("退出成功", ApiResult.SUCCESS, ResultCode.CODE_200);
 	}
+	
+	@ApiOperation(notes = "获取加密公钥", value = "获取加密公钥")
+	@RequestMapping(value = "/publicKey", method = RequestMethod.GET)
+	public ModelResult<String> getPublicKey() {
+		String publicKey = Auth.getPublicKey();
+		return Result.build(publicKey);
+	}
 }
