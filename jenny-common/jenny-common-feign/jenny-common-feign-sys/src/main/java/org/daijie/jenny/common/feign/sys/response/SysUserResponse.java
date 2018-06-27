@@ -40,6 +40,9 @@ public class SysUserResponse implements Serializable {
 
 	@ApiModelProperty(value = "是否禁用", required = true)
 	private Boolean enable;
+	
+	@ApiModelProperty(value = "是否删除", required = true)
+	private Boolean cancel;
 
 	public Integer getId() {
 		return id;
@@ -119,5 +122,13 @@ public class SysUserResponse implements Serializable {
 
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
+	}
+
+	public Boolean getCancel() {
+		return cancel;
+	}
+
+	public void setCancel(Boolean cancel) {
+		this.cancel = cancel;
 	}
 }

@@ -29,6 +29,7 @@ public class SysUserController {
 	@ApiOperation(notes = "获取全部用户", value = "获取全部用户")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserPageRequest) {
+		sysUserPageRequest.setCancel(false);
 		return sysUserFeign.getUserAll(sysUserPageRequest);
 	}
 	

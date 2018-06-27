@@ -13,7 +13,7 @@ $(function() {
 		var userCode = button.attr('userCode');
 		var modal = $(this) //获得模态框本身
 		modal.find('form input').each(function() {
-			if (userCode) {
+			if(userCode) {
 				var row = $("#sysUserTable").bootstrapTable('getRowByUniqueId', userCode);
 				modal.find('form').initForm(row);
 				modal.find('.modal-title').html('编辑');
@@ -40,12 +40,12 @@ $(function() {
 				ele.find('label.error').remove();
 			}
 		})
-//		$(document).delegate('#saveSysUser button.save', "click", function() {
-//			valid(modal.find('form'));
-//			if(modal.find('form').valid()) {
-//				save(modal.find('form'), $(this).attr('action'));
-//			}
-//		});
+		//		$(document).delegate('#saveSysUser button.save', "click", function() {
+		//			valid(modal.find('form'));
+		//			if(modal.find('form').valid()) {
+		//				save(modal.find('form'), $(this).attr('action'));
+		//			}
+		//		});
 	})
 });
 
@@ -100,6 +100,7 @@ var TableInit = function() {
 				{
 					field: 'operate',
 					title: '操作',
+					events: operateEvents,
 					formatter: operateFormatter //自定义方法，添加操作按钮
 				},
 			]
@@ -121,17 +122,23 @@ function queryParams(params) {
 
 //操作按扭
 function operateFormatter(value, row, index) { //赋予的参数
-	return [
-		'<a userCode="'+row.userCode+'" class="btn active" data-toggle="modal" data-target="#saveSysUser" href="saveSysUser.html">编辑</a>',
-		'<a class="btn active" href="#">禁用</a>',
-		'<a class="btn active" href="#">启用</a>',
-		'<a class="btn active" href="#">删除</a>',
-		'<a class="btn active" href="#">设置角色</a>'
-	].join('');
+	var operate = new Array();
+	if (!row.cancel) {
+		if (!row.enable) {
+			operate.push('<a userCode="' + row.userCode + '" class="btn active" data-toggle="modal" data-target="#saveSysUser" href="#">编辑</a>');
+			operate.push('<a class="btn active enable" href="#">禁用</a>');
+			operate.push('<a class="btn active delete" href="#">删除</a>');
+			operate.push('<a class="btn active" href="#">设置角色</a>');
+		} else {
+			operate.push('<a class="btn active notenable" href="#">启用</a>');
+			operate.push('<a class="btn active delete" href="#">删除</a>');
+		}
+	}
+	return operate;
 }
 
 function booleanFormatter(value, row, index) {
-	if (value.enable) {
+	if(value.enable) {
 		return '是';
 	}
 	return '否';
@@ -141,7 +148,7 @@ function booleanFormatter(value, row, index) {
 function save(form, action) {
 	var method = action == 'add' ? 'post' : 'put';
 	var formData = form.serializeJson();
-	request(method, formData, '/sysuser/'+action, function(result) {
+	request(method, formData, '/sysuser/' + action, function(result) {
 		$('#saveSysUser').modal('hide');
 		$("#sysUserTable").bootstrapTable('refresh');
 	});
@@ -213,3 +220,37 @@ function validUpdate(form) {
 		}
 	});
 }
+
+//监听表格操作按扭事件
+window.operateEvents = {
+	'click .enable': function(e, value, row, index) {
+		layer.confirm('确定需要禁用'+row.userName+'吗？', {
+			yes: function(index, layero){
+				request('put',  '', '/sysuser/enable?id='+row.id,function(result) {
+					$("#sysUserTable").bootstrapTable('refresh');
+					layer.close(index);
+				})
+			}
+		});
+	},
+	'click .notenable': function(e, value, row, index) {
+		layer.confirm('确定需要启用'+row.userName+'吗？', {
+			yes: function(index, layero){
+				request('put',  '', '/sysuser/notenable?id='+row.id, function(result) {
+					$("#sysUserTable").bootstrapTable('refresh');
+					layer.close(index);
+				})
+			}
+		});
+	},
+	'click .delete': function(e, value, row, index) {
+		layer.confirm('确定需要删除'+row.userName+'吗？', {
+			yes: function(index, layero){
+				request('delete',  '', '/sysuser/delete?id='+row.id, function(result) {
+					$("#sysUserTable").bootstrapTable('refresh');
+					layer.close(index);
+				})
+			}
+		});
+	}
+};

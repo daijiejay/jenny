@@ -14,9 +14,6 @@ function request(method, data, url, callback) {
 	        xhrFields: {
 	            withCredentials: true
 	        },
-			headers: {
-				'Access-Control-Allow-Origin': 'http://localhost'
-		    },
 	        crossDomain: true,
 			success: function(result, textStatus, request) {
 				requestMap.delete(url);
