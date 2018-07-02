@@ -1,6 +1,8 @@
 package org.daijie.jenny.common.feign.sys.response;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -8,10 +10,10 @@ import io.swagger.annotations.ApiModelProperty;
 public class SysMenuAuthorizedResponse implements Serializable {
 
 	@ApiModelProperty(value = "角色编号", required = true)
-	private String roleCode;
+	private Integer roleId;
 	
 	@ApiModelProperty(value = "菜单编号", required = true)
-	private String menuCode;
+	private Integer menuId;
 	
 	@ApiModelProperty(value = "菜单名称", required = true)
 	private String menuName;
@@ -20,28 +22,43 @@ public class SysMenuAuthorizedResponse implements Serializable {
 	private Integer level;
 	
 	@ApiModelProperty(value = "父级菜单名称")
-	private String parentCode;
-	
+	private Integer parentId;
+
+	/**
+	 * 排序
+	 */
+	@ApiModelProperty(value = "排序", required = true)
+	private Integer sort;
+
+	/**
+	 * 映射路径
+	 */
 	@ApiModelProperty(value = "映射路径")
 	private String mapping;
+
+	/**
+	 * 图标
+	 */
+	@ApiModelProperty(value = "图标")
+	private String icon;
 	
-	@ApiModelProperty(value = "权限集")
-	private String authorizedTypes;
+	@ApiModelProperty(value = "功能")
+	private List<SysActionResponse> sysActions = new ArrayList<SysActionResponse>();
 
-	public String getRoleCode() {
-		return roleCode;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
-	public String getMenuCode() {
-		return menuCode;
+	public Integer getMenuId() {
+		return menuId;
 	}
 
-	public void setMenuCode(String menuCode) {
-		this.menuCode = menuCode;
+	public void setMenuId(Integer menuId) {
+		this.menuId = menuId;
 	}
 
 	public String getMenuName() {
@@ -60,12 +77,12 @@ public class SysMenuAuthorizedResponse implements Serializable {
 		this.level = level;
 	}
 
-	public String getParentCode() {
-		return parentCode;
+	public Integer getParentId() {
+		return parentId;
 	}
 
-	public void setParentCode(String parentCode) {
-		this.parentCode = parentCode;
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getMapping() {
@@ -76,11 +93,27 @@ public class SysMenuAuthorizedResponse implements Serializable {
 		this.mapping = mapping;
 	}
 
-	public String getAuthorizedTypes() {
-		return authorizedTypes;
+	public Integer getSort() {
+		return sort;
 	}
 
-	public void setAuthorizedTypes(String authorizedTypes) {
-		this.authorizedTypes = authorizedTypes;
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public List<SysActionResponse> getSysActions() {
+		return sysActions;
+	}
+
+	public void setSysActions(List<SysActionResponse> sysActions) {
+		this.sysActions = sysActions;
 	}
 }

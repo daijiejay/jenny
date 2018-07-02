@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.daijie.jenny.common.mapper.sys.SysTableColumnMapper">
+  <resultMap id="BaseResultMap" type="org.daijie.jenny.common.model.sys.SysTableColumn">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="column_id" jdbcType="INTEGER" property="columnId" />
+    <result column="table_id" jdbcType="INTEGER" property="tableId" />
+    <result column="field" jdbcType="VARCHAR" property="field" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    column_id, table_id, field, title
+  </sql>
+</mapper>

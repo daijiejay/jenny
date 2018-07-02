@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class SysUserPasswordResponse implements Serializable {
 
 	@ApiModelProperty(value = "用户编号", required = true)
-	private String userCode;
+	private Integer userId;
 
 	@ApiModelProperty(value = "密码", required = true)
 	private String password;
@@ -16,12 +16,12 @@ public class SysUserPasswordResponse implements Serializable {
 	@ApiModelProperty(value = "加密盐", required = true)
     private String salt;
 
-	public String getUserCode() {
-		return userCode;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getPassword() {

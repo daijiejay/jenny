@@ -1,20 +1,18 @@
 package org.daijie.jenny.common.model.sys;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "sys_user")
 public class SysUser implements Serializable {
-    @Id
-    @Column(name = "id")
-    private Integer id;
-
     /**
      * 用户编号
      */
-    @Column(name = "user_code")
-    private String userCode;
+    @Id
+    @Column(name = "user_id")
+    private Integer userId;
 
     /**
      * 用户名
@@ -56,7 +54,7 @@ public class SysUser implements Serializable {
      * 性别
      */
     @Column(name = "gender")
-    private Boolean gender;
+    private byte[] gender;
 
     /**
      * 头像
@@ -69,6 +67,12 @@ public class SysUser implements Serializable {
      */
     @Column(name = "create_time")
     private Date createTime;
+
+    /**
+     * 是否管理员用户
+     */
+    @Column(name = "admin")
+    private Boolean admin;
 
     /**
      * 是否禁用
@@ -85,45 +89,26 @@ public class SysUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @return id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    public SysUser withId(Integer id) {
-        this.setId(id);
-        return this;
-    }
-
-    /**
-     * @param id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
      * 获取用户编号
      *
-     * @return user_code - 用户编号
+     * @return user_id - 用户编号
      */
-    public String getUserCode() {
-        return userCode;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public SysUser withUserCode(String userCode) {
-        this.setUserCode(userCode);
+    public SysUser withUserId(Integer userId) {
+        this.setUserId(userId);
         return this;
     }
 
     /**
      * 设置用户编号
      *
-     * @param userCode 用户编号
+     * @param userId 用户编号
      */
-    public void setUserCode(String userCode) {
-        this.userCode = userCode == null ? null : userCode.trim();
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     /**
@@ -269,11 +254,11 @@ public class SysUser implements Serializable {
      *
      * @return gender - 性别
      */
-    public Boolean getGender() {
+    public byte[] getGender() {
         return gender;
     }
 
-    public SysUser withGender(Boolean gender) {
+    public SysUser withGender(byte[] gender) {
         this.setGender(gender);
         return this;
     }
@@ -283,7 +268,7 @@ public class SysUser implements Serializable {
      *
      * @param gender 性别
      */
-    public void setGender(Boolean gender) {
+    public void setGender(byte[] gender) {
         this.gender = gender;
     }
 
@@ -331,6 +316,29 @@ public class SysUser implements Serializable {
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    /**
+     * 获取是否管理员用户
+     *
+     * @return admin - 是否管理员用户
+     */
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public SysUser withAdmin(Boolean admin) {
+        this.setAdmin(admin);
+        return this;
+    }
+
+    /**
+     * 设置是否管理员用户
+     *
+     * @param admin 是否管理员用户
+     */
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
     /**
@@ -385,8 +393,7 @@ public class SysUser implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", userCode=").append(userCode);
+        sb.append(", userId=").append(userId);
         sb.append(", userName=").append(userName);
         sb.append(", mobile=").append(mobile);
         sb.append(", email=").append(email);
@@ -396,6 +403,7 @@ public class SysUser implements Serializable {
         sb.append(", gender=").append(gender);
         sb.append(", portrait=").append(portrait);
         sb.append(", createTime=").append(createTime);
+        sb.append(", admin=").append(admin);
         sb.append(", enable=").append(enable);
         sb.append(", cancel=").append(cancel);
         sb.append(", serialVersionUID=").append(serialVersionUID);
@@ -415,17 +423,17 @@ public class SysUser implements Serializable {
             return false;
         }
         SysUser other = (SysUser) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
+        return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
             && (this.getMobile() == null ? other.getMobile() == null : this.getMobile().equals(other.getMobile()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getSalt() == null ? other.getSalt() == null : this.getSalt().equals(other.getSalt()))
             && (this.getBirthday() == null ? other.getBirthday() == null : this.getBirthday().equals(other.getBirthday()))
-            && (this.getGender() == null ? other.getGender() == null : this.getGender().equals(other.getGender()))
+            && (Arrays.equals(this.getGender(), other.getGender()))
             && (this.getPortrait() == null ? other.getPortrait() == null : this.getPortrait().equals(other.getPortrait()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getAdmin() == null ? other.getAdmin() == null : this.getAdmin().equals(other.getAdmin()))
             && (this.getEnable() == null ? other.getEnable() == null : this.getEnable().equals(other.getEnable()))
             && (this.getCancel() == null ? other.getCancel() == null : this.getCancel().equals(other.getCancel()));
     }
@@ -434,17 +442,17 @@ public class SysUser implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
         result = prime * result + ((getMobile() == null) ? 0 : getMobile().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getSalt() == null) ? 0 : getSalt().hashCode());
         result = prime * result + ((getBirthday() == null) ? 0 : getBirthday().hashCode());
-        result = prime * result + ((getGender() == null) ? 0 : getGender().hashCode());
+        result = prime * result + (Arrays.hashCode(getGender()));
         result = prime * result + ((getPortrait() == null) ? 0 : getPortrait().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getAdmin() == null) ? 0 : getAdmin().hashCode());
         result = prime * result + ((getEnable() == null) ? 0 : getEnable().hashCode());
         result = prime * result + ((getCancel() == null) ? 0 : getCancel().hashCode());
         return result;

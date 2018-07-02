@@ -5,15 +5,12 @@ import javax.persistence.*;
 
 @Table(name = "sys_menu")
 public class SysMenu implements Serializable {
-    @Id
-    @Column(name = "id")
-    private Integer id;
-
     /**
-     * 菜单代码
+     * 菜单编号
      */
-    @Column(name = "menu_code")
-    private String menuCode;
+    @Id
+    @Column(name = "menu_id")
+    private Integer menuId;
 
     /**
      * 菜单名称
@@ -28,10 +25,16 @@ public class SysMenu implements Serializable {
     private Integer level;
 
     /**
-     * 父级代码
+     * 父级菜单编号
      */
-    @Column(name = "parent_code")
-    private String parentCode;
+    @Column(name = "parent_id")
+    private Integer parentId;
+
+    /**
+     * 排序
+     */
+    @Column(name = "sort")
+    private Integer sort;
 
     /**
      * 映射路径
@@ -40,10 +43,10 @@ public class SysMenu implements Serializable {
     private String mapping;
 
     /**
-     * 权限类型
+     * 图标
      */
-    @Column(name = "authority_types")
-    private String authorityTypes;
+    @Column(name = "icon")
+    private String icon;
 
     /**
      * 是否禁用
@@ -54,45 +57,26 @@ public class SysMenu implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @return id
+     * 获取菜单编号
+     *
+     * @return menu_id - 菜单编号
      */
-    public Integer getId() {
-        return id;
+    public Integer getMenuId() {
+        return menuId;
     }
 
-    public SysMenu withId(Integer id) {
-        this.setId(id);
+    public SysMenu withMenuId(Integer menuId) {
+        this.setMenuId(menuId);
         return this;
     }
 
     /**
-     * @param id
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * 获取菜单代码
+     * 设置菜单编号
      *
-     * @return menu_code - 菜单代码
+     * @param menuId 菜单编号
      */
-    public String getMenuCode() {
-        return menuCode;
-    }
-
-    public SysMenu withMenuCode(String menuCode) {
-        this.setMenuCode(menuCode);
-        return this;
-    }
-
-    /**
-     * 设置菜单代码
-     *
-     * @param menuCode 菜单代码
-     */
-    public void setMenuCode(String menuCode) {
-        this.menuCode = menuCode == null ? null : menuCode.trim();
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
     }
 
     /**
@@ -142,26 +126,49 @@ public class SysMenu implements Serializable {
     }
 
     /**
-     * 获取父级代码
+     * 获取父级菜单编号
      *
-     * @return parent_code - 父级代码
+     * @return parent_id - 父级菜单编号
      */
-    public String getParentCode() {
-        return parentCode;
+    public Integer getParentId() {
+        return parentId;
     }
 
-    public SysMenu withParentCode(String parentCode) {
-        this.setParentCode(parentCode);
+    public SysMenu withParentId(Integer parentId) {
+        this.setParentId(parentId);
         return this;
     }
 
     /**
-     * 设置父级代码
+     * 设置父级菜单编号
      *
-     * @param parentCode 父级代码
+     * @param parentId 父级菜单编号
      */
-    public void setParentCode(String parentCode) {
-        this.parentCode = parentCode == null ? null : parentCode.trim();
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    /**
+     * 获取排序
+     *
+     * @return sort - 排序
+     */
+    public Integer getSort() {
+        return sort;
+    }
+
+    public SysMenu withSort(Integer sort) {
+        this.setSort(sort);
+        return this;
+    }
+
+    /**
+     * 设置排序
+     *
+     * @param sort 排序
+     */
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
     /**
@@ -188,26 +195,26 @@ public class SysMenu implements Serializable {
     }
 
     /**
-     * 获取权限类型
+     * 获取图标
      *
-     * @return authority_types - 权限类型
+     * @return icon - 图标
      */
-    public String getAuthorityTypes() {
-        return authorityTypes;
+    public String getIcon() {
+        return icon;
     }
 
-    public SysMenu withAuthorityTypes(String authorityTypes) {
-        this.setAuthorityTypes(authorityTypes);
+    public SysMenu withIcon(String icon) {
+        this.setIcon(icon);
         return this;
     }
 
     /**
-     * 设置权限类型
+     * 设置图标
      *
-     * @param authorityTypes 权限类型
+     * @param icon 图标
      */
-    public void setAuthorityTypes(String authorityTypes) {
-        this.authorityTypes = authorityTypes == null ? null : authorityTypes.trim();
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
     }
 
     /**
@@ -239,13 +246,13 @@ public class SysMenu implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", menuCode=").append(menuCode);
+        sb.append(", menuId=").append(menuId);
         sb.append(", menuName=").append(menuName);
         sb.append(", level=").append(level);
-        sb.append(", parentCode=").append(parentCode);
+        sb.append(", parentId=").append(parentId);
+        sb.append(", sort=").append(sort);
         sb.append(", mapping=").append(mapping);
-        sb.append(", authorityTypes=").append(authorityTypes);
+        sb.append(", icon=").append(icon);
         sb.append(", enable=").append(enable);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
@@ -264,13 +271,13 @@ public class SysMenu implements Serializable {
             return false;
         }
         SysMenu other = (SysMenu) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getMenuCode() == null ? other.getMenuCode() == null : this.getMenuCode().equals(other.getMenuCode()))
+        return (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()))
             && (this.getMenuName() == null ? other.getMenuName() == null : this.getMenuName().equals(other.getMenuName()))
             && (this.getLevel() == null ? other.getLevel() == null : this.getLevel().equals(other.getLevel()))
-            && (this.getParentCode() == null ? other.getParentCode() == null : this.getParentCode().equals(other.getParentCode()))
+            && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
+            && (this.getSort() == null ? other.getSort() == null : this.getSort().equals(other.getSort()))
             && (this.getMapping() == null ? other.getMapping() == null : this.getMapping().equals(other.getMapping()))
-            && (this.getAuthorityTypes() == null ? other.getAuthorityTypes() == null : this.getAuthorityTypes().equals(other.getAuthorityTypes()))
+            && (this.getIcon() == null ? other.getIcon() == null : this.getIcon().equals(other.getIcon()))
             && (this.getEnable() == null ? other.getEnable() == null : this.getEnable().equals(other.getEnable()));
     }
 
@@ -278,13 +285,13 @@ public class SysMenu implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getMenuCode() == null) ? 0 : getMenuCode().hashCode());
+        result = prime * result + ((getMenuId() == null) ? 0 : getMenuId().hashCode());
         result = prime * result + ((getMenuName() == null) ? 0 : getMenuName().hashCode());
         result = prime * result + ((getLevel() == null) ? 0 : getLevel().hashCode());
-        result = prime * result + ((getParentCode() == null) ? 0 : getParentCode().hashCode());
+        result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
+        result = prime * result + ((getSort() == null) ? 0 : getSort().hashCode());
         result = prime * result + ((getMapping() == null) ? 0 : getMapping().hashCode());
-        result = prime * result + ((getAuthorityTypes() == null) ? 0 : getAuthorityTypes().hashCode());
+        result = prime * result + ((getIcon() == null) ? 0 : getIcon().hashCode());
         result = prime * result + ((getEnable() == null) ? 0 : getEnable().hashCode());
         return result;
     }

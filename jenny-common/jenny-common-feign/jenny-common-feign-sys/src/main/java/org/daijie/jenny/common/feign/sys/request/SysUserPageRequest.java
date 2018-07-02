@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class SysUserPageRequest extends Page implements ExampleConditions {
 
 	@ApiModelProperty(value = "用户编号")
-	private String userCode;
+	private String userId;
 
 	@ApiModelProperty(value = "用户名称")
 	private String userName;
@@ -46,12 +46,12 @@ public class SysUserPageRequest extends Page implements ExampleConditions {
 	@ApiModelProperty(value = "是否删除")
 	private Boolean cancel;
 
-	public String getUserCode() {
-		return userCode;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getUserName() {

@@ -5,7 +5,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
     <result column="enable" jdbcType="BIT" property="enable" />
@@ -14,6 +14,6 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, role_code, role_name, enable
+    role_id, role_code, role_name, enable
   </sql>
 </mapper>

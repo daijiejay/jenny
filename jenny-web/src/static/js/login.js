@@ -5,13 +5,20 @@ $(function() {
 			login($('.form-signin'));
 		}
 	});
+	$(window).keydown(function(event){
+		if(event.keyCode == 13){
+			if($('.form-signin').valid()) {
+				login($('.form-signin'));
+			}
+		}
+	});
 });
 
 //登录
 function login(form) {
 	var formData = form.serializeJson();
 	formData.password = encrypt.encrypt(formData.password);
-	request('post', formData, '/syslogin', function(result) {
+	request('post', formData, '/syslogin', 'SYS', function(result) {
 		location.href = 'index.html';
 	});
 }
@@ -27,7 +34,7 @@ function valid(form) {
 			},
 			password: {
 				required: true,
-				isPassword: true
+				password: true
 			}
 		},
 		errorPlacement: function(error, element) {
@@ -46,7 +53,7 @@ function valid(form) {
 loadPublicKey();
 var encrypt = new JSEncrypt();
 function loadPublicKey() {
-	request('get', '', '/publicKey', function(result) {
+	request('get', '', '/publicKey', 'SYS', function(result) {
 		encrypt.setPublicKey(result.data);
 	});
 }

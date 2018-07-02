@@ -27,7 +27,7 @@ public class SysUserController {
 	private SysUserFeign sysUserFeign;
 	
 	@ApiOperation(notes = "获取全部用户", value = "获取全部用户")
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/query", method = RequestMethod.GET)
 	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserPageRequest) {
 		sysUserPageRequest.setCancel(false);
 		return sysUserFeign.getUserAll(sysUserPageRequest);
@@ -68,25 +68,25 @@ public class SysUserController {
 	}
 
 	@ApiOperation(notes = "删除用户", value = "删除用户")
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public ModelResult<SysUserResponse> deleteUser(Integer id) {
-		return sysUserFeign.deleteUser(id);
+	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.DELETE)
+	public ModelResult<SysUserResponse> deleteUser(Integer userId) {
+		return sysUserFeign.deleteUser(userId);
 	}
 	
 	@ApiOperation(notes = "禁用用户", value = "禁用用户")
-	@RequestMapping(value = "/enable", method = RequestMethod.PUT)
-	public ModelResult<SysUserResponse> enableUser(Integer id) {
+	@RequestMapping(value = "/enable/{userId}", method = RequestMethod.PUT)
+	public ModelResult<SysUserResponse> enableUser(Integer userId) {
 		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();
-		sysUserRequest.setId(id);
+		sysUserRequest.setUserId(userId);
 		sysUserRequest.setEnable(true);
 		return sysUserFeign.updateUser(sysUserRequest);
 	}
 	
 	@ApiOperation(notes = "启用用户", value = "启用用户")
-	@RequestMapping(value = "/notenable", method = RequestMethod.PUT)
-	public ModelResult<SysUserResponse> notenableUser(Integer id) {
+	@RequestMapping(value = "/notenable/{userId}", method = RequestMethod.PUT)
+	public ModelResult<SysUserResponse> notenableUser(Integer userId) {
 		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();
-		sysUserRequest.setId(id);
+		sysUserRequest.setUserId(userId);
 		sysUserRequest.setEnable(false);
 		return sysUserFeign.updateUser(sysUserRequest);
 	}

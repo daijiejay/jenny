@@ -5,15 +5,24 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
-    <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
-    <result column="authorized_types" jdbcType="VARCHAR" property="authorizedTypes" />
+    <id column="role_authorized_id" jdbcType="INTEGER" property="roleAuthorizedId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbg.generated
     -->
-    id, role_code, menu_code, authorized_types
+    role_authorized_id, user_id, role_id
   </sql>
+	
+	<select id="selectRolesByUser" parameterType="Integer" resultType="String">
+		select
+			sys_role.role_code
+		from
+			sys_role_authorized,
+			sys_role
+		where 1=1
+			and sys_role_authorized.role_id = sys_role.role_id
+	</select>
 </mapper>

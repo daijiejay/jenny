@@ -5,19 +5,19 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="menu_code" jdbcType="VARCHAR" property="menuCode" />
+    <id column="menu_id" jdbcType="INTEGER" property="menuId" />
     <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
     <result column="level" jdbcType="INTEGER" property="level" />
-    <result column="parent_code" jdbcType="VARCHAR" property="parentCode" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="mapping" jdbcType="VARCHAR" property="mapping" />
-    <result column="authority_types" jdbcType="VARCHAR" property="authorityTypes" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="enable" jdbcType="BIT" property="enable" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbg.generated
     -->
-    id, menu_code, menu_name, level, parent_code, mapping, authority_types, enable
+    menu_id, menu_name, level, parent_id, sort, mapping, icon, enable
   </sql>
 </mapper>

@@ -4,9 +4,10 @@ import org.daijie.core.controller.enums.ResultCode;
 import org.daijie.core.result.ApiResult;
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
+import org.daijie.jenny.common.feign.sys.SysRoleAuthorizedFeign;
 import org.daijie.jenny.common.feign.sys.SysUserFeign;
+import org.daijie.jenny.common.feign.sys.response.SysUserCacheResponse;
 import org.daijie.jenny.common.feign.sys.response.SysUserPasswordResponse;
-import org.daijie.jenny.common.feign.sys.response.SysUserResponse;
 import org.daijie.shiro.authc.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +25,28 @@ public class SysLoginController {
 
 	@Autowired
 	private SysUserFeign sysUserFeign;
+	
+	@Autowired
+	private SysRoleAuthorizedFeign sysRoleAuthorizedFeign;
 
 	@ApiOperation(notes = "登录", value = "登录")
 	@RequestMapping(value = "/syslogin", method = RequestMethod.POST)
-	public ModelResult<SysUserResponse> login(
+	public ModelResult<Boolean> login(
 			@ApiParam(value="用户名") @RequestParam String username, 
 			@ApiParam(value="密码") @RequestParam String password) {
-		SysUserResponse sysUserResponse = sysUserFeign.getUserByUsername(username).getData();
+		SysUserCacheResponse sysUserResponse = sysUserFeign.getUserByUsername(username).getData();
 		if (sysUserResponse != null) {
-			SysUserPasswordResponse passwordResponse = sysUserFeign.getUserPasswordById(sysUserResponse.getId()).getData();
+			if (sysUserResponse.getEnable()) {
+				return Result.build("用户已被禁用！", ApiResult.ERROR, ResultCode.CODE_100);
+			}
+			if (sysUserResponse.getAdmin()) {
+				Auth.setRoles(new String[]{"ADMIN"});
+			} else {
+				Auth.setRoles(sysRoleAuthorizedFeign.getRolesByUser(sysUserResponse.getUserId()).getData());
+			}
+			SysUserPasswordResponse passwordResponse = sysUserFeign.getUserPasswordById(sysUserResponse.getUserId()).getData();
 			Auth.login(username, password, passwordResponse.getSalt(), passwordResponse.getPassword(), sysUserResponse);
-			return Result.build(sysUserResponse, "登录成功", ApiResult.SUCCESS);
+			return Result.build(true, "登录成功", ApiResult.SUCCESS);
 		}
 		return Result.build("用户名或密码错误！", ApiResult.ERROR, ResultCode.CODE_100);
 	}

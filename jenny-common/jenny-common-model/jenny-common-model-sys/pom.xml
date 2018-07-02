@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.daijie</groupId>
-		<artifactId>jenny-common</artifactId>
+		<artifactId>jenny-common-model</artifactId>
 		<version>1.0.0-RELEASE</version>
 	</parent>
 	<artifactId>jenny-common-model-sys</artifactId>

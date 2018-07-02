@@ -1,9 +1,14 @@
 package org.daijie.jenny.api.sys;
 
 import org.daijie.core.result.ModelResult;
+import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.jenny.common.feign.sys.SysMenuAuthorizedFeign;
+import org.daijie.jenny.common.feign.sys.response.SysActionAuthorizedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleMenuResponse;
+import org.daijie.jenny.common.feign.sys.response.SysUserCacheResponse;
+import org.daijie.shiro.authc.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,11 +24,22 @@ public class SysIndexController {
 	@Autowired
 	private SysMenuAuthorizedFeign sysMenuAuthorizedFeign;
 	
-	@ApiOperation(notes = "获取菜单", value = "获取菜单")
+	@ApiOperation(value = "获取菜单")
 	@RequestMapping(value = "/menu/authorized", method = RequestMethod.GET)
 	public ModelResult<SysRoleMenuResponse> getMenuByUser() {
-		@SuppressWarnings("unused")
-		int i = 1/0;
-		return sysMenuAuthorizedFeign.getMenuAll();
+		SysUserCacheResponse sysUserResponse = Auth.getAuthc(SysUserCacheResponse.class);
+		SysRoleMenuResponse menuResponse = null;
+		if (sysUserResponse.getAdmin()) {
+			menuResponse = sysMenuAuthorizedFeign.getMenuAll().getData();
+		} else {
+			menuResponse = sysMenuAuthorizedFeign.getMenuByUser(sysUserResponse.getUserId()).getData();
+		}
+		return Result.build(menuResponse);
+	}
+	
+	@ApiOperation(value = "获取表格")
+	@RequestMapping(value = "/menu/authorized/action/{menuId}", method = RequestMethod.GET)
+	public ModelResult<SysActionAuthorizedResponse> getActionByMenu(@PathVariable(name = "menuId") Integer menuId) {
+		return sysMenuAuthorizedFeign.getActionByMenu(menuId);
 	}
 }

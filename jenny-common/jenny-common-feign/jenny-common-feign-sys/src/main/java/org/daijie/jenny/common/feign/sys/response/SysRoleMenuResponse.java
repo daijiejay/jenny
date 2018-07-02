@@ -7,8 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class SysRoleMenuResponse {
 
-	@ApiModelProperty(value = "角色编号", required = true)
-	private String userCode;
+	@ApiModelProperty(value = "用户编号", required = true)
+	private Integer userId;
 
 	@ApiModelProperty(value = "1级菜单")
 	private List<SysMenuAuthorizedResponse> level1 = new ArrayList<SysMenuAuthorizedResponse>();
@@ -16,12 +16,12 @@ public class SysRoleMenuResponse {
 	@ApiModelProperty(value = "2级菜单")
 	private List<SysMenuAuthorizedResponse> level2 = new ArrayList<SysMenuAuthorizedResponse>();
 
-	public String getUserCode() {
-		return userCode;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public List<SysMenuAuthorizedResponse> getLevel1() {

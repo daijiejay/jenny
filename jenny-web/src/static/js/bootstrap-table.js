@@ -722,6 +722,9 @@
             });
             columns.push(column);
         });
+        if (typeof this.options.columns == 'function') {
+        	this.options.columns = this.options.columns();
+        }
         if (!$.isArray(this.options.columns[0])) {
             this.options.columns = [this.options.columns];
         }
@@ -1121,6 +1124,9 @@
         }
         this.$toolbar.html('');
 
+		if (typeof this.options.toolbar === 'function') {
+			this.options.toolbar = this.options.toolbar();
+		}
         if (typeof this.options.toolbar === 'string' || typeof this.options.toolbar === 'object') {
             $(sprintf('<div class="bs-bars %s-%s"></div>', bs.pullClass, this.options.toolbarAlign))
                 .appendTo(this.$toolbar)
@@ -1823,7 +1829,7 @@
             }
 
             value = calculateObjectValue(column,
-                that.header.formatters[j], [value_, item, i, field], value_);
+                that.header.formatters[j], [value_, item, i, field, field], value_);
 
             if (item['_' + field + '_data'] && !$.isEmptyObject(item['_' + field + '_data'])) {
                 $.each(item['_' + field + '_data'], function(k, v) {

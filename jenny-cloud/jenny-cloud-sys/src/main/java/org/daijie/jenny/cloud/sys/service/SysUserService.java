@@ -8,24 +8,23 @@ import org.daijie.core.result.ApiResult;
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
 import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
-import org.daijie.core.util.IdWorker;
 import org.daijie.jdbc.mybatis.example.ExampleBuilder;
 import org.daijie.jenny.common.feign.sys.SysUserFeign;
 import org.daijie.jenny.common.feign.sys.request.SysUserAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserUpdateRequest;
+import org.daijie.jenny.common.feign.sys.response.SysUserCacheResponse;
 import org.daijie.jenny.common.feign.sys.response.SysUserPasswordResponse;
 import org.daijie.jenny.common.feign.sys.response.SysUserResponse;
 import org.daijie.jenny.common.mapper.sys.SysUserMapper;
 import org.daijie.jenny.common.model.sys.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.util.StringUtil;
-import com.xiaoleilu.hutool.bean.BeanUtil;
+
+import cn.hutool.core.bean.BeanUtil;
 
 @RestController
 public class SysUserService implements SysUserFeign {
@@ -42,9 +41,9 @@ public class SysUserService implements SysUserFeign {
 	}
 
 	@Override
-	public ModelResult<SysUserResponse> getUserById(Integer id) {
+	public ModelResult<SysUserResponse> getUserById(Integer userId) {
 		SysUserResponse sysUserResponse = new SysUserResponse();
-		SysUser sysUser = sysUserMapper.selectByPrimaryKey(id);
+		SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
 		if (sysUser != null) {
 			BeanUtil.copyProperties(sysUser, sysUserResponse);
 			return Result.build(sysUserResponse);
@@ -53,8 +52,8 @@ public class SysUserService implements SysUserFeign {
 	}
 	
 	@Override
-	public ModelResult<SysUserResponse> getUserByUsername(@PathVariable(name = "username") String username) {
-		SysUserResponse sysUserResponse = new SysUserResponse();
+	public ModelResult<SysUserCacheResponse> getUserByUsername(String username) {
+		SysUserCacheResponse sysUserResponse = new SysUserCacheResponse();
 		List<SysUser> sysUsers = sysUserMapper.selectByExample(
 				ExampleBuilder.create(SysUser.class).andEqualTo("userName", username)
 				.andEqualTo("cancel", false).build());
@@ -66,9 +65,9 @@ public class SysUserService implements SysUserFeign {
 	}
 
 	@Override
-	public ModelResult<SysUserPasswordResponse> getUserPasswordById(@PathVariable(name = "id") Integer id) {
+	public ModelResult<SysUserPasswordResponse> getUserPasswordById(Integer userId) {
 		SysUserPasswordResponse  sysUserPasswordResponse = new SysUserPasswordResponse();
-		SysUser sysUser = sysUserMapper.selectByPrimaryKey(id);
+		SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
 		if (sysUser != null) {
 			BeanUtil.copyProperties(sysUser, sysUserPasswordResponse);
 			return Result.build(sysUserPasswordResponse);
@@ -86,7 +85,6 @@ public class SysUserService implements SysUserFeign {
 		}
 		SysUser sysUser = new SysUser();
 		BeanUtil.copyProperties(sysUserRequest, sysUser);
-		sysUser.setUserCode(IdWorker.getId()+"");
 		sysUser.setCreateTime(new Date());
 		sysUserMapper.insertSelective(sysUser);
 		SysUserResponse sysUserResponse = new SysUserResponse();
@@ -98,12 +96,10 @@ public class SysUserService implements SysUserFeign {
 	public ModelResult<SysUserResponse> updateUser(SysUserUpdateRequest sysUserRequest) {
 		SysUser sysUser = new SysUser();
 		BeanUtil.copyProperties(sysUserRequest, sysUser);
-		if (sysUser.getId() != null) {
+		if (sysUser.getUserId() != null) {
 			sysUserMapper.updateByPrimaryKeySelective(sysUser);
-		} else if (StringUtil.isNotEmpty(sysUser.getUserCode())) {
-			sysUserMapper.updateByExampleSelective(sysUser, ExampleBuilder.create(SysUser.class).andEqualTo("userCode", sysUserRequest.getUserCode()).build());
 		} else {
-			return Result.build("缺少id或userCode，更新失败！", ApiResult.ERROR, ResultCode.CODE_102);
+			return Result.build("缺少参数userId，更新失败！", ApiResult.ERROR, ResultCode.CODE_102);
 		}
 		SysUserResponse sysUserResponse = new SysUserResponse();
 		BeanUtil.copyProperties(sysUser, sysUserResponse);
@@ -111,10 +107,10 @@ public class SysUserService implements SysUserFeign {
 	}
 
 	@Override
-	public ModelResult<SysUserResponse> deleteUser(@PathVariable(name = "id") Integer id) {
-		SysUser sysUser = sysUserMapper.selectByPrimaryKey(id);
+	public ModelResult<SysUserResponse> deleteUser(Integer userId) {
+		SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
 		if (sysUser != null) {
-			sysUser.setId(id);
+			sysUser.setUserId(userId);
 			sysUser.setCancel(true);
 			sysUserMapper.updateByPrimaryKey(sysUser);
 			SysUserResponse sysUserResponse = new SysUserResponse();

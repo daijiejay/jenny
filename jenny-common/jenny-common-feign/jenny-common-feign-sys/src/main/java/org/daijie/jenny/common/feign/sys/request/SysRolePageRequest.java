@@ -13,7 +13,7 @@ public class SysRolePageRequest extends Page implements Serializable {
      * 角色代码
      */
 	@ApiModelProperty(value = "角色代码", required = true)
-    private String roleCode;
+    private Integer roleId;
 
     /**
      * 角色名称
@@ -21,12 +21,12 @@ public class SysRolePageRequest extends Page implements Serializable {
 	@ApiModelProperty(value = "角色名称", required = true)
     private String roleName;
 
-	public String getRoleCode() {
-		return roleCode;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getRoleName() {

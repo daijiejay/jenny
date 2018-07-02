@@ -45,18 +45,21 @@
             <property name="trimStrings" value="true"/>  
         </javaModelGenerator> 
         
-        <!-- <sqlMapGenerator targetPackage="mybatis-mapper" targetProject="src/main/resources">
-        </sqlMapGenerator>    -->
+        <sqlMapGenerator targetPackage="mybatis-mapper" targetProject="src/main/resources">
+        </sqlMapGenerator>   
         
         <javaClientGenerator type="XMLMAPPER" targetPackage="org.daijie.jenny.common.mapper.sys" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>  
         </javaClientGenerator>
         
+        <table tableName="sys_action" domainObjectName="SysAction" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_menu" domainObjectName="SysMenu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_role" domainObjectName="SysRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_user" domainObjectName="SysUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="sys_user_authorized" domainObjectName="SysUserAuthorized" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_role_authorized" domainObjectName="SysRoleAuthorized" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="sys_menu_authorized" domainObjectName="SysMenuAuthorized" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="sys_table" domainObjectName="SysTable" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="sys_Table_column" domainObjectName="SysTableColumn" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>  
       
     <!-- mvn mybatis-generator:generate -->

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.daijie.jenny.common.mapper.sys.SysTableMapper">
+  <resultMap id="BaseResultMap" type="org.daijie.jenny.common.model.sys.SysTable">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="table_id" jdbcType="INTEGER" property="tableId" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="interface_server_id" jdbcType="VARCHAR" property="interfaceServerId" />
+    <result column="interface_url" jdbcType="VARCHAR" property="interfaceUrl" />
+    <result column="interface_method" jdbcType="VARCHAR" property="interfaceMethod" />
+    <result column="table_target" jdbcType="VARCHAR" property="tableTarget" />
+    <result column="search_target" jdbcType="VARCHAR" property="searchTarget" />
+    <result column="toolbar_target" jdbcType="VARCHAR" property="toolbarTarget" />
+    <result column="unique_id" jdbcType="VARCHAR" property="uniqueId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    table_id, menu_id, interface_server_id, interface_url, interface_method, table_target, 
+    search_target, toolbar_target, unique_id
+  </sql>
+</mapper>

@@ -1,38 +1,22 @@
 //手机号码验证
-jQuery.validator.addMethod("isMobile", function(value, element) {
+jQuery.validator.addMethod("mobile", function(value, element) {
 	var length = value.length;
 	var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
 	return this.optional(element) || (length == 11 && mobile.test(value));
 }, "请正确填写您的手机号码");
 
-//验证IMG是否上传图片
-jQuery.validator.addMethod("isImg", function(value, element) {
-	return value != "";
-}, "请上传图片");
-
 //身份证号码验证
-jQuery.validator.addMethod("isIdCardNo", function(value, element) { 
+jQuery.validator.addMethod("idCardNo", function(value, element) { 
   return this.optional(element) || isIdCardNo(value);    
 }, "请输入正确的身份证号码。");
 
 //手机号与邮箱同时验证
-jQuery.validator.addMethod("isMobileOrEmail", function(value, element) {   
+jQuery.validator.addMethod("mobileOrEmail", function(value, element) {   
 	return isMobile(value) || isEmail(value);
-}, "请输入正确的身份证号码。");
-
-//选择器是否选择
-jQuery.validator.addMethod("isSelect", function(value, element) {   
-	return value != "0";
-}, "");
-
-//判断是否为空
-jQuery.validator.addMethod("isEmpty", function(value, element) {  
-	var empty = /^\s*$/;
-	return !empty.test(value);
-}, "");
+}, "请输入正确的手机号或邮箱。");
 
 //验证手机和固定电话  this.optional(element) || (length == 11 && mobile.test(value));
-jQuery.validator.addMethod("isMobileOrTelephone", function(value, element) {
+jQuery.validator.addMethod("mobileOrTelephone", function(value, element) {
 	    var mobile = $.trim($("#telephone").val());  
 	    var isMobile = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1})|(14[0-9]{1}))+\d{8})$/;  
 	    var isPhone = /^(?:(?:0\d{2,3})-)?(?:\d{7,8})(-(?:\d{3,}))?$/;
@@ -56,13 +40,13 @@ jQuery.validator.addMethod("isMobileOrTelephone", function(value, element) {
 }, "请正确填写您的手机号码");
 
 //验证邮编
-jQuery.validator.addMethod("isZipCode", function(value, element) {   
+jQuery.validator.addMethod("zipCode", function(value, element) {   
     var tel = /^[0-9]{6}$/;
     return this.optional(element) || (tel.test(value));
 }, "请正确填写您的邮编");
 
 //密码 最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
-jQuery.validator.addMethod("isPassword", function(value, element) {
+jQuery.validator.addMethod("password", function(value, element) {
 	if (value.length == 0) {
 		return true;
 	}

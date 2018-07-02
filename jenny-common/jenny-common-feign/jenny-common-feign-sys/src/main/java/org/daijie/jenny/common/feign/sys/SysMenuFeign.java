@@ -2,8 +2,9 @@ package org.daijie.jenny.common.feign.sys;
 
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
+import org.daijie.jenny.common.feign.sys.request.SysMenuAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuPageRequest;
-import org.daijie.jenny.common.feign.sys.request.SysMenuRequest;
+import org.daijie.jenny.common.feign.sys.request.SysMenuUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,13 +25,13 @@ public interface SysMenuFeign {
 
 	@ApiOperation(notes = "添加菜单", value = "添加菜单")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ModelResult<SysMenuResponse> addMenu(SysMenuRequest sysMenuRequest);
+	public ModelResult<SysMenuResponse> addMenu(SysMenuAddRequest sysMenuRequest);
 
 	@ApiOperation(notes = "更新菜单", value = "更新菜单")
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ModelResult<SysMenuResponse> updateMenu(SysMenuRequest sysMenuRequest);
+	public ModelResult<SysMenuResponse> updateMenu(SysMenuUpdateRequest sysMenuRequest);
 
 	@ApiOperation(notes = "删除菜单", value = "删除菜单")
-	@RequestMapping(value = "/delete/menuCode/{menuCode}", method = RequestMethod.DELETE)
-	public ModelResult<SysMenuResponse> deleteMenu(@PathVariable(name = "menuCode") String menuCode);
+	@RequestMapping(value = "/delete/menuId/{menuId}", method = RequestMethod.DELETE)
+	public ModelResult<SysMenuResponse> deleteMenu(@PathVariable(name = "menuId") Integer menuId);
 }

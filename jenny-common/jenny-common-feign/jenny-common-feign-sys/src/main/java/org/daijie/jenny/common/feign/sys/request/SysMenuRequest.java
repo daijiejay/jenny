@@ -6,55 +6,55 @@ import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
 public class SysMenuRequest implements Serializable {
-	
+
 	/**
-     * 菜单代码
-     */
+	 * 菜单编号
+	 */
 	@ApiModelProperty(value = "菜单编号", required = true)
-    private String menuCode;
+	private Integer menuId;
 
-    /**
-     * 菜单名称
-     */
+	/**
+	 * 菜单名称	
+	 */
 	@ApiModelProperty(value = "菜单名称", required = true)
-    private String menuName;
+	private String menuName;
 
-    /**
-     * 菜单等级
-     */
+	/**
+	 * 菜单等级
+	 */
 	@ApiModelProperty(value = "菜单等级", required = true)
-    private Integer level;
+	private Integer level;
 
-    /**
-     * 父级代码
-     */
-	@ApiModelProperty(value = "菜单父级编号")
-    private String parentCode;
+	/**
+	 * 父级菜单编号
+	 */
+	@ApiModelProperty(value = "父级菜单编号")
+	private Integer parentId;
 
-    /**
-     * 映射路径
-     */
-	@ApiModelProperty(value = "映射路径", required = true)
-    private String mapping;
+	/**
+	 * 排序
+	 */
+	@ApiModelProperty(value = "排序", required = true)
+	private Integer sort;
 
-    /**
-     * 权限类型
-     */
-	@ApiModelProperty(value = "权限类型")
-    private String authorityTypes;
+	/**
+	 * 映射路径
+	 */
+	@ApiModelProperty(value = "映射路径")
+	private String mapping;
 
-    /**
-     * 是否禁用
-     */
-	@ApiModelProperty(value = "是否禁用", required = true)
-    private Boolean enable;
+	/**
+	 * 图标
+	 */
+	@ApiModelProperty(value = "图标")
+	private String icon;
 
-	public String getMenuCode() {
-		return menuCode;
+	public Integer getMenuId() {
+		return menuId;
 	}
 
-	public void setMenuCode(String menuCode) {
-		this.menuCode = menuCode;
+	public void setMenuId(Integer menuId) {
+		this.menuId = menuId;
 	}
 
 	public String getMenuName() {
@@ -73,12 +73,20 @@ public class SysMenuRequest implements Serializable {
 		this.level = level;
 	}
 
-	public String getParentCode() {
-		return parentCode;
+	public Integer getParentId() {
+		return parentId;
 	}
 
-	public void setParentCode(String parentCode) {
-		this.parentCode = parentCode;
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
 	}
 
 	public String getMapping() {
@@ -89,19 +97,11 @@ public class SysMenuRequest implements Serializable {
 		this.mapping = mapping;
 	}
 
-	public String getAuthorityTypes() {
-		return authorityTypes;
+	public String getIcon() {
+		return icon;
 	}
 
-	public void setAuthorityTypes(String authorityTypes) {
-		this.authorityTypes = authorityTypes;
-	}
-
-	public Boolean getEnable() {
-		return enable;
-	}
-
-	public void setEnable(Boolean enable) {
-		this.enable = enable;
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.daijie.jenny.common.mapper.sys.SysRoleAuthorizedMapper">
+	<resultMap id="BaseResultMap"
+		type="org.daijie.jenny.common.model.sys.SysRoleAuthorized">
+		<!-- WARNING - @mbg.generated -->
+		<id column="role_authorized_id" jdbcType="INTEGER" property="roleAuthorizedId" />
+		<result column="role_id" jdbcType="VARCHAR" property="roleId" />
+		<result column="menu_id" jdbcType="VARCHAR" property="menuId" />
+		<result column="action_ids" jdbcType="VARCHAR" property="actionIds" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbg.generated -->
+		role_authorized_id, role_id, menu_id, action_ids
+	</sql>
+	
+	<!-- <resultMap type="org.daijie.jenny.common.feign.sys.response.SysRoleMenuResponse" id="selectRoleAuthorizedAllResultMap">
+		<id column="user_id" jdbcType="INTEGER" property="userId" />
+		<collection property="level1" ofType="org.daijie.jenny.common.feign.sys.response.SysMenuAuthorizedResponse" column="userId">
+			<id column="menu_id" jdbcType="INTEGER" property="menuId" />
+		    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+		    <result column="level" jdbcType="INTEGER" property="level" />
+		    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+		    <result column="sort" jdbcType="INTEGER" property="sort" />
+		    <result column="mapping" jdbcType="VARCHAR" property="mapping" />
+		    <result column="icon" jdbcType="VARCHAR" property="icon" />
+		    <result column="enable" jdbcType="BIT" property="enable" />
+		</collection>
+		<collection property="level2" ofType="org.daijie.jenny.common.feign.sys.response.SysMenuAuthorizedResponse" column="userId">
+			<id column="menu_id1" jdbcType="INTEGER" property="menuId" />
+		    <result column="menu_name1" jdbcType="VARCHAR" property="menuName" />
+		    <result column="level1" jdbcType="INTEGER" property="level" />
+		    <result column="parent_id1" jdbcType="INTEGER" property="parentId" />
+		    <result column="sort1" jdbcType="INTEGER" property="sort" />
+		    <result column="mapping1" jdbcType="VARCHAR" property="mapping" />
+		    <result column="icon1" jdbcType="VARCHAR" property="icon" />
+		    <result column="enable1" jdbcType="BIT" property="enable" />
+		    <collection property="sysActions" ofType="org.daijie.jenny.common.feign.sys.response.SysActionResponse" column="menu_id">
+			    <id column="action_id" jdbcType="INTEGER" property="actionId" />
+			    <result column="menu_id2" jdbcType="INTEGER" property="menuId" />
+			    <result column="action_name" jdbcType="VARCHAR" property="actionName" />
+			    <result column="action_type" jdbcType="CHAR" property="actionType" />
+			    <result column="mutual_type" jdbcType="CHAR" property="mutualType" />
+			    <result column="interface_server_name" jdbcType="VARCHAR" property="interfaceServerName" />
+			    <result column="interface_url" jdbcType="VARCHAR" property="interfaceUrl" />
+			    <result column="interface_method" jdbcType="VARCHAR" property="interfaceMethod" />
+		    </collection>
+		</collection>
+	</resultMap>
+
+	<select id="selectRoleAuthorizedAll" resultMap="selectRoleAuthorizedAllResultMap">
+		select
+			level1.*,
+			level2.*,
+			sys_action.*
+		from
+			sys_menu level1,
+			sys_menu level2,
+			sys_action
+		where 1=1
+			and level1.level = 1
+			and level2.level = 2
+			and level2.menu_id = sys_action.menu_id
+	</select> -->
+</mapper>

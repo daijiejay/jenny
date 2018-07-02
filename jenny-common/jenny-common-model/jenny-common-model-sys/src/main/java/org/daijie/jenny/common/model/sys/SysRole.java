@@ -5,9 +5,12 @@ import javax.persistence.*;
 
 @Table(name = "sys_role")
 public class SysRole implements Serializable {
+    /**
+     * 角色编号
+     */
     @Id
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "role_id")
+    private Integer roleId;
 
     /**
      * 角色代码
@@ -30,22 +33,26 @@ public class SysRole implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @return id
+     * 获取角色编号
+     *
+     * @return role_id - 角色编号
      */
-    public Integer getId() {
-        return id;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public SysRole withId(Integer id) {
-        this.setId(id);
+    public SysRole withRoleId(Integer roleId) {
+        this.setRoleId(roleId);
         return this;
     }
 
     /**
-     * @param id
+     * 设置角色编号
+     *
+     * @param roleId 角色编号
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     /**
@@ -123,7 +130,7 @@ public class SysRole implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        sb.append(", roleId=").append(roleId);
         sb.append(", roleCode=").append(roleCode);
         sb.append(", roleName=").append(roleName);
         sb.append(", enable=").append(enable);
@@ -144,7 +151,7 @@ public class SysRole implements Serializable {
             return false;
         }
         SysRole other = (SysRole) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+        return (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
             && (this.getRoleCode() == null ? other.getRoleCode() == null : this.getRoleCode().equals(other.getRoleCode()))
             && (this.getRoleName() == null ? other.getRoleName() == null : this.getRoleName().equals(other.getRoleName()))
             && (this.getEnable() == null ? other.getEnable() == null : this.getEnable().equals(other.getEnable()));
@@ -154,7 +161,7 @@ public class SysRole implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
         result = prime * result + ((getRoleCode() == null) ? 0 : getRoleCode().hashCode());
         result = prime * result + ((getRoleName() == null) ? 0 : getRoleName().hashCode());
         result = prime * result + ((getEnable() == null) ? 0 : getEnable().hashCode());

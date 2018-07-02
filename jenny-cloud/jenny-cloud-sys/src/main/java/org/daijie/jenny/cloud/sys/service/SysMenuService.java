@@ -9,8 +9,9 @@ import org.daijie.core.result.PageResult;
 import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.jdbc.mybatis.example.ExampleBuilder;
 import org.daijie.jenny.common.feign.sys.SysMenuFeign;
+import org.daijie.jenny.common.feign.sys.request.SysMenuAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuPageRequest;
-import org.daijie.jenny.common.feign.sys.request.SysMenuRequest;
+import org.daijie.jenny.common.feign.sys.request.SysMenuUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
 import org.daijie.jenny.common.mapper.sys.SysMenuMapper;
 import org.daijie.jenny.common.model.sys.SysMenu;
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xiaoleilu.hutool.bean.BeanUtil;
+
+import cn.hutool.core.bean.BeanUtil;
 
 @RestController
 public class SysMenuService implements SysMenuFeign {
@@ -37,7 +39,7 @@ public class SysMenuService implements SysMenuFeign {
 	}
 
 	@Override
-	public ModelResult<SysMenuResponse> addMenu(SysMenuRequest sysMenuRequest) {
+	public ModelResult<SysMenuResponse> addMenu(SysMenuAddRequest sysMenuRequest) {
 		SysMenu sysMenu = new SysMenu();
 		BeanUtil.copyProperties(sysMenuRequest, sysMenu);
 		sysMenuMapper.insert(sysMenu);
@@ -47,20 +49,20 @@ public class SysMenuService implements SysMenuFeign {
 	}
 
 	@Override
-	public ModelResult<SysMenuResponse> updateMenu(SysMenuRequest sysMenuRequest) {
+	public ModelResult<SysMenuResponse> updateMenu(SysMenuUpdateRequest sysMenuRequest) {
 		SysMenu sysMenu = new SysMenu();
 		BeanUtil.copyProperties(sysMenuRequest, sysMenu);
-		sysMenuMapper.updateByExampleSelective(sysMenu, ExampleBuilder.create(SysMenu.class).andEqualTo("menuCode", sysMenuRequest.getMenuCode()).build());
+		sysMenuMapper.updateByExampleSelective(sysMenu, ExampleBuilder.create(SysMenu.class).andEqualTo("menuId", sysMenuRequest.getMenuId()).build());
 		SysMenuResponse sysMenuResponse = new SysMenuResponse();
 		BeanUtil.copyProperties(sysMenu, sysMenuResponse);
 		return Result.build(sysMenuResponse);
 	}
 
 	@Override
-	public ModelResult<SysMenuResponse> deleteMenu(@PathVariable(name = "menuCode") String menuCode) {
-		List<SysMenu> list = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("menuCode", menuCode).build());
+	public ModelResult<SysMenuResponse> deleteMenu(@PathVariable(name = "menuId") Integer menuId) {
+		List<SysMenu> list = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("menuId", menuId).build());
 		if (list.size() == 1) {
-			sysMenuMapper.deleteByPrimaryKey(list.get(0).getId());
+			sysMenuMapper.deleteByPrimaryKey(list.get(0).getMenuId());
 			SysMenuResponse sysMenuResponse = new SysMenuResponse();
 			BeanUtil.copyProperties(list.get(0), sysMenuResponse);
 			return Result.build(sysMenuResponse);

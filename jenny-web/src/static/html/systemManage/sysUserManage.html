@@ -14,6 +14,7 @@
 		<script src="../../js/layer.js"></script>
 		<script src="../../js/serializeJson.js"></script>
 		<script src="../../js/jquery.initForm.js"></script>
+		<script src="../../js/jquery.initTable.js"></script>
 		<script src="../../js/jquery.validate.min.js"></script>
 		<script src="../../js/jquery.validate.messages_cn.js"></script>
 		<script src="../../js/custom.validate.js"></script>
@@ -34,11 +35,11 @@
 						<form class="form-inline">
 							<div class="form-group">
 								<label for="userName">用户名称：</label>
-								<input type="text" class="form-control" id="userName" placeholder="用户名称">
+								<input type="text" class="form-control" name="userName" placeholder="用户名称">
 							</div>
 							<div class="form-group">
 								<label for="mobile">手机号：</label>
-								<input type="email" class="form-control" id="mobile" placeholder="手机号">
+								<input type="email" class="form-control" name="mobile" placeholder="手机号">
 							</div>
 							<button type="button" class="btn btn-default query">查询</button>
 						</form>
@@ -52,10 +53,6 @@
 
 </html>
 
-<div id="toolbar" class="btn-group">
-	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#saveSysUser">添加</a>
-</div>
-
 <div class="modal fade" id="saveSysUser" data-backdrop="static" data-keyboard="false">
 	<div class="modal-dialog" style="width: 80%;">
 		<div class="modal-content">
@@ -68,7 +65,7 @@
 			<div class="modal-body">
 				<div class="form-three widget-shadow">
 					<form class="form-horizontal">
-						<input type="hidden" id="userCode" name="userCode"/>
+						<input type="hidden" id="userId" name="userId"/>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">用户名</label>
 							<div class="col-sm-8">
@@ -142,8 +139,8 @@
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">性别</label>
 							<div class="col-sm-8">
-								<div class="radio block"><label><input type="radio" name="gander" id="gander" value="1">男</label></div>
-								<div class="radio block"><label><input type="radio" name="gander" id="gander" value="0">女</label></div>
+								<div class="radio block"><label><input type="radio" name="gander" value="1">男</label></div>
+								<div class="radio block"><label><input type="radio" name="gander" value="0">女</label></div>
 							</div>
 							<div class="col-sm-2">
 								<p class="help-block"></p>

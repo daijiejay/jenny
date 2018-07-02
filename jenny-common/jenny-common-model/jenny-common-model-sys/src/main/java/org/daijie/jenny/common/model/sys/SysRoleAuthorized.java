@@ -5,116 +5,94 @@ import javax.persistence.*;
 
 @Table(name = "sys_role_authorized")
 public class SysRoleAuthorized implements Serializable {
+    /**
+     * 用户角色授权编号
+     */
     @Id
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "role_authorized_id")
+    private Integer roleAuthorizedId;
 
     /**
-     * 角色代码
+     * 用户编号
      */
-    @Column(name = "role_code")
-    private String roleCode;
+    @Column(name = "user_id")
+    private Integer userId;
 
     /**
-     * 菜单代码
+     * 角色编号
      */
-    @Column(name = "menu_code")
-    private String menuCode;
-
-    /**
-     * 授权类型
-     */
-    @Column(name = "authorized_types")
-    private String authorizedTypes;
+    @Column(name = "role_id")
+    private Integer roleId;
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * @return id
+     * 获取用户角色授权编号
+     *
+     * @return role_authorized_id - 用户角色授权编号
      */
-    public Integer getId() {
-        return id;
+    public Integer getRoleAuthorizedId() {
+        return roleAuthorizedId;
     }
 
-    public SysRoleAuthorized withId(Integer id) {
-        this.setId(id);
+    public SysRoleAuthorized withRoleAuthorizedId(Integer roleAuthorizedId) {
+        this.setRoleAuthorizedId(roleAuthorizedId);
         return this;
     }
 
     /**
-     * @param id
+     * 设置用户角色授权编号
+     *
+     * @param roleAuthorizedId 用户角色授权编号
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setRoleAuthorizedId(Integer roleAuthorizedId) {
+        this.roleAuthorizedId = roleAuthorizedId;
     }
 
     /**
-     * 获取角色代码
+     * 获取用户编号
      *
-     * @return role_code - 角色代码
+     * @return user_id - 用户编号
      */
-    public String getRoleCode() {
-        return roleCode;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public SysRoleAuthorized withRoleCode(String roleCode) {
-        this.setRoleCode(roleCode);
+    public SysRoleAuthorized withUserId(Integer userId) {
+        this.setUserId(userId);
         return this;
     }
 
     /**
-     * 设置角色代码
+     * 设置用户编号
      *
-     * @param roleCode 角色代码
+     * @param userId 用户编号
      */
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode == null ? null : roleCode.trim();
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     /**
-     * 获取菜单代码
+     * 获取角色编号
      *
-     * @return menu_code - 菜单代码
+     * @return role_id - 角色编号
      */
-    public String getMenuCode() {
-        return menuCode;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public SysRoleAuthorized withMenuCode(String menuCode) {
-        this.setMenuCode(menuCode);
+    public SysRoleAuthorized withRoleId(Integer roleId) {
+        this.setRoleId(roleId);
         return this;
     }
 
     /**
-     * 设置菜单代码
+     * 设置角色编号
      *
-     * @param menuCode 菜单代码
+     * @param roleId 角色编号
      */
-    public void setMenuCode(String menuCode) {
-        this.menuCode = menuCode == null ? null : menuCode.trim();
-    }
-
-    /**
-     * 获取授权类型
-     *
-     * @return authorized_types - 授权类型
-     */
-    public String getAuthorizedTypes() {
-        return authorizedTypes;
-    }
-
-    public SysRoleAuthorized withAuthorizedTypes(String authorizedTypes) {
-        this.setAuthorizedTypes(authorizedTypes);
-        return this;
-    }
-
-    /**
-     * 设置授权类型
-     *
-     * @param authorizedTypes 授权类型
-     */
-    public void setAuthorizedTypes(String authorizedTypes) {
-        this.authorizedTypes = authorizedTypes == null ? null : authorizedTypes.trim();
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     @Override
@@ -123,10 +101,9 @@ public class SysRoleAuthorized implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", roleCode=").append(roleCode);
-        sb.append(", menuCode=").append(menuCode);
-        sb.append(", authorizedTypes=").append(authorizedTypes);
+        sb.append(", roleAuthorizedId=").append(roleAuthorizedId);
+        sb.append(", userId=").append(userId);
+        sb.append(", roleId=").append(roleId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -144,20 +121,18 @@ public class SysRoleAuthorized implements Serializable {
             return false;
         }
         SysRoleAuthorized other = (SysRoleAuthorized) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getRoleCode() == null ? other.getRoleCode() == null : this.getRoleCode().equals(other.getRoleCode()))
-            && (this.getMenuCode() == null ? other.getMenuCode() == null : this.getMenuCode().equals(other.getMenuCode()))
-            && (this.getAuthorizedTypes() == null ? other.getAuthorizedTypes() == null : this.getAuthorizedTypes().equals(other.getAuthorizedTypes()));
+        return (this.getRoleAuthorizedId() == null ? other.getRoleAuthorizedId() == null : this.getRoleAuthorizedId().equals(other.getRoleAuthorizedId()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getRoleCode() == null) ? 0 : getRoleCode().hashCode());
-        result = prime * result + ((getMenuCode() == null) ? 0 : getMenuCode().hashCode());
-        result = prime * result + ((getAuthorizedTypes() == null) ? 0 : getAuthorizedTypes().hashCode());
+        result = prime * result + ((getRoleAuthorizedId() == null) ? 0 : getRoleAuthorizedId().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
         return result;
     }
 }

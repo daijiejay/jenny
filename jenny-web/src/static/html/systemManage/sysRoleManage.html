@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>系统角色管理</title>
+		<link href="../../css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link href="../../css/bootstrap-table.css" rel='stylesheet' type='text/css' />
+		<link href="../../css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../css/layer.css" rel='stylesheet' type='text/css' />
+		<link href="../../css/font-awesome.css" rel="stylesheet">
+		<script src="../../js/jquery-1.11.1.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script src="../../js/layer.js"></script>
+		<script src="../../js/serializeJson.js"></script>
+		<script src="../../js/jquery.initForm.js"></script>
+		<script src="../../js/jquery.validate.min.js"></script>
+		<script src="../../js/jquery.validate.messages_cn.js"></script>
+		<script src="../../js/custom.validate.js"></script>
+		<script src="../../js/bootstrap.js"></script>
+		<script src="../../js/bootstrap-table.js"></script>
+		<script src="../../js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../js/systemManage/sysRoleManage.js"></script>
+	</head>
+	<body>
+		<div class="table-search froms">
+			<div class="row">
+				<div class="widget-shadow">
+					<div class="form-title">
+						<i class="fa fa-tasks"></i><span>查询条件</span>
+					</div>
+					<div class="form-body" data-example-id="simple-form-inline">
+						<form class="form-inline">
+							<div class="form-group">
+								<label for="userName">角色名称：</label>
+								<input type="text" class="form-control" id="roleName" placeholder="用户名称">
+							</div>
+							<button type="button" class="btn btn-default query">查询</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<table class="table table-hover" id="sysRoleTable">
+		</table>
+	</body>
+</html>
+
+<div id="toolbar" class="btn-group">
+	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#saveSysRole">添加</a>
+</div>
+
+<div class="modal fade" id="saveSysRole" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 80%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<h4 class="modal-title">添加</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<div class="form-three widget-shadow">
+					<form class="form-horizontal">
+						<input type="hidden" id="userCode" name="userCode"/>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">角色名称</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-user"></i>
+									</span>
+									<input type="text" class="form-control1" maxlength="20" name="roleName" id="roleName" placeholder="角色名称">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
