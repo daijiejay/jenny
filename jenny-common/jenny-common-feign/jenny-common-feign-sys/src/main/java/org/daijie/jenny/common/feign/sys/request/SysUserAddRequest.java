@@ -3,6 +3,10 @@ package org.daijie.jenny.common.feign.sys.request;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class SysUserAddRequest implements Serializable {
@@ -24,6 +28,8 @@ public class SysUserAddRequest implements Serializable {
 	@ApiModelProperty(value = "邮箱")
 	private String email;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@ApiModelProperty(value = "生日")
 	private Date birthday;
 

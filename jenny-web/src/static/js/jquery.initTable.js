@@ -5,7 +5,6 @@
 	},
 	settings = {
 		searchTarget: '.table-search',
-		toolbarTarget: undefined,
 		listenModalSave: function(form, action) {
 			return true;
 		},
@@ -141,6 +140,7 @@
 						var formData = modal.find('form').serializeJson();
 						var url = that.formatterUrl(action.interfaceUrl, formData);
 						request(action.interfaceMethod, formData, url, action.interfaceServerId, function(result) {
+							modal.find('button.save').unbind("click");
 							modal.modal('hide');
 							that.bootstrapTable('refresh');
 						});
@@ -169,10 +169,9 @@
 					if (action.mutualType == 'CONFIRM') {
 						layer.confirm('确定需要'+action.actionName+'吗？', {
 							yes: function(index, layero){
-								var url = action.interfaceUrl;
-								that.formatterUrl(url, row);
+								var url = that.formatterUrl(action.interfaceUrl, row);
 								request(action.interfaceMethod,  '', url, action.interfaceServerId, function(result) {
-									$(table.tableTerget).bootstrapTable('refresh');
+									that.bootstrapTable('refresh');
 									layer.close(index);
 								})
 							}

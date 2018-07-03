@@ -25,7 +25,7 @@ $(function() {
 		}
 	}
 	//设置iframe的高度
-	var height = document.documentElement.clientHeight - $('.sticky-header').height();
+	var height = document.documentElement.clientHeight - $('.sticky-header').height() - 100;
 	$('#page-wrapper iframe').css("height", height + 'px')
 	
 	loadMenu();

@@ -109,9 +109,8 @@ body a:hover {
 /* ----menu-icon----*/
 
 button#showLeftPush {
-	font-size: 1.5em;
-	width: 80px;
-	padding: 0.77em 0;
+	width: 20px;
+	padding: 1.50em 0;
 	text-align: center;
 	cursor: pointer;
 	float: left;
@@ -140,7 +139,7 @@ button#showLeftPush:hover {
 	height: 100%;
 	top: 70px;
 	z-index: 1000;
-	background-color: #393d49;
+	background-color: #424a60;
 	padding: 2em 0;
 }
 
@@ -286,13 +285,14 @@ ul.dropdown-menu {
 /* ----Logo----*/
 
 .logo {
+	width: 289px;
 	text-align: center;
 	float: left;
-	padding: 8px 0px;
+	padding: 11px 0px;
 }
 
 .logo a {
-	padding: 0.9em 3.3em .3em;
+	padding: 0.9em 1.3em .3em;
 	display: block;
 	text-decoration: none;
 }
@@ -3699,7 +3699,7 @@ i.fa.fa-facebook.profile-icon {
 		min-width: 163px;
 	}
 	button#showLeftPush {
-		width: 65px;
+		width: 40px;
 	}
 	.cbp-spmenu-vertical {
 		padding: 1.5em 0;
@@ -3796,9 +3796,9 @@ i.fa.fa-facebook.profile-icon {
 	li.dropdown.head-dpdn a.dropdown-toggle {
 		padding: 1em 1.4em;
 	}
-	button#showLeftPush {
+	/*button#showLeftPush {
 		padding: 0.73em 0;
-	}
+	}*/
 	.sb-search-input {
 		font-size: 0.8em;
 		padding: 0.5em;
@@ -4316,9 +4316,9 @@ i.fa.fa-facebook.profile-icon {
 	i.fa.fa-bars {
 		font-size: 0.8em;
 	}
-	button#showLeftPush {
+	/*button#showLeftPush {
 		padding: 0.4em 0;
-	}
+	}*/
 	.search-box {
 		margin: 0.7em 0 0 0.5em;
 	}

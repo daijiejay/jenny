@@ -56,7 +56,8 @@ public class SysUserService implements SysUserFeign {
 		SysUserCacheResponse sysUserResponse = new SysUserCacheResponse();
 		List<SysUser> sysUsers = sysUserMapper.selectByExample(
 				ExampleBuilder.create(SysUser.class).andEqualTo("userName", username)
-				.andEqualTo("cancel", false).build());
+				.andEqualTo("cancel", false)
+				.build());
 		if (sysUsers.size() == 1) {
 			BeanUtil.copyProperties(sysUsers.get(0), sysUserResponse);
 			return Result.build(sysUserResponse);

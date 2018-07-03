@@ -22,6 +22,7 @@ public class SysUserResponse implements Serializable {
 	@ApiModelProperty(value = "邮箱")
 	private String email;
 
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@ApiModelProperty(value = "生日")
 	private Date birthday;
 
