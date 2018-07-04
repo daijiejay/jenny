@@ -3,46 +3,36 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>系统菜单管理</title>
-		<link href="../../css/bootstrap.css" rel='stylesheet' type='text/css' />
-		<link href="../../css/bootstrap-table.css" rel='stylesheet' type='text/css' />
-		<link href="../../css/style.css" rel='stylesheet' type='text/css' />
-		<link href="../../css/layer.css" rel='stylesheet' type='text/css' />
-		<link href="../../css/font-awesome.css" rel="stylesheet">
-		<script src="../../js/jquery-1.11.1.min.js"></script>
-		<script src="../../js/common.js"></script>
-		<script src="../../js/layer.js"></script>
-		<script src="../../js/jquery.validate.min.js"></script>
-		<script src="../../js/jquery.validate.messages_cn.js"></script>
-		<script src="../../js/custom.validate.js"></script>
-		<script src="../../js/bootstrap.js"></script>
-		<script src="../../js/bootstrap-table.js"></script>
-		<script src="../../js/bootstrap-table-zh-CN.js"></script>
+		<link href="../../public/bootstrap/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/bootstrap/css/bootstrap-table.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/ztree/css/ztree.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/layer/css/layer.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/css/font-awesome.css" rel="stylesheet">
+		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
+		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
+		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../../public/ztree/js/jquery.ztree.core.js"></script>
+		<script src="../../public/ztree/js/jquery.ztree.excheck.js"></script>
+		<script src="../../public/ztree/js/jquery.ztree.exedit.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../public/layer/js/layer.js"></script>
+		<script src="../../public/js/custom.validate.js"></script>
+		<script src="../../public/js/common.js"></script>
 		<script src="../../js/systemManage/sysMenuManage.js"></script>
 	</head>
 	<body>
-		<div class="table-search froms">
-			<div class="row">
-				<div class="widget-shadow">
-					<div class="form-title">
-						<i class="fa fa-tasks"></i><span>查询条件</span>
-					</div>
-					<div class="form-body" data-example-id="simple-form-inline">
-						<form class="form-inline">
-							<div class="form-group">
-								<label for="userName">菜单名称：</label>
-								<input type="text" class="form-control" id="roleName" placeholder="菜单名称">
-							</div>
-							<button type="button" class="btn btn-default query">查询</button>
-						</form>
-					</div>
-				</div>
+		<div class="main-page">
+			<div class="col-md-6">
+				<ul id="tree" class="ztree">
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<table class="table table-hover" id="sysUserTable">
+				</table>
 			</div>
 		</div>
-		<table class="table table-hover" id="sysRoleTable">
-		</table>
 	</body>
 </html>
-
-<div id="toolbar" class="btn-group">
-	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#saveSysRole">添加</a>
-</div>

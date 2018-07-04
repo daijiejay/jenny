@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 public interface SysRoleFeign {
 	
 	@ApiOperation(notes = "获取所有角色", value = "获取所有角色")
-	@RequestMapping(value = "/query/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/query/all", method = RequestMethod.POST)
 	public ModelResult<PageResult<SysRoleResponse>> getRoleAll(SysRolePageRequest sysRolePageRequest);
 
 	@ApiOperation(notes = "添加角色", value = "添加角色")

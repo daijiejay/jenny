@@ -24,7 +24,7 @@ public class SysMeunController {
 	private SysMenuFeign sysMenuFeign;
 	
 	@ApiOperation(notes = "获取全部菜单", value = "获取全部菜单")
-	@RequestMapping(value = "/query", method = RequestMethod.GET)
+	@RequestMapping(value = "/query", method = RequestMethod.POST)
 	public ModelResult<PageResult<SysMenuResponse>> getMenuAll(SysMenuPageRequest sysMenuRequest) {
 		return sysMenuFeign.getMenuAll(sysMenuRequest);
 	}

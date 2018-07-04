@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 public interface SysUserFeign {
 	
 	@ApiOperation(notes = "条件查询用户", value = "条件查询用户")
-	@RequestMapping(value = "/query", method = RequestMethod.POST)
+	@RequestMapping(value = "/query/all", method = RequestMethod.POST)
 	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserPageRequest);
 	
 	@ApiOperation(notes = "根据系统用户ID获取用户信息", value = "根据系统用户ID获取用户信息")
