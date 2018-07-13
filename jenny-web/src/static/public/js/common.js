@@ -1,13 +1,30 @@
+/**
+ * 存储服务名地址
+ */
 var serverMap = new Map();
 serverMap.set('SYS', 'http://daijie.org:12801/')
 
+/**
+ * 存储请求地址缓存，请求完成后清除，防止重复请求
+ */
 var requestMap = new Map();
-
+/**
+ * 请求封装，处理请求重复提交，加载效果展示，自动拦截用户过期跳转登录，请求错误提示
+ * @param {Object} method 请求方式
+ * @param {Object} data 请求数据
+ * @param {Object} url 请求地址
+ * @param {Object} serverId 请求服务名
+ * @param {Object} callback 请求回调
+ */
 function request(method, data, url, serverId, callback) {
 	if(requestMap.get(url)) {
 		return;
 	}
 	requestMap.set(url, true);
+	if (!loader) {
+		initFakeloader();
+	}
+    loader.fadeIn();
 	if(method.toUpperCase() == 'GET') {
 		jQuery.ajax({
 			type: method,
@@ -19,8 +36,11 @@ function request(method, data, url, serverId, callback) {
 			crossDomain: true,
 			success: function(result, textStatus, request) {
 				requestMap.delete(url);
+				loader.fadeOut();
 				if(result.code == '200') {
-					return callback(result);
+					if(typeof callback == 'function') {
+						return callback(result);
+					}
 				} else if(result.code == '300') {
 					location.href = '../html/login.html';
 				} else {
@@ -31,6 +51,7 @@ function request(method, data, url, serverId, callback) {
 			error: function(e) {
 				layer.alert('访问服务器异常！');
 				requestMap.delete(url);
+				loader.fadeOut();
 			}
 		});
 	} else {
@@ -46,8 +67,11 @@ function request(method, data, url, serverId, callback) {
 			crossDomain: true,
 			success: function(result, textStatus, request) {
 				requestMap.delete(url);
+				loader.fadeOut();
 				if(result.code == '200') {
-					return callback(result);
+					if(typeof callback == 'function') {
+						return callback(result);
+					}
 				} else if(result.code == '300') {
 					location.href = '../html/login.html';
 				} else {
@@ -58,38 +82,120 @@ function request(method, data, url, serverId, callback) {
 			error: function(e) {
 				layer.alert('访问服务器异常！');
 				requestMap.delete(url);
+				loader.fadeOut();
 			}
 		});
 	}
 }
-
-(function($) {
-	var that,initTable = {
-		table:'',
-		actions:[]
-	},
-	settings = {
-		searchTarget: '.table-search',
-		listenModalSave: function(form, action) {
-			return true;
-		},
-		searchParams: function(params) {
-			return params;
-		},
-		columnFormatter: function(value, row, index, field) {
-			return value;
-		},
-		operateFormatter: function(action, row) {
-			return true;
+/**
+ * 初始化加载效果
+ */
+var loader;
+function initFakeloader() {
+	var pre = '';
+	var atr = $(document)[0].baseURI.split('/');
+	for (var i = atr.length-2; i > 0; i--) {
+		if (atr[i] == 'static') {
+			break;
 		}
-	},
-	modalMap = new Map();
+		pre += '../';
+	}
+	if ($('.fakeloader').length == 0) {
+		$('body').append('<div class="fakeloader"></div>');
+	}
+	loader = $('.fakeloader').fakeLoader({
+        timeToHide:36000,
+        zIndex: '9999', 
+        spinner:'spinner2',
+        imagePath:pre+'public/images/loading-0.gif'
+    });
+    return loader;
+}
+/**
+ * 子页面变动iframe高度自适应
+ */
+async function changeFrameHeight() {
+	var ifm = parent.window.document.getElementById("iframepage");
+	if(ifm) {
+		ifm.height = document.body.clientHeight < 600 ? 600 : document.body.clientHeight;
+	}
+}
+/**
+ * 监听窗口操作，时时配置ifram高度
+ */
+window.onresize = function() {
+	changeFrameHeight();
+}
+/**
+ * 监听窗口点击事件，时时配置ifram高度
+ */
+$(window).mouseup(function(event) {
+	setTimeout(()=>{
+		changeFrameHeight();
+        return;
+    },300)
+});
+
+/**
+ * 带天数的倒计时
+ * @param {Object} times 时间戳
+ */
+function countDown(times) {
+	var timer = null;
+	timer = setInterval(function() {
+		var day = 0,
+			hour = 0,
+			minute = 0,
+			second = 0; 
+		if(times > 0) {
+			day = Math.floor(times / (60 * 60 * 24));
+			hour = Math.floor(times / (60 * 60)) - (day * 24);
+			minute = Math.floor(times / 60) - (day * 24 * 60) - (hour * 60);
+			second = Math.floor(times) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+		}
+		if(day <= 9) day = '0' + day;
+		if(hour <= 9) hour = '0' + hour;
+		if(minute <= 9) minute = '0' + minute;
+		if(second <= 9) second = '0' + second;
+		console.log(day + "天:" + hour + "小时：" + minute + "分钟：" + second + "秒");
+		times--;
+	}, 1000);
+	if(times <= 0) {
+		clearInterval(timer);
+	}
+}
+
+/**
+ * 自定义juery插件
+ * @param {Object} $
+ */
+(function($) {
+	var that, initTable = {
+			table: '',
+			actions: []
+		},
+		settings = {
+			searchTarget: '.table-search',
+			listenModalSave: function(form, action) {
+				return true;
+			},
+			searchParams: function(params) {
+				return params;
+			},
+			columnFormatter: function(value, row, index, field) {
+				return value;
+			},
+			operateFormatter: function(action, row) {
+				return true;
+			}
+		},
+		modalMap = new Map();
 	$.fn.extend({
 		initTable: function(settings) {
 			that = this;
 			this.settings = settings;
 			var menuId = window.parent.$('#page-wrapper iframe').attr('menuId');
-			request('get', '', '/sysindex/menu/authorized/action/'+menuId, 'SYS', function(result) {
+			request('get', '', '/sysindex/menu/authorized/action/' + menuId, 'SYS', function(result) {
 				initTable.table = result.data.table;
 				initTable.actions = result.data.actions;
 				that.initTableData();
@@ -102,7 +208,7 @@ function request(method, data, url, serverId, callback) {
 			var actions = initTable.actions;
 			this.bootstrapTable({
 				method: table.interfaceMethod,
-				url: serverMap.get(table.interfaceServerId)+table.interfaceUrl,
+				url: serverMap.get(table.interfaceServerId) + table.interfaceUrl,
 				dataField: 'rows',
 				cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
 				striped: true, //表格显示条纹，默认为false
@@ -122,15 +228,15 @@ function request(method, data, url, serverId, callback) {
 			queryParams.pageSize = params.limit;
 			queryParams.pageNumber = params.offset + 1;
 			return settings.searchParams(queryParams);
-			
+
 		},
 		initToolbar: function() {
 			var toolbar = '<div class="btn-group">';
 			var actions = initTable.actions;
 			actions.forEach(function(action, i) {
-				if (action.actionType == 'TOOLBAR') {
-					if (action.mutualType == 'FORM') {
-						toolbar += '<a actionId="'+action.actionId+'" href="#" class="btn btn-primary" data-toggle="modal" data-target="'+action.formTarget+'">'+action.actionName+'</a>';
+				if(action.actionType == 'TOOLBAR') {
+					if(action.mutualType == 'FORM') {
+						toolbar += '<a actionId="' + action.actionId + '" href="#" class="btn btn-primary" data-toggle="modal" data-target="' + action.formTarget + '">' + action.actionName + '</a>';
 					}
 				}
 			});
@@ -153,11 +259,11 @@ function request(method, data, url, serverId, callback) {
 		initOperates: function(value, row, index) {
 			var operate = new Array();
 			initTable.actions.forEach(function(action, i) {
-				if (action.actionType == 'OPERATE' && that.settings.operateFormatter(action, row)) {
-					if (action.mutualType == 'CONFIRM') {
-						operate.push('<a actionId="'+action.actionId+'" class="btn active" href="#">'+action.actionName+'</a>');
+				if(action.actionType == 'OPERATE' && that.settings.operateFormatter(action, row)) {
+					if(action.mutualType == 'CONFIRM') {
+						operate.push('<a actionId="' + action.actionId + '" class="btn active" href="#">' + action.actionName + '</a>');
 					} else if(action.mutualType == 'FORM') {
-						operate.push('<a id="'+row.userId+'" actionId="'+action.actionId+'" class="btn active" data-toggle="modal" data-target="'+action.formTarget+'" href="#">'+action.actionName+'</a>');
+						operate.push('<a id="' + row.userId + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>');
 					}
 				}
 			});
@@ -176,7 +282,7 @@ function request(method, data, url, serverId, callback) {
 			});
 		},
 		listenModalEvents: function(action) {
-			if (!modalMap.get(action.formTarget)) {
+			if(!modalMap.get(action.formTarget)) {
 				modalMap.set(action.formTarget, $(action.formTarget));
 				modalMap.get(action.formTarget).on('shown.bs.modal', function(event) {
 					var modal = $(this);
@@ -200,8 +306,8 @@ function request(method, data, url, serverId, callback) {
 		saveFormData: function(actionId, modal) {
 			var actions = initTable.actions;
 			actions.forEach(function(action, i) {
-				if (action.actionId == actionId) {
-					if (that.settings.listenModalSave(modal.find('form'), action)) {
+				if(action.actionId == actionId) {
+					if(that.settings.listenModalSave(modal.find('form'), action)) {
 						var formData = modal.find('form').serializeJson();
 						var url = that.formatterUrl(action.interfaceUrl, formData);
 						request(action.interfaceMethod, formData, url, action.interfaceServerId, function(result) {
@@ -214,19 +320,19 @@ function request(method, data, url, serverId, callback) {
 			});
 		},
 		formatterUrl: function(url, row) {
-			if (url.indexOf('{') >= 0 && url.indexOf('}') >= 0) {
-				var key = url.substring(url.indexOf('{')+1, url.indexOf('}'));
-				url = url.substring(0,url.lastIndexOf('/')+1);
-				jQuery.each(row, function(k, val) {  
-					if (k == key) {
+			if(url.indexOf('{') >= 0 && url.indexOf('}') >= 0) {
+				var key = url.substring(url.indexOf('{') + 1, url.indexOf('}'));
+				url = url.substring(0, url.lastIndexOf('/') + 1);
+				jQuery.each(row, function(k, val) {
+					if(k == key) {
 						url += val;
 					}
-				}); 
+				});
 			}
 			return url;
 		}
 	});
-	
+
 	$.fn.serializeJson = function() {
 		var serializeObj = {};
 		var array = this.serializeArray();
@@ -244,7 +350,7 @@ function request(method, data, url, serverId, callback) {
 		});
 		return serializeObj;
 	};
-	
+
 	$.fn.initForm = function(options) {
 		//默认参数  
 		var defaults = {
@@ -255,7 +361,7 @@ function request(method, data, url, serverId, callback) {
 		var setting = $.extend({}, defaults, options);
 		var form = this;
 		var jsonValue;
-		if (setting.jsonValue == "") {
+		if(setting.jsonValue == "") {
 			jsonValue = setting;
 		} else {
 			jsonValue = setting.jsonValue;
@@ -302,30 +408,38 @@ function request(method, data, url, serverId, callback) {
 			}
 		}
 		return form; //返回对象，提供链式操作  
-	}
-	
+	};
+	$.fn.sleep = function(numberMillis) {
+		var now = new Date();
+		var exitTime = now.getTime() + numberMillis;
+		while(true) {
+			now = new Date();
+			if(now.getTime() > exitTime) {
+				return;
+			}
+		}
+	};
+
 	window.operateEvents = {
 		'click .btn': function(e, value, row, index) {
 			initTable.actions.forEach(function(action, i) {
-				if (action.actionType == 'OPERATE' && action.actionName == e.target.innerHTML) {
-					if (action.mutualType == 'CONFIRM') {
-						layer.confirm('确定需要'+action.actionName+'吗？', {
-							yes: function(index, layero){
+				if(action.actionType == 'OPERATE' && action.actionName == e.target.innerHTML) {
+					if(action.mutualType == 'CONFIRM') {
+						layer.confirm('确定需要' + action.actionName + '吗？', {
+							yes: function(index, layero) {
 								var url = that.formatterUrl(action.interfaceUrl, row);
-								request(action.interfaceMethod,  '', url, action.interfaceServerId, function(result) {
+								request(action.interfaceMethod, '', url, action.interfaceServerId, function(result) {
 									that.bootstrapTable('refresh');
 									layer.close(index);
 								})
 							}
 						});
-					} else if (action.mutualType == 'FORM') {
+					} else if(action.mutualType == 'FORM') {
 						that.listenModalEvents(action);
 					}
 				}
 			});
-			
+
 		}
 	}
 })(jQuery)
-
-

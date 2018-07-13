@@ -39,6 +39,8 @@ spring.datasource.password: 123456
 spring.datasource.initialSize: 5
 spring.datasource.minIdle: 5
 spring.datasource.maxActive: 20
+spring.datasource.reapTimeout: 0
+spring.datasource.transactionTimeout: 1000
 
 #分页插件会自动检测当前的数据库链接，自动选择合适的分页方式
 pagehelper.helperDialect: mysql

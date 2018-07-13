@@ -24,9 +24,6 @@ $(function() {
 			classie.toggle(showLeftPush, 'disabled');
 		}
 	}
-	//设置iframe的高度
-	var height = document.documentElement.clientHeight - $('.sticky-header').height() - 100;
-	$('#page-wrapper iframe').css("height", height + 'px')
 	
 	loadMenu();
 });

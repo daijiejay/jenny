@@ -10,16 +10,16 @@ eureka.instance.preferIpAddress: true
 
 #启用默认执行超时
 hystrix.command.default.execution.timeout.enabled: true
-#开启重试机制
-spring.cloud.loadbalancer.retry.enabled: true
-#断路器的超时时间,断路器的超时时间需要大于ribbon的超时时间，不然不会触发重试。
-hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
-#设置线程池大小
-hystrix.threadpool.default.coreSize: 100
-#请求连接的超时时间
-ribbon.ConnectTimeout: 5000
-#请求处理的超时时间
-ribbon.ReadTimeout: 5000
+##开启重试机制
+#spring.cloud.loadbalancer.retry.enabled: true
+##断路器的超时时间,断路器的超时时间需要大于ribbon的超时时间，不然不会触发重试。
+#hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
+##设置线程池大小
+#hystrix.threadpool.default.coreSize: 100
+##请求连接的超时时间
+#ribbon.ConnectTimeout: 5000
+##请求处理的超时时间
+#ribbon.ReadTimeout: 5000
 ##对所有操作请求都进行重试
 #ribbon.OkToRetryOnAllOperations: true
 ##对当前实例的重试次数
@@ -48,6 +48,8 @@ shiro.redis.timeout: 5000
 shiro.redis.expire: 360000
 #出现异常最大重试次数
 shiro.redis.maxAttempts: 1
+#设置session过期时间
+shiro.sesseionTimeOut: -1
 
 #是否开启kisso cookie机制
 shiro.kissoEnable: false

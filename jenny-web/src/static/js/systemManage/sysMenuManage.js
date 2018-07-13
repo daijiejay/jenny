@@ -1,5 +1,30 @@
 $(function() {
+	initZTree();
+	
+	var dynamicIconsElement = $('#icon').fontIconPicker({
+		source: fa_icons,
+		searchSource: fa_icon_search,
+		useAttribute: true,
+		attributeName: 'data-icomoon',
+		theme: 'fip-bootstrap',
+		iconsPerPage: 10,
+		emptyIcon: true,
+        hasSearch: true
+	});
+	
+	$('#info-tab').click(function() {
+		
+	});
+	
+	$('#action-tab').click(function() {
+		
+	})
+});
+var treeName = 'tree';
+
+function initZTree() {
 	var setting = {
+		treeId: treeName,
 		view: {
 			addHoverDom: addHoverDom,
 			removeHoverDom: removeHoverDom,
@@ -10,27 +35,123 @@ $(function() {
 //		},
 		data: {
 			simpleData: {
-				enable: true
+				enable: true,
+                idKey: 'id',
+                pIdKey: 'pid'
 			}
 		},
 		edit: {
-			enable: true
+			enable: true,
+			renameTitle: '修改',
+			removeTitle: '删除'
+		},
+		callback: {
+			beforeClick: zTreeBeforeClick,
+			beforeRemove: zTreeBeforeRemove,
+			beforeRename: zTreeBeforeRename,
+			beforeDrop: zTreeBeforeDrop,
+			beforeExpand: zTreeBeforeExpand
 		}
 	};
-	$.fn.zTree.init($("#tree"), setting, zNodes);
-});
+	request('get', '', '/sysmenu/query/tree', 'SYS', function(result) {
+		$.fn.zTree.init($("#tree"), setting, result.data);
+	});
+}
+
+function zTreeBeforeClick(treeId, treeNode, clickFlag) {
+	request('get', '', '/sysaction/query/'+treeNode.id, 'SYS', function(result) {
+		$('#menuForm').initForm(result.data)
+	});
 	
+	$("#sysActionTable").initTable({
+		listenModalSave: function(form, action) {
+			if (action.actionName == '编辑') {
+				validUpdate(form);
+			} else {
+				validAdd(form);
+			}
+			return form.valid();
+		},
+		columnFormatter: function(value, row, index, field) {
+			if (field == 'enable') {
+				if(value) {
+					return '是';
+				}
+				return '否';
+			}
+			return value;
+		},
+		operateFormatter: function(action, row) {
+//			if (row.cancel) {
+//				return false;
+//			}
+//			if (action.actionName == '编辑' || action.actionName == '禁用') {
+//				return !row.enable;
+//			}
+//			if (action.actionName == '启用') {
+//				return row.enable;
+//			}
+			return true;
+		}
+	});
+}
+
+function zTreeBeforeRemove(treeId, treeNode) {
+	request('delete', '', '/sysmenu/delete/'+treeNode.id, 'SYS');
+}
+
+function zTreeBeforeRename(treeId, treeNode, newName, isCancel) {
+	var formData = {
+		'menuId': treeNode.id,
+		'menuName': newName
+	};
+	request('put', formData, '/sysmenu/update', 'SYS');
+}
+
+function zTreeBeforeDrop(treeId, treeNodes, targetNode, moveType) {
+	if (!targetNode) {
+		return false;
+	}
+	var formData = {'targetId': targetNode.id};
+	var ids = new Array();
+	$.each(treeNodes,function(index,value){  
+		ids.push(value.id);
+	})
+	formData.menuIds = ids;
+	formData.moveType = moveType.toUpperCase();
+	request('put', formData, '/sysmenu/move', 'SYS');
+}
+
+var zNodesExtandMap = new Map();
+function zTreeBeforeExpand(treeId, treeNode) {
+//	zNodesExtandMap.set(treeNode.id, treeNode);
+}
+
+function zTreeBeforeAddNode(treeId, treeNode, callback) {
+	var formData = {
+		'menuName': treeNode.name,
+		'parentId': treeNode.pid
+	};
+	request('post', formData, '/sysmenu/add', 'SYS', function(result) {
+		callback(result.data);
+	});
+}
+
 var newCount = 1;
 function addHoverDom(treeId, treeNode) {
 	var sObj = $("#" + treeNode.tId + "_span");
 	if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
 	var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-		+ "' title='add node' onfocus='this.blur();'></span>";
+		+ "' title='创建'></span>";
 	sObj.after(addStr);
 	var btn = $("#addBtn_"+treeNode.tId);
 	if (btn) btn.bind("click", function(){
-		var zTree = $.fn.zTree.getZTreeObj("tree");
-		zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"new node" + (newCount++)});
+		var zTree = $.fn.zTree.getZTreeObj(treeName);
+		var newTreeNode = {id:(treeNode.id + newCount), pid:treeNode.id, name:"新建菜单"};
+		zTreeBeforeAddNode(treeId, newTreeNode, function(data) {
+			newTreeNode.id = data.menuId;
+			zTree.addNodes(treeNode, newTreeNode);
+		});
 		return false;
 	});
 };
@@ -38,8 +159,12 @@ function removeHoverDom(treeId, treeNode) {
 	$("#addBtn_"+treeNode.tId).unbind().remove();
 };
 
+//function recoverExtand() {
+//	
+//}
+
 var zNodes =[
-		{id:1, pId:0, name:"[core] 基本功能 演示", open:true},
+	{id:1, pId:0, name:"[core] 基本功能 演示", open:true},
 	{id:101, pId:1, name:"最简单的树 --  标准 JSON 数据"},
 	{id:102, pId:1, name:"最简单的树 --  简单 JSON 数据"},
 	{id:103, pId:1, name:"不显示 连接线"},
@@ -98,4 +223,12 @@ var zNodes =[
 	{id:601, pId:6, name:"隐藏普通节点"},
 	{id:602, pId:6, name:"配合 checkbox 的隐藏"},
 	{id:603, pId:6, name:"配合 radio 的隐藏"}
-	];
+];
+	
+var fa_icons = [
+	'fa-home','fa-cogs'
+];
+
+var fa_icon_search = [
+	'首页','设置'
+];

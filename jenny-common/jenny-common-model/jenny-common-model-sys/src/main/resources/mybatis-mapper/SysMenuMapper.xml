@@ -6,9 +6,11 @@
       WARNING - @mbg.generated
     -->
     <id column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="menu_code" jdbcType="INTEGER" property="menuCode" />
     <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
     <result column="level" jdbcType="INTEGER" property="level" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="parent_code" jdbcType="INTEGER" property="parentCode" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="mapping" jdbcType="VARCHAR" property="mapping" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
@@ -18,6 +20,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    menu_id, menu_name, level, parent_id, sort, mapping, icon, enable
+    menu_id, menu_code, menu_name, level, parent_id, parent_code, sort, mapping, icon, 
+    enable
   </sql>
 </mapper>

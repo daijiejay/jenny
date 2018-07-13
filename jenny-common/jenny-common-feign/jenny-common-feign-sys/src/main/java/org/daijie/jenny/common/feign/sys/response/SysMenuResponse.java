@@ -22,7 +22,7 @@ public class SysMenuResponse implements Serializable {
 	/**
 	 * 菜单等级
 	 */
-	@ApiModelProperty(value = "菜单等级", required = true)
+	@ApiModelProperty(value = "菜单等级")
 	private Integer level;
 
 	/**

@@ -21,31 +21,31 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/sysfeign/sysuser")
 public interface SysUserFeign {
 	
-	@ApiOperation(notes = "条件查询用户", value = "条件查询用户")
+	@ApiOperation(value = "条件查询用户")
 	@RequestMapping(value = "/query/all", method = RequestMethod.POST)
-	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserPageRequest);
+	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserRequest);
 	
-	@ApiOperation(notes = "根据系统用户ID获取用户信息", value = "根据系统用户ID获取用户信息")
+	@ApiOperation(value = "根据系统用户ID获取用户信息")
 	@RequestMapping(value = "/query/{userId}", method = RequestMethod.GET)
 	public ModelResult<SysUserResponse> getUserById(@PathVariable(name = "userId") Integer userId);
 	
-	@ApiOperation(notes = "根据系统用户名获取用户", value = "根据系统用户名获取用户")
+	@ApiOperation(value = "根据系统用户名获取用户")
 	@RequestMapping(value = "/query/username/{username}", method = RequestMethod.GET)
 	public ModelResult<SysUserCacheResponse> getUserByUsername(@PathVariable(name = "username") String username);
 
-	@ApiOperation(notes = "根据系统用户ID获取用户密码", value = "根据系统用户ID获取用户密码")
+	@ApiOperation(value = "根据系统用户ID获取用户密码")
 	@RequestMapping(value = "/query/password/{userId}", method = RequestMethod.GET)
 	public ModelResult<SysUserPasswordResponse> getUserPasswordById(@PathVariable(name = "userId") Integer userId);
 
-	@ApiOperation(notes = "添加用户", value = "添加用户")
+	@ApiOperation(value = "添加用户")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelResult<SysUserResponse> addUser(SysUserAddRequest sysUserRequest);
 
-	@ApiOperation(notes = "更新用户", value = "更新用户")
+	@ApiOperation(value = "更新用户")
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ModelResult<SysUserResponse> updateUser(SysUserUpdateRequest sysUserRequest);
 
-	@ApiOperation(notes = "删除用户", value = "删除用户")
+	@ApiOperation(value = "删除用户")
 	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.DELETE)
 	public ModelResult<SysUserResponse> deleteUser(@PathVariable(name = "userId") Integer userId);
 }

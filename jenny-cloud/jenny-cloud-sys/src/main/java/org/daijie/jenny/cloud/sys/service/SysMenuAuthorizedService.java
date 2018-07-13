@@ -59,7 +59,7 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 	@Override
 	public ModelResult<SysRoleMenuResponse> getMenuAll() {
 		SysRoleMenuResponse menuResponse = new SysRoleMenuResponse();
-		List<SysMenu> list1 = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("level", 1).build());
+		List<SysMenu> list1 = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("level", 1).orderByAsc("parentCode").build());
 		List<SysMenuAuthorizedResponse> level1 = new ArrayList<SysMenuAuthorizedResponse>();
 		list1.forEach(sysMenu -> {
 			SysMenuAuthorizedResponse menuAuthorizedResponse = new SysMenuAuthorizedResponse();
@@ -68,7 +68,7 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 		});
 		menuResponse.setLevel1(level1);
 		
-		List<SysMenu> list2 = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("level", 2).build());
+		List<SysMenu> list2 = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("level", 2).orderByAsc("parentCode").build());
 		List<SysMenuAuthorizedResponse> level2 = new ArrayList<SysMenuAuthorizedResponse>();
 		list2.forEach(sysMenu -> {
 			SysMenuAuthorizedResponse menuAuthorizedResponse = new SysMenuAuthorizedResponse();

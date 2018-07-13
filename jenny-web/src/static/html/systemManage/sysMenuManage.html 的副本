@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>系统菜单管理</title>
+		<link href="../../public/bootstrap/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/bootstrap/css/bootstrap-table.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/fontIconPicker/css/jquery.fonticonpicker.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/fontIconPicker/themes/bootstrap-theme/jquery.fonticonpicker.bootstrap.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/ztree/css/ztree.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/layer/css/layer.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../public/css/font-awesome.css" rel="stylesheet" type='text/css' />
+		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
+		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
+		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../../public/fontIconPicker/js/jquery.fonticonpicker.js"></script>
+		<script src="../../public/ztree/js/jquery.ztree.core.js"></script>
+		<script src="../../public/ztree/js/jquery.ztree.excheck.js"></script>
+		<script src="../../public/ztree/js/jquery.ztree.exedit.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../public/layer/js/layer.js"></script>
+		<script src="../../public/js/custom.validate.js"></script>
+		<script src="../../public/js/common.js"></script>
+		<script src="../../js/systemManage/sysMenuManage.js"></script>
+	</head>
+
+	<body>
+		<div class="main-page">
+			<div class="elements">
+				<div class="col-md-5 weather-grids-l weather-grids widget-shadow">
+					<h4 class="title3">菜单</h4>
+					<div class="profile-text">
+						<ul id="tree" class="ztree">
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-6 weather-grids-r weather-grids weather-right widget-shadow">
+					<h4 class="title3">详细信息</h4>
+					<div class="profile-text">
+						<div class="forms">
+							<div class="form-two">
+								<ul id="myTabs" class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="">
+										<a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Home</a>
+									</li>
+									<li role="presentation" class="active">
+										<a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Profile</a>
+									</li>
+									<li role="presentation" class="dropdown">
+										<a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Dropdown <span class="caret"></span></a>
+										<ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
+											<li class="">
+												<a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1" aria-expanded="false">@fat</a>
+											</li>
+											<li class="">
+												<a href="#dropdown2" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2" aria-expanded="false">@mdo</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+								<!--<div class="form-body">
+									<form class="form-horizontal">
+										<input type="hidden" class="form-control" id="menuId" name="menuId">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">菜单名称</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" id="munuName" name="munuName" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">父级菜单名称</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" id="parentName" name="parentName" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">映射路径</label>
+											<div class="col-sm-7">
+												<input type="text" class="form-control" id="mapping" name="mapping">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label">图标</label>
+											<div class="col-sm-7">
+												<input type="email" class="form-control" id="icon" name="icon">
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-3 col-sm-7">
+												<button type="submit" class="btn btn-default">保存</button>
+											</div>
+										</div>
+									</form>
+								</div>-->
+							</div>
+						</div>
+					</div>
+					<div class="profile-btm">
+						<table class="table table-hover" id="sysUserTable">
+						</table>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</body>
+
+</html>

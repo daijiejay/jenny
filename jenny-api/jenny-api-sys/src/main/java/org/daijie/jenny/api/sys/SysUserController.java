@@ -26,14 +26,14 @@ public class SysUserController {
 	@Autowired
 	private SysUserFeign sysUserFeign;
 	
-	@ApiOperation(notes = "获取全部用户", value = "获取全部用户")
+	@ApiOperation(value = "获取全部用户")
 	@RequestMapping(value = "/query", method = RequestMethod.GET)
 	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserPageRequest) {
 		sysUserPageRequest.setCancel(false);
 		return sysUserFeign.getUserAll(sysUserPageRequest);
 	}
 	
-	@ApiOperation(notes = "添加用户", value = "添加用户")
+	@ApiOperation(value = "添加用户")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelResult<SysUserResponse> addUser(@RequestBody SysUserAddRequest sysUserRequest) {
 		if (!StringUtils.isEmpty(sysUserRequest.getPassword())) {
@@ -50,7 +50,7 @@ public class SysUserController {
 		return sysUserFeign.addUser(sysUserRequest);
 	}
 	
-	@ApiOperation(notes = "更新用户", value = "更新用户")
+	@ApiOperation(value = "更新用户")
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ModelResult<SysUserResponse> updateUser(@RequestBody SysUserUpdateRequest sysUserRequest) {
 		if (!StringUtils.isEmpty(sysUserRequest.getPassword())) {
@@ -67,13 +67,13 @@ public class SysUserController {
 		return sysUserFeign.updateUser(sysUserRequest);
 	}
 
-	@ApiOperation(notes = "删除用户", value = "删除用户")
+	@ApiOperation(value = "删除用户")
 	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.DELETE)
 	public ModelResult<SysUserResponse> deleteUser(Integer userId) {
 		return sysUserFeign.deleteUser(userId);
 	}
 	
-	@ApiOperation(notes = "禁用用户", value = "禁用用户")
+	@ApiOperation(value = "禁用用户")
 	@RequestMapping(value = "/enable/{userId}", method = RequestMethod.PUT)
 	public ModelResult<SysUserResponse> enableUser(Integer userId) {
 		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();
@@ -82,7 +82,7 @@ public class SysUserController {
 		return sysUserFeign.updateUser(sysUserRequest);
 	}
 	
-	@ApiOperation(notes = "启用用户", value = "启用用户")
+	@ApiOperation(value = "启用用户")
 	@RequestMapping(value = "/notenable/{userId}", method = RequestMethod.PUT)
 	public ModelResult<SysUserResponse> notenableUser(Integer userId) {
 		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();

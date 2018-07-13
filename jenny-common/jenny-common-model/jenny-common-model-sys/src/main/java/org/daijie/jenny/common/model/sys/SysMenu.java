@@ -9,8 +9,15 @@ public class SysMenu implements Serializable {
      * 菜单编号
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_id")
     private Integer menuId;
+
+    /**
+     * 菜单代码
+     */
+    @Column(name = "menu_code")
+    private Integer menuCode;
 
     /**
      * 菜单名称
@@ -29,6 +36,12 @@ public class SysMenu implements Serializable {
      */
     @Column(name = "parent_id")
     private Integer parentId;
+
+    /**
+     * 父级菜单代码
+     */
+    @Column(name = "parent_code")
+    private Integer parentCode;
 
     /**
      * 排序
@@ -77,6 +90,29 @@ public class SysMenu implements Serializable {
      */
     public void setMenuId(Integer menuId) {
         this.menuId = menuId;
+    }
+
+    /**
+     * 获取菜单代码
+     *
+     * @return menu_code - 菜单代码
+     */
+    public Integer getMenuCode() {
+        return menuCode;
+    }
+
+    public SysMenu withMenuCode(Integer menuCode) {
+        this.setMenuCode(menuCode);
+        return this;
+    }
+
+    /**
+     * 设置菜单代码
+     *
+     * @param menuCode 菜单代码
+     */
+    public void setMenuCode(Integer menuCode) {
+        this.menuCode = menuCode;
     }
 
     /**
@@ -146,6 +182,29 @@ public class SysMenu implements Serializable {
      */
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
+    }
+
+    /**
+     * 获取父级菜单代码
+     *
+     * @return parent_code - 父级菜单代码
+     */
+    public Integer getParentCode() {
+        return parentCode;
+    }
+
+    public SysMenu withParentCode(Integer parentCode) {
+        this.setParentCode(parentCode);
+        return this;
+    }
+
+    /**
+     * 设置父级菜单代码
+     *
+     * @param parentCode 父级菜单代码
+     */
+    public void setParentCode(Integer parentCode) {
+        this.parentCode = parentCode;
     }
 
     /**
@@ -247,9 +306,11 @@ public class SysMenu implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", menuId=").append(menuId);
+        sb.append(", menuCode=").append(menuCode);
         sb.append(", menuName=").append(menuName);
         sb.append(", level=").append(level);
         sb.append(", parentId=").append(parentId);
+        sb.append(", parentCode=").append(parentCode);
         sb.append(", sort=").append(sort);
         sb.append(", mapping=").append(mapping);
         sb.append(", icon=").append(icon);
@@ -272,9 +333,11 @@ public class SysMenu implements Serializable {
         }
         SysMenu other = (SysMenu) that;
         return (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()))
+            && (this.getMenuCode() == null ? other.getMenuCode() == null : this.getMenuCode().equals(other.getMenuCode()))
             && (this.getMenuName() == null ? other.getMenuName() == null : this.getMenuName().equals(other.getMenuName()))
             && (this.getLevel() == null ? other.getLevel() == null : this.getLevel().equals(other.getLevel()))
             && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
+            && (this.getParentCode() == null ? other.getParentCode() == null : this.getParentCode().equals(other.getParentCode()))
             && (this.getSort() == null ? other.getSort() == null : this.getSort().equals(other.getSort()))
             && (this.getMapping() == null ? other.getMapping() == null : this.getMapping().equals(other.getMapping()))
             && (this.getIcon() == null ? other.getIcon() == null : this.getIcon().equals(other.getIcon()))
@@ -286,9 +349,11 @@ public class SysMenu implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getMenuId() == null) ? 0 : getMenuId().hashCode());
+        result = prime * result + ((getMenuCode() == null) ? 0 : getMenuCode().hashCode());
         result = prime * result + ((getMenuName() == null) ? 0 : getMenuName().hashCode());
         result = prime * result + ((getLevel() == null) ? 0 : getLevel().hashCode());
         result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
+        result = prime * result + ((getParentCode() == null) ? 0 : getParentCode().hashCode());
         result = prime * result + ((getSort() == null) ? 0 : getSort().hashCode());
         result = prime * result + ((getMapping() == null) ? 0 : getMapping().hashCode());
         result = prime * result + ((getIcon() == null) ? 0 : getIcon().hashCode());

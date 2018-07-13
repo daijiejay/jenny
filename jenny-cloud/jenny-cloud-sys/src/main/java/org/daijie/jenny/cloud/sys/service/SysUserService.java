@@ -118,7 +118,7 @@ public class SysUserService implements SysUserFeign {
 			BeanUtil.copyProperties(sysUser, sysUserResponse);
 			return Result.build(sysUserResponse);
 		}
-		return Result.build("无效的用户ID！", ApiResult.ERROR, ResultCode.CODE_102);
+		return Result.build("无效的用户编号！", ApiResult.ERROR, ResultCode.CODE_102);
 	}
 
 }

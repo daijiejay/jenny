@@ -1767,7 +1767,7 @@ section#tables p {
 }
 
 .form-two {
-	margin-top: 2em;
+	/*margin-top: 2em;*/
 }
 
 .form-three {
@@ -2373,6 +2373,16 @@ h4.modal-title {
 	width: 49%;
 }
 
+.general-grids-l {
+	padding: 2em 1.5em;
+	width: 30%;
+}
+
+.general-grids-r {
+	padding: 2em 1.5em;
+	width: 67%;
+}
+
 .general-grids.grids-right {
 	margin-left: 2%;
 }
@@ -2414,6 +2424,7 @@ h4.modal-title {
 /*--tabs --*/
 
 .nav-tabs {
+	padding-top: 10px;
 	border-bottom: 1px solid #797979;
 }
 
@@ -3053,6 +3064,16 @@ i.fa.fa-facebook.profile-icon {
 	width: 49%;
 }
 
+.weather-grids-l {
+	padding: 0;
+	width: 30%;
+}
+
+.weather-grids-r {
+	padding: 0;
+	width: 67%;
+}
+
 .header-top {
 	border-bottom: 3px solid rgba(97, 100, 193, 0.56);
 	padding: 1.5em;
@@ -3152,7 +3173,7 @@ i.fa.fa-facebook.profile-icon {
 
 .weather-grids.weather-right {
 	margin-left: 2%;
-	text-align: center;
+	/*text-align: center;*/
 }
 
 .weather-grids.weather-right h3 {
@@ -3409,6 +3430,12 @@ i.fa.fa-facebook.profile-icon {
 	.general-grids {
 		width: 100%;
 	}
+	.general-grids-l {
+		width: 100%;
+	}
+	.general-grids-r {
+		width: 100%;
+	}
 	.general-grids.grids-right {
 		margin: 2em 0 0;
 	}
@@ -3446,6 +3473,12 @@ i.fa.fa-facebook.profile-icon {
 		width: 78%;
 	}
 	.weather-grids {
+		width: 100%;
+	}
+	.weather-grids-l {
+		width: 100%;
+	}
+	.weather-grids-r {
 		width: 100%;
 	}
 	.weather-grids.weather-right {
