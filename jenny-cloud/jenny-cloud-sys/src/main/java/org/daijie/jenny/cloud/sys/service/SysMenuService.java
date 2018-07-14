@@ -162,12 +162,23 @@ public class SysMenuService implements SysMenuFeign {
 		List<SysMenu> list = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("menuId", menuId).build());
 		if (list.size() == 1) {
 			sysMenuMapper.deleteByPrimaryKey(list.get(0).getMenuId());
+			deleteChildMenu(menuId);
 			forwardMoveMenu(list.get(0).getParentId(), list.get(0).getSort(), 1);
 			SysMenuResponse sysMenuResponse = new SysMenuResponse();
 			BeanUtil.copyProperties(list.get(0), sysMenuResponse);
 			return Result.build(sysMenuResponse);
 		}
 		throw new ApiException(ResultCode.CODE_102, "无效的菜单编号！");
+	}
+	
+	public void deleteChildMenu(Integer parentId) {
+		List<SysMenu> list = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("parentId", parentId).build());
+		if (list.size() > 0) {
+			for (SysMenu sysMenu : list) {
+				deleteChildMenu(sysMenu.getMenuId());
+			}
+			sysMenuMapper.deleteByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("parentId", parentId).build());
+		}
 	}
 
 	/**
@@ -185,6 +196,7 @@ public class SysMenuService implements SysMenuFeign {
 			sysMenu.setSort(sysMenu.getSort()-1);
 			sysMenu.setMenuCode(generatorMenuId(sysMenu.getMenuCode(), sysMenu.getLevel(), num*-1));
 			sysMenuMapper.updateByPrimaryKey(sysMenu);
+			renewChildMenu(sysMenu);
 		}
 	}
 	
@@ -217,7 +229,7 @@ public class SysMenuService implements SysMenuFeign {
 	@Transactional
 	public void moveBeforeMenu(SysMenu targetMenu, List<Integer> menuIds) {
 		List<SysMenu> menus = sysMenuMapper.selectByExample(
-				ExampleBuilder.create(SysMenu.class).andEqualTo("parentCode", targetMenu.getParentCode())
+				ExampleBuilder.create(SysMenu.class).andEqualTo("parentId", targetMenu.getParentId())
 				.andNotIn("menuId", menuIds)
 				.orderByAsc("menuCode").build());
 		int menuCode = targetMenu.getParentCode();
@@ -264,7 +276,7 @@ public class SysMenuService implements SysMenuFeign {
 	@Transactional
 	public void moveAfterMenu(SysMenu targetMenu, List<Integer> menuIds) {
 		List<SysMenu> menus = sysMenuMapper.selectByExample(
-				ExampleBuilder.create(SysMenu.class).andEqualTo("parentCode", targetMenu.getParentCode())
+				ExampleBuilder.create(SysMenu.class).andEqualTo("parentId", targetMenu.getParentId())
 				.andNotIn("menuId", menuIds)
 				.orderByAsc("menuCode").build());
 		int menuCode = targetMenu.getParentCode();
@@ -310,7 +322,7 @@ public class SysMenuService implements SysMenuFeign {
 	@Transactional
 	public void renewMoveMenu(SysMenu parentMenu, List<Integer> menuIds) {
 		List<SysMenu> menus = sysMenuMapper.selectByExample(
-				ExampleBuilder.create(SysMenu.class).andEqualTo("parentCode", parentMenu.getMenuCode())
+				ExampleBuilder.create(SysMenu.class).andEqualTo("parentId", parentMenu.getMenuId())
 				.orderByDesc("menuCode").build());
 		int menuCode = menus.size() > 0 ? menus.get(0).getMenuCode() : parentMenu.getMenuCode();
 		int sort = menus.size();
@@ -333,7 +345,7 @@ public class SysMenuService implements SysMenuFeign {
 	@Transactional
 	public void renewChildMenu(SysMenu parentMenu) {
 		List<SysMenu> menus = sysMenuMapper.selectByExample(
-				ExampleBuilder.create(SysMenu.class).andEqualTo("parentCode", parentMenu.getMenuCode())
+				ExampleBuilder.create(SysMenu.class).andEqualTo("parentId", parentMenu.getMenuId())
 				.orderByAsc("menuCode").build());
 		int menuCode = parentMenu.getMenuCode();
 		int sort = 0;
