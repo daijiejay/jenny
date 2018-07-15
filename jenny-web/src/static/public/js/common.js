@@ -170,7 +170,7 @@ function countDown(times) {
  * @param {Object} $
  */
 (function($) {
-	var that, initTable = {
+	var that, loadTable, initTable = {
 			table: '',
 			actions: []
 		},
@@ -201,6 +201,11 @@ function countDown(times) {
 				that.initTableData();
 				that.listenSearch();
 				that.listenToolbar();
+				if (loadTable) {
+					that.bootstrapTable('refresh');
+				} else {
+					loadTable = true;
+				}
 			});
 		},
 		initTableData: function(params) {
@@ -227,6 +232,9 @@ function countDown(times) {
 			var queryParams = $(settings.searchTarget).serializeJson();;
 			queryParams.pageSize = params.limit;
 			queryParams.pageNumber = params.offset + 1;
+			if (typeof that.settings.searchParams == 'function') {
+				return that.settings.searchParams(queryParams);
+			}
 			return settings.searchParams(queryParams);
 
 		},

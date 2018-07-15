@@ -685,7 +685,11 @@
 			// Check if attribute is to be used
 			if ( this.settings.useAttribute ) {
 				if ( theIcon ) {
-					this.iconPicker.find('.selected-icon').html('<i ' + this.settings.attributeName + '="' + ( this.settings.convertToHex ? '&#x' + parseInt(theIcon, 10).toString(16) + ';' : theIcon ) + '"></i>' );
+					if (theIcon.indexOf('fa') >= 0) {
+						this.iconPicker.find('.selected-icon').html('<i class="fa ' + theIcon + '"></i>' );
+					} else {
+						this.iconPicker.find('.selected-icon').html('<i ' + this.settings.attributeName + '="' + ( this.settings.convertToHex ? '&#x' + parseInt(theIcon, 10).toString(16) + ';' : theIcon ) + '"></i>' );
+					}
 				} else {
 					this.iconPicker.find('.selected-icon').html('<i class="fip-icon-block"></i>');
 				}
@@ -816,6 +820,12 @@
 				}
 			});
 		}, this);
+		
+		this.refreshToInput = $.proxy(function(icon) {
+			this.each(function () {
+				$.data(this, "fontIconPicker").setSelectedIcon(icon);
+			});
+		});
 
 		return this;
 	};

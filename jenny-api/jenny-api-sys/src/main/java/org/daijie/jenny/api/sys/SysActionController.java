@@ -25,7 +25,7 @@ public class SysActionController {
 	private SysActionFeign sysActionFeign;
 
 	@ApiOperation(value = "条件查询用户")
-	@RequestMapping(value = "/query", method = RequestMethod.POST)
+	@RequestMapping(value = "/query", method = RequestMethod.GET)
 	public ModelResult<PageResult<SysActionResponse>> getActionByPage(SysActionPageRequest sysActionRequest) {
 		return sysActionFeign.getActionByPage(sysActionRequest);
 	}

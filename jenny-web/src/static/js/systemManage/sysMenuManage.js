@@ -1,7 +1,7 @@
 $(function() {
 	initZTree();
 	
-	var dynamicIconsElement = $('#icon').fontIconPicker({
+	dynamicIconsElement = $('#icon').fontIconPicker({
 		source: fa_icons,
 		searchSource: fa_icon_search,
 		useAttribute: true,
@@ -20,6 +20,7 @@ $(function() {
 		
 	})
 });
+var dynamicIconsElement;
 var treeName = 'tree';
 
 function initZTree() {
@@ -59,8 +60,16 @@ function initZTree() {
 }
 
 function zTreeBeforeClick(treeId, treeNode, clickFlag) {
-	request('get', '', '/sysaction/query/'+treeNode.id, 'SYS', function(result) {
-		$('#menuForm').initForm(result.data)
+	var parentNode = treeNode.getParentNode();
+	request('get', '', '/sysmenu/query/'+treeNode.id, 'SYS', function(result) {
+		var data = result.data;
+		if (parentNode) {
+			data.parentName = parentNode.name;
+		} else {
+			data.parentName = '';
+		}
+		dynamicIconsElement.refreshToInput(data.icon);
+		$('#menuForm').initForm(data);
 	});
 	
 	$("#sysActionTable").initTable({
@@ -92,6 +101,10 @@ function zTreeBeforeClick(treeId, treeNode, clickFlag) {
 //				return row.enable;
 //			}
 			return true;
+		},
+		searchParams: function(params) {
+			params.menuId = treeNode.id;
+			return params
 		}
 	});
 }

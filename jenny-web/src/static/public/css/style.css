@@ -3307,10 +3307,10 @@ i.fa.fa-facebook.profile-icon {
 	.navbar-collapse.bs-example-js-navbar-scrollspy .nav>li>a {
 		padding: 15px 13px;
 	}
-	.general-grids .tab-content {
+	/*.general-grids .tab-content {
 		overflow-y: scroll;
 		height: 228px;
-	}
+	}*/
 	.sub_home input[type="submit"] {
 		margin: 0.5em 0 0 9.2em;
 	}
@@ -4818,4 +4818,7 @@ table thead {
 }
 table tbody {
 	font-size: 8px;
+}
+.main-page {
+	min-height: 700px;
 }

@@ -88,10 +88,6 @@ public class SysActionResponse {
 	public ActionType getActionType() {
 		return actionType;
 	}
-
-	public void setActionType(String actionType) {
-		this.actionType = ActionType.valueOf(actionType);
-	}
 	
 	public void setActionType(ActionType actionType) {
 		this.actionType = actionType;
@@ -99,10 +95,6 @@ public class SysActionResponse {
 
 	public MutualType getMutualType() {
 		return mutualType;
-	}
-
-	public void setMutualType(String mutualType) {
-		this.mutualType = MutualType.valueOf(mutualType);
 	}
 
 	public void setMutualType(MutualType mutualType) {

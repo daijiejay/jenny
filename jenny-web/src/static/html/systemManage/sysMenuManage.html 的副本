@@ -10,12 +10,14 @@
 		<link href="../../public/fontIconPicker/themes/bootstrap-theme/jquery.fonticonpicker.bootstrap.css" rel='stylesheet' type='text/css' />
 		<link href="../../public/ztree/css/ztree.css" rel='stylesheet' type='text/css' />
 		<link href="../../public/layer/css/layer.css" rel='stylesheet' type='text/css' />
+    	<link href="../../public/fakeLoader/css/fakeLoader.css" rel="stylesheet" type='text/css' >
 		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
 		<link href="../../public/css/font-awesome.css" rel="stylesheet" type='text/css' />
 		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
 		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
 		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
 		<script src="../../public/fontIconPicker/js/jquery.fonticonpicker.js"></script>
+		<script src="../../public/fakeLoader/js/fakeLoader.js"></script>
 		<script src="../../public/ztree/js/jquery.ztree.core.js"></script>
 		<script src="../../public/ztree/js/jquery.ztree.excheck.js"></script>
 		<script src="../../public/ztree/js/jquery.ztree.exedit.js"></script>
@@ -29,46 +31,35 @@
 	</head>
 
 	<body>
-		<div class="main-page">
-			<div class="elements">
-				<div class="col-md-5 weather-grids-l weather-grids widget-shadow">
+		<div class="main-page general">
+			<div class="row">
+				<div class="col-md-6 general-grids-l general-grids">
 					<h4 class="title3">菜单</h4>
 					<div class="profile-text">
 						<ul id="tree" class="ztree">
 						</ul>
 					</div>
 				</div>
-				<div class="col-md-6 weather-grids-r weather-grids weather-right widget-shadow">
+				<div class="col-md-6 general-grids-r general-grids grids-right">
 					<h4 class="title3">详细信息</h4>
-					<div class="profile-text">
-						<div class="forms">
-							<div class="form-two">
-								<ul id="myTabs" class="nav nav-tabs" role="tablist">
-									<li role="presentation" class="">
-										<a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="false">Home</a>
-									</li>
-									<li role="presentation" class="active">
-										<a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="true">Profile</a>
-									</li>
-									<li role="presentation" class="dropdown">
-										<a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Dropdown <span class="caret"></span></a>
-										<ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-											<li class="">
-												<a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1" aria-expanded="false">@fat</a>
-											</li>
-											<li class="">
-												<a href="#dropdown2" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2" aria-expanded="false">@mdo</a>
-											</li>
-										</ul>
-									</li>
-								</ul>
-								<!--<div class="form-body">
-									<form class="form-horizontal">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#info" id="info-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="false">菜单信息</a>
+						</li>
+						<li role="presentation" class="">
+							<a href="#action" role="tab" id="action-tab" data-toggle="tab" aria-controls="action" aria-expanded="true">菜单功能</a>
+						</li>
+					</ul>
+					<div class="tab-conten">
+						<div role="tabpanel" class="tab-pane fade active in" id="info" aria-labelledby="info-tab">
+							<div class="forms">
+								<div class="form-body">
+									<form class="form-horizontal" id="menuForm">
 										<input type="hidden" class="form-control" id="menuId" name="menuId">
 										<div class="form-group">
 											<label class="col-sm-3 control-label">菜单名称</label>
 											<div class="col-sm-7">
-												<input type="text" class="form-control" id="munuName" name="munuName" readonly>
+												<input type="text" class="form-control" id="menuName" name="menuName" readonly>
 											</div>
 										</div>
 										<div class="form-group">
@@ -95,18 +86,147 @@
 											</div>
 										</div>
 									</form>
-								</div>-->
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="profile-btm">
-						<table class="table table-hover" id="sysUserTable">
-						</table>
+						<div role="tabpanel" class="tab-pane fade" id="action" aria-labelledby="action-tab">
+							<table class="table table-hover" id="sysActionTable">
+							</table>
+						</div>
 					</div>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
 		</div>
+		<div class="fakeloader"></div>
 	</body>
-
 </html>
+
+<div class="modal fade" id="saveSysAction" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 80%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<h4 class="modal-title">添加</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<div class="form-three widget-shadow">
+					<form class="form-horizontal" id="actionForm">
+						<input type="hidden" id="userId" name="userId"/>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">功能名称</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-user"></i>
+									</span>
+									<input type="text" class="form-control1" maxlength="20" name="actionName" id="actionName" placeholder="用户名">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">功能类型</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-phone"></i>
+									</span>
+									<select name="actionType" id="actionType">
+										<option value="OPERATE">列表单行操作</option>
+										<option value="TOOLBAR">列表工具栏</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">交互类型</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-phone"></i>
+									</span>
+									<select name="actionType" id="actionType">
+										<option value="CONFIRM">确认</option>
+										<option value="FORM">表单</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口服务名</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-key"></i>
+									</span>
+									<input type="text" class="form-control1" name="interfaceServerId" id="interfaceServerId" placeholder="密码">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口地址</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-envelope"></i>
+									</span>
+									<input type="text" class="form-control1" name="interfaceUrl" id="interfaceUrl" placeholder="邮箱">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口方式</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-birthday-cake"></i>
+									</span>
+									<input type="text" class="form-control1" name="interfaceMethod" id="interfaceMethod" placeholder="生日">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">表单目标元素</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-birthday-cake"></i>
+									</span>
+									<input type="text" class="form-control1" name="formTarget" id="formTarget" placeholder="生日">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>

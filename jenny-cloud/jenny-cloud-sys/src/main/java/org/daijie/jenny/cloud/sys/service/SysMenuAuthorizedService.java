@@ -79,8 +79,6 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 			sysActions.forEach(sysAction -> {
 				SysActionResponse sysActionResponse = new SysActionResponse();
 				BeanUtil.copyProperties(sysAction, sysActionResponse, CopyOptions.create().setIgnoreError(true));
-				sysActionResponse.setActionType(sysAction.getActionType());
-				sysActionResponse.setMutualType(sysAction.getMutualType());
 				sysActionResponses.add(sysActionResponse);
 			});
 			menuAuthorizedResponse.setSysActions(sysActionResponses);
@@ -166,8 +164,6 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 		sysActions.forEach(action -> {
 			SysActionResponse actionResponse = new SysActionResponse();
 			BeanUtil.copyProperties(action, actionResponse, CopyOptions.create().setIgnoreError(true));
-			actionResponse.setActionType(action.getActionType());
-			actionResponse.setMutualType(action.getMutualType());
 			sysActionResponses.add(actionResponse);
 		});
 		sysActionAuthorizedResponse.setActions(sysActionResponses);

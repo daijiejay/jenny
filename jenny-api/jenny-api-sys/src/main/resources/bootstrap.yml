@@ -16,10 +16,10 @@ hystrix.command.default.execution.timeout.enabled: true
 #hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 10000
 ##设置线程池大小
 #hystrix.threadpool.default.coreSize: 100
-##请求连接的超时时间
-#ribbon.ConnectTimeout: 5000
-##请求处理的超时时间
-#ribbon.ReadTimeout: 5000
+#请求连接的超时时间
+ribbon.ConnectTimeout: 5000
+#请求处理的超时时间
+ribbon.ReadTimeout: 5000
 ##对所有操作请求都进行重试
 #ribbon.OkToRetryOnAllOperations: true
 ##对当前实例的重试次数

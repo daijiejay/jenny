@@ -7,9 +7,8 @@ import org.daijie.jenny.common.feign.sys.enumtype.MutualType;
 
 import io.swagger.annotations.ApiModelProperty;
 
+@SuppressWarnings("serial")
 public class SysActionPageRequest extends Page implements ExampleConditions {
-
-	private static final long serialVersionUID = 1L;
 
 	/**
      * 功能编号
