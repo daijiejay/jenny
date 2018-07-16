@@ -11,8 +11,6 @@
     <result column="interface_url" jdbcType="VARCHAR" property="interfaceUrl" />
     <result column="interface_method" jdbcType="VARCHAR" property="interfaceMethod" />
     <result column="table_target" jdbcType="VARCHAR" property="tableTarget" />
-    <result column="search_target" jdbcType="VARCHAR" property="searchTarget" />
-    <result column="toolbar_target" jdbcType="VARCHAR" property="toolbarTarget" />
     <result column="unique_id" jdbcType="VARCHAR" property="uniqueId" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -20,6 +18,6 @@
       WARNING - @mbg.generated
     -->
     table_id, menu_id, interface_server_id, interface_url, interface_method, table_target, 
-    search_target, toolbar_target, unique_id
+    unique_id
   </sql>
 </mapper>

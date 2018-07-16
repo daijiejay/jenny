@@ -44,10 +44,10 @@
 					<h4 class="title3">详细信息</h4>
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active">
-							<a href="#info" id="info-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="false">菜单信息</a>
+							<a href="#info" id="info-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="false">基本信息</a>
 						</li>
 						<li role="presentation" class="">
-							<a href="#action" role="tab" id="action-tab" data-toggle="tab" aria-controls="action" aria-expanded="true">菜单功能</a>
+							<a href="#action" role="tab" id="action-tab" data-toggle="tab" aria-controls="action" aria-expanded="true">操作功能</a>
 						</li>
 					</ul>
 					<div class="tab-content">
@@ -114,15 +114,15 @@
 			<div class="modal-body">
 				<div class="form-three widget-shadow">
 					<form class="form-horizontal" id="actionForm">
-						<input type="hidden" id="userId" name="userId"/>
+						<input type="hidden" id="actionId" name="actionId"/>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">功能名称</label>
 							<div class="col-sm-8">
 								<div class="input-group">
 									<span class="input-group-addon">
-										<i class="fa fa-user"></i>
+										<i class="fa fa-font"></i>
 									</span>
-									<input type="text" class="form-control1" maxlength="20" name="actionName" id="actionName" placeholder="用户名">
+									<input type="text" class="form-control" maxlength="20" name="actionName" id="actionName" placeholder="用户名">
 								</div>
 							</div>
 							<div class="col-sm-2">
@@ -134,9 +134,9 @@
 							<div class="col-sm-8">
 								<div class="input-group">
 									<span class="input-group-addon">
-										<i class="fa fa-phone"></i>
+										<i class="fa fa-list"></i>
 									</span>
-									<select name="actionType" id="actionType">
+									<select class="form-control" name="actionType" id="actionType">
 										<option value="OPERATE">列表单行操作</option>
 										<option value="TOOLBAR">列表工具栏</option>
 									</select>
@@ -151,9 +151,9 @@
 							<div class="col-sm-8">
 								<div class="input-group">
 									<span class="input-group-addon">
-										<i class="fa fa-phone"></i>
+										<i class="fa fa-list"></i>
 									</span>
-									<select name="actionType" id="actionType">
+									<select class="form-control" name="mutualType" id="mutualType">
 										<option value="CONFIRM">确认</option>
 										<option value="FORM">表单</option>
 									</select>
@@ -168,9 +168,9 @@
 							<div class="col-sm-8">
 								<div class="input-group">
 									<span class="input-group-addon">
-										<i class="fa fa-key"></i>
+										<i class="fa fa-font"></i>
 									</span>
-									<input type="text" class="form-control1" name="interfaceServerId" id="interfaceServerId" placeholder="密码">
+									<input type="text" class="form-control" name="interfaceServerId" id="interfaceServerId" placeholder="密码">
 								</div>
 							</div>
 							<div class="col-sm-2">
@@ -182,9 +182,9 @@
 							<div class="col-sm-8">
 								<div class="input-group">
 									<span class="input-group-addon">
-										<i class="fa fa-envelope"></i>
+										<i class="fa fa-font"></i>
 									</span>
-									<input type="text" class="form-control1" name="interfaceUrl" id="interfaceUrl" placeholder="邮箱">
+									<input type="text" class="form-control" name="interfaceUrl" id="interfaceUrl" placeholder="邮箱">
 								</div>
 							</div>
 							<div class="col-sm-2">
@@ -196,9 +196,9 @@
 							<div class="col-sm-8">
 								<div class="input-group">
 									<span class="input-group-addon">
-										<i class="fa fa-birthday-cake"></i>
+										<i class="fa fa-font"></i>
 									</span>
-									<input type="text" class="form-control1" name="interfaceMethod" id="interfaceMethod" placeholder="生日">
+									<input type="text" class="form-control" name="interfaceMethod" id="interfaceMethod" placeholder="生日">
 								</div>
 							</div>
 							<div class="col-sm-2">
@@ -210,9 +210,9 @@
 							<div class="col-sm-8">
 								<div class="input-group">
 									<span class="input-group-addon">
-										<i class="fa fa-birthday-cake"></i>
+										<i class="fa fa-font"></i>
 									</span>
-									<input type="text" class="form-control1" name="formTarget" id="formTarget" placeholder="生日">
+									<input type="text" class="form-control" name="formTarget" id="formTarget" placeholder="生日">
 								</div>
 							</div>
 							<div class="col-sm-2">

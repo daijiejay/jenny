@@ -170,11 +170,14 @@ function countDown(times) {
  * @param {Object} $
  */
 (function($) {
-	var that, loadTable, initTable = {
-			table: '',
-			actions: []
+	var _table = function() {
+		this.that = {},
+		this.loaded = false,
+		this.table = {
+			actions: [],
+			columns: []
 		},
-		settings = {
+		this.settings = {
 			searchTarget: '.table-search',
 			listenModalSave: function(form, action) {
 				return true;
@@ -188,30 +191,37 @@ function countDown(times) {
 			operateFormatter: function(action, row) {
 				return true;
 			}
-		},
-		modalMap = new Map();
+		}
+	},
+	_modalMap = new Map(),
+	_tableMap = new Map();
+	
 	$.fn.extend({
 		initTable: function(settings) {
-			that = this;
-			this.settings = settings;
+			var tab = _tableMap.get(this.selector);
+			if (!tab) {
+				_tableMap.set(this.selector, tab = new _table());
+			}
+			var _this = this;
+			tab.that = this;
+			tab.settings = settings;
 			var menuId = window.parent.$('#page-wrapper iframe').attr('menuId');
 			request('get', '', '/sysindex/menu/authorized/action/' + menuId, 'SYS', function(result) {
-				initTable.table = result.data.table;
-				initTable.actions = result.data.actions;
-				that.initTableData();
-				that.listenSearch();
-				that.listenToolbar();
-				if (loadTable) {
-					that.bootstrapTable('refresh');
+				tab.table = result.data.tables[0];
+				tab.table.actions = result.data.actions;
+				_this.initTableData(tab);
+				_this.listenSearch(tab);
+				_this.listenToolbar(tab);
+				if (tab.loaded) {
+					_this.bootstrapTable('refresh');
 				} else {
-					loadTable = true;
+					tab.loaded = true;
 				}
 			});
 		},
-		initTableData: function(params) {
-			var table = initTable.table;
-			var actions = initTable.actions;
-			this.bootstrapTable({
+		initTableData: function(tab) {
+			var table = tab.table;
+			tab.that.bootstrapTable({
 				method: table.interfaceMethod,
 				url: serverMap.get(table.interfaceServerId) + table.interfaceUrl,
 				dataField: 'rows',
@@ -223,24 +233,25 @@ function countDown(times) {
 				pageNumber: 1, // 首页页码
 				uniqueId: table.uniqueId, //每一行的唯一标识，一般为主键列
 				sidePagination: 'server', // 设置为服务器端分页
-				queryParams: that.initQueryParams,
-				toolbar: that.initToolbar,
-				columns: that.initColumns
+				queryParams: tab.that.initQueryParams,
+				toolbar: tab.that.initToolbar(tab),
+				columns: tab.that.initColumns(tab)
 			});
 		},
-		initQueryParams: function(params) {
-			var queryParams = $(settings.searchTarget).serializeJson();;
+		initQueryParams: function(params, ele) {
+			var tab = _tableMap.get('#' + ele.id);
+			var queryParams = $(tab.settings.searchTarget).serializeJson();
 			queryParams.pageSize = params.limit;
 			queryParams.pageNumber = params.offset + 1;
-			if (typeof that.settings.searchParams == 'function') {
-				return that.settings.searchParams(queryParams);
+			if (typeof tab.settings.searchParams == 'function') {
+				return tab.settings.searchParams(queryParams);
 			}
-			return settings.searchParams(queryParams);
+			return queryParams;
 
 		},
-		initToolbar: function() {
+		initToolbar: function(tab) {
 			var toolbar = '<div class="btn-group">';
-			var actions = initTable.actions;
+			var actions = tab.table.actions;
 			actions.forEach(function(action, i) {
 				if(action.actionType == 'TOOLBAR') {
 					if(action.mutualType == 'FORM') {
@@ -251,77 +262,87 @@ function countDown(times) {
 			toolbar += '</div>';
 			return toolbar;
 		},
-		initColumns: function() {
-			var columns = initTable.table.columns;
+		initColumns: function(tab) {
+			var columns = tab.table.columns;
 			columns.forEach(function(column, i) {
-				column.formatter = that.settings.columnFormatter;
+				column.formatter = tab.settings.columnFormatter;
 			})
 			columns.push({
 				field: 'operate',
 				title: '操作',
 				events: operateEvents,
-				formatter: that.initOperates
+				formatter: tab.that.initOperates
 			});
 			return columns;
 		},
-		initOperates: function(value, row, index) {
+		initOperates: function(value, row, index, field, field, ele) {
+			var tab = _tableMap.get('#' + ele.id);
 			var operate = new Array();
-			initTable.actions.forEach(function(action, i) {
-				if(action.actionType == 'OPERATE' && that.settings.operateFormatter(action, row)) {
+			tab.table.actions.forEach(function(action, i) {
+				if(action.actionType == 'OPERATE' && tab.settings.operateFormatter(action, row)) {
 					if(action.mutualType == 'CONFIRM') {
 						operate.push('<a actionId="' + action.actionId + '" class="btn active" href="#">' + action.actionName + '</a>');
 					} else if(action.mutualType == 'FORM') {
-						operate.push('<a id="' + row.userId + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>');
+						operate.push('<a id="' + tab.that.getUniqueIdValue(row, tab) + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>');
 					}
 				}
 			});
 			return operate
 		},
-		listenSearch: function() {
-			var table = initTable.table;
-			$(settings.searchTarget).find('button.query').click(function() {
-				that.bootstrapTable('refresh');
+		getUniqueIdValue: function(row, tab) {
+			var value, field = tab.table.uniqueId;
+			jQuery.each(row, function(key, val) {
+				if (key == field) {
+					value = val;
+					return;
+				}
+			})
+			return value;
+		},
+		listenSearch: function(tab) {
+			$(tab.settings.searchTarget).find('button.query').click(function() {
+				tab.that.bootstrapTable('refresh');
 			});
 		},
-		listenToolbar: function() {
-			var actions = initTable.actions;
+		listenToolbar: function(tab) {
+			var actions = tab.table.actions;
 			actions.forEach(function(action, i) {
-				that.listenModalEvents(action);
+				tab.that.listenModalEvents(tab, action);
 			});
 		},
-		listenModalEvents: function(action) {
-			if(!modalMap.get(action.formTarget)) {
-				modalMap.set(action.formTarget, $(action.formTarget));
-				modalMap.get(action.formTarget).on('shown.bs.modal', function(event) {
+		listenModalEvents: function(tab, action) {
+			if(!_modalMap.get(action.formTarget)) {
+				_modalMap.set(action.formTarget, $(action.formTarget));
+				_modalMap.get(action.formTarget).on('shown.bs.modal', function(event) {
 					var modal = $(this);
 					var button = $(event.relatedTarget);
 					var id = button.attr('id');
 					var actionId = button.attr('actionId');
 					if(id) {
-						var row = that.bootstrapTable('getRowByUniqueId', id);
+						var row = tab.that.bootstrapTable('getRowByUniqueId', id);
 						modal.find('form').initForm(row);
-						modal.find('.modal-title').html(action.actionName);
+						modal.find('.modal-title').html(button.html());
 					} else {
-						modal.find('.modal-title').html(action.actionName);
-						$(this).val("");
+						modal.find('.modal-title').html(button.html());
+						modal.find('form')[0].reset();
 					}
 					modal.find('button.save').click(function() {
-						that.saveFormData(actionId, modal);
+						tab.that.saveFormData(tab, actionId, modal);
 					});
 				});
 			}
 		},
-		saveFormData: function(actionId, modal) {
-			var actions = initTable.actions;
+		saveFormData: function(tab, actionId, modal) {
+			var actions = tab.table.actions;
 			actions.forEach(function(action, i) {
 				if(action.actionId == actionId) {
-					if(that.settings.listenModalSave(modal.find('form'), action)) {
+					if(tab.settings.listenModalSave(modal.find('form'), action)) {
 						var formData = modal.find('form').serializeJson();
-						var url = that.formatterUrl(action.interfaceUrl, formData);
+						var url = tab.that.formatterUrl(action.interfaceUrl, formData);
 						request(action.interfaceMethod, formData, url, action.interfaceServerId, function(result) {
 							modal.find('button.save').unbind("click");
 							modal.modal('hide');
-							that.bootstrapTable('refresh');
+							tab.that.bootstrapTable('refresh');
 						});
 					}
 				}
@@ -429,25 +450,25 @@ function countDown(times) {
 	};
 
 	window.operateEvents = {
-		'click .btn': function(e, value, row, index) {
-			initTable.actions.forEach(function(action, i) {
+		'click .btn': function(e, value, row, index, ele) {
+			var tab = _tableMap.get('#' + ele.id);
+			tab.table.actions.forEach(function(action, i) {
 				if(action.actionType == 'OPERATE' && action.actionName == e.target.innerHTML) {
 					if(action.mutualType == 'CONFIRM') {
 						layer.confirm('确定需要' + action.actionName + '吗？', {
 							yes: function(index, layero) {
-								var url = that.formatterUrl(action.interfaceUrl, row);
+								var url = tab.that.formatterUrl(action.interfaceUrl, row);
 								request(action.interfaceMethod, '', url, action.interfaceServerId, function(result) {
-									that.bootstrapTable('refresh');
+									tab.that.bootstrapTable('refresh');
 									layer.close(index);
 								})
 							}
 						});
 					} else if(action.mutualType == 'FORM') {
-						that.listenModalEvents(action);
+						tab.that.listenModalEvents(tab, action);
 					}
 				}
 			});
-
 		}
 	}
 })(jQuery)

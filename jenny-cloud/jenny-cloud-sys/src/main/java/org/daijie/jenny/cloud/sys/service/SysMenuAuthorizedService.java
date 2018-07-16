@@ -144,19 +144,22 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 		if (sysTables.size() != 1) {
 			return Result.build("此菜单配置表格数据错误", ApiResult.ERROR, ResultCode.CODE_102);
 		}
-		SysTableResponse sysTableResponse = new SysTableResponse();
-		BeanUtil.copyProperties(sysTables.get(0), sysTableResponse, CopyOptions.create().setIgnoreError(true));
-		sysActionAuthorizedResponse.setTable(sysTableResponse);
 		
-		List<SysTableColumn> sysTableColumns = sysTableConlumnMapper.selectByExample(
-				ExampleBuilder.create(SysTableColumn.class).andEqualTo("tableId", sysTableResponse.getTableId()).build());
-		List<SysTableColumnResponse> columns = new ArrayList<SysTableColumnResponse>();
-		sysTableColumns.forEach(sysTableConlumn -> {
-			SysTableColumnResponse sysTableConlumnResponse = new SysTableColumnResponse();
-			BeanUtil.copyProperties(sysTableConlumn, sysTableConlumnResponse, CopyOptions.create().setIgnoreError(true));
-			columns.add(sysTableConlumnResponse);
-		});
-		sysTableResponse.setColumns(columns);
+		for (SysTable sysTable : sysTables) {
+			SysTableResponse sysTableResponse = new SysTableResponse();
+			BeanUtil.copyProperties(sysTable, sysTableResponse, CopyOptions.create().setIgnoreError(true));
+			sysActionAuthorizedResponse.getTables().add(sysTableResponse);
+			
+			List<SysTableColumn> sysTableColumns = sysTableConlumnMapper.selectByExample(
+					ExampleBuilder.create(SysTableColumn.class).andEqualTo("tableId", sysTable.getTableId()).build());
+			List<SysTableColumnResponse> columns = new ArrayList<SysTableColumnResponse>();
+			sysTableColumns.forEach(sysTableConlumn -> {
+				SysTableColumnResponse sysTableConlumnResponse = new SysTableColumnResponse();
+				BeanUtil.copyProperties(sysTableConlumn, sysTableConlumnResponse, CopyOptions.create().setIgnoreError(true));
+				columns.add(sysTableConlumnResponse);
+			});
+			sysTableResponse.setColumns(columns);
+		}
 		
 		List<SysAction> sysActions = sysActionMapper.selectByExample(
 				ExampleBuilder.create(SysAction.class).andEqualTo("menuId", menuId).build());

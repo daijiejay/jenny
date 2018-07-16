@@ -1829,7 +1829,7 @@
             }
 
             value = calculateObjectValue(column,
-                that.header.formatters[j], [value_, item, i, field, field], value_);
+                that.header.formatters[j], [value_, item, i, field, field, that.$el[0]], value_);
 
             if (item['_' + field + '_data'] && !$.isEmptyObject(item['_' + field + '_data'])) {
                 $.each(item['_' + field + '_data'], function(k, v) {
@@ -2056,7 +2056,7 @@
                             row = that.data[index],
                             value = row[field];
 
-                        func.apply(this, [e, value, row, index]);
+                        func.apply(this, [e, value, row, index, that.$el[0]]);
                     });
                 });
             }
@@ -2115,7 +2115,7 @@
             params.filter = JSON.stringify(this.filterColumnsPartial, null);
         }
 
-        data = calculateObjectValue(this.options, this.options.queryParams, [params], data);
+        data = calculateObjectValue(this.options, this.options.queryParams, [params, this.$el[0]], data);
 
         $.extend(data, query || {});
 

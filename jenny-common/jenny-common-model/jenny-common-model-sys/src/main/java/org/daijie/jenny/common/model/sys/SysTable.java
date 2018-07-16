@@ -43,18 +43,6 @@ public class SysTable implements Serializable {
     private String tableTarget;
 
     /**
-     * 搜索目录元素
-     */
-    @Column(name = "search_target")
-    private String searchTarget;
-
-    /**
-     * 表格工具栏目录元素
-     */
-    @Column(name = "toolbar_target")
-    private String toolbarTarget;
-
-    /**
      * 表格行主键编号名
      */
     @Column(name = "unique_id")
@@ -201,52 +189,6 @@ public class SysTable implements Serializable {
     }
 
     /**
-     * 获取搜索目录元素
-     *
-     * @return search_target - 搜索目录元素
-     */
-    public String getSearchTarget() {
-        return searchTarget;
-    }
-
-    public SysTable withSearchTarget(String searchTarget) {
-        this.setSearchTarget(searchTarget);
-        return this;
-    }
-
-    /**
-     * 设置搜索目录元素
-     *
-     * @param searchTarget 搜索目录元素
-     */
-    public void setSearchTarget(String searchTarget) {
-        this.searchTarget = searchTarget == null ? null : searchTarget.trim();
-    }
-
-    /**
-     * 获取表格工具栏目录元素
-     *
-     * @return toolbar_target - 表格工具栏目录元素
-     */
-    public String getToolbarTarget() {
-        return toolbarTarget;
-    }
-
-    public SysTable withToolbarTarget(String toolbarTarget) {
-        this.setToolbarTarget(toolbarTarget);
-        return this;
-    }
-
-    /**
-     * 设置表格工具栏目录元素
-     *
-     * @param toolbarTarget 表格工具栏目录元素
-     */
-    public void setToolbarTarget(String toolbarTarget) {
-        this.toolbarTarget = toolbarTarget == null ? null : toolbarTarget.trim();
-    }
-
-    /**
      * 获取表格行主键编号名
      *
      * @return unique_id - 表格行主键编号名
@@ -281,8 +223,6 @@ public class SysTable implements Serializable {
         sb.append(", interfaceUrl=").append(interfaceUrl);
         sb.append(", interfaceMethod=").append(interfaceMethod);
         sb.append(", tableTarget=").append(tableTarget);
-        sb.append(", searchTarget=").append(searchTarget);
-        sb.append(", toolbarTarget=").append(toolbarTarget);
         sb.append(", uniqueId=").append(uniqueId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
@@ -307,8 +247,6 @@ public class SysTable implements Serializable {
             && (this.getInterfaceUrl() == null ? other.getInterfaceUrl() == null : this.getInterfaceUrl().equals(other.getInterfaceUrl()))
             && (this.getInterfaceMethod() == null ? other.getInterfaceMethod() == null : this.getInterfaceMethod().equals(other.getInterfaceMethod()))
             && (this.getTableTarget() == null ? other.getTableTarget() == null : this.getTableTarget().equals(other.getTableTarget()))
-            && (this.getSearchTarget() == null ? other.getSearchTarget() == null : this.getSearchTarget().equals(other.getSearchTarget()))
-            && (this.getToolbarTarget() == null ? other.getToolbarTarget() == null : this.getToolbarTarget().equals(other.getToolbarTarget()))
             && (this.getUniqueId() == null ? other.getUniqueId() == null : this.getUniqueId().equals(other.getUniqueId()));
     }
 
@@ -322,8 +260,6 @@ public class SysTable implements Serializable {
         result = prime * result + ((getInterfaceUrl() == null) ? 0 : getInterfaceUrl().hashCode());
         result = prime * result + ((getInterfaceMethod() == null) ? 0 : getInterfaceMethod().hashCode());
         result = prime * result + ((getTableTarget() == null) ? 0 : getTableTarget().hashCode());
-        result = prime * result + ((getSearchTarget() == null) ? 0 : getSearchTarget().hashCode());
-        result = prime * result + ((getToolbarTarget() == null) ? 0 : getToolbarTarget().hashCode());
         result = prime * result + ((getUniqueId() == null) ? 0 : getUniqueId().hashCode());
         return result;
     }

@@ -74,32 +74,25 @@ function zTreeBeforeClick(treeId, treeNode, clickFlag) {
 	
 	$("#sysActionTable").initTable({
 		listenModalSave: function(form, action) {
-			if (action.actionName == '编辑') {
-				validUpdate(form);
-			} else {
-				validAdd(form);
-			}
+			valid(form);
 			return form.valid();
 		},
 		columnFormatter: function(value, row, index, field) {
-			if (field == 'enable') {
-				if(value) {
-					return '是';
+			if (field == 'actionType') {
+				if(actionType == 'OPERATE') {
+					return '列表单行操作';
 				}
-				return '否';
+				return '列表工具栏';
+			}
+			if (field == 'mutualType') {
+				if(mutualType == 'CONFIRM') {
+					return '确认';
+				}
+				return '表单';
 			}
 			return value;
 		},
 		operateFormatter: function(action, row) {
-//			if (row.cancel) {
-//				return false;
-//			}
-//			if (action.actionName == '编辑' || action.actionName == '禁用') {
-//				return !row.enable;
-//			}
-//			if (action.actionName == '启用') {
-//				return row.enable;
-//			}
 			return true;
 		},
 		searchParams: function(params) {
@@ -172,9 +165,33 @@ function removeHoverDom(treeId, treeNode) {
 	$("#addBtn_"+treeNode.tId).unbind().remove();
 };
 
-//function recoverExtand() {
-//	
-//}
+//功能表单检验
+function valid(form) {
+	form.validate({
+		ignore: "",
+		rules: {
+			actionName: {
+				required: true
+			},
+			interfaceServerId: {
+				required: true
+			},
+			interfaceUrl: {
+				required: true
+			},
+			interfaceMethod: {
+				required: true
+			}
+		},
+		errorPlacement: function(error, element) {
+			var ele = element.parent('.input-group').parent();
+			if(ele.find('label.error')) {
+				ele.find('label.error').remove();
+			}
+			ele.append(error[0].outerHTML);
+		}
+	});
+}
 
 var zNodes =[
 	{id:1, pId:0, name:"[core] 基本功能 演示", open:true},

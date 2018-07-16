@@ -11,17 +11,17 @@ public class SysActionAuthorizedResponse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "列表", required = true)
-	private SysTableResponse table;
+	private List<SysTableResponse> tables = new ArrayList<SysTableResponse>();
 
 	@ApiModelProperty(value = "功能", required = true)
 	private List<SysActionResponse> actions = new ArrayList<SysActionResponse>();
 
-	public SysTableResponse getTable() {
-		return table;
+	public List<SysTableResponse> getTables() {
+		return tables;
 	}
 
-	public void setTable(SysTableResponse table) {
-		this.table = table;
+	public void setTables(List<SysTableResponse> tables) {
+		this.tables = tables;
 	}
 
 	public List<SysActionResponse> getActions() {

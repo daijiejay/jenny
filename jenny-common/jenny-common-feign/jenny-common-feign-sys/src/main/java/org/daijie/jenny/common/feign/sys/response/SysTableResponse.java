@@ -47,18 +47,6 @@ public class SysTableResponse implements Serializable {
     private String tableTarget;
 
     /**
-     * 搜索目录元素
-     */
-	@ApiModelProperty(value = "搜索目录元素", required = true)
-    private String searchTarget;
-
-    /**
-     * 表格工具栏目录元素
-     */
-	@ApiModelProperty(value = "表格工具栏目录元素", required = true)
-    private String toolbarTarget;
-
-    /**
      * 表格行主键编号名
      */
 	@ApiModelProperty(value = "表格行主键编号名", required = true)
@@ -113,22 +101,6 @@ public class SysTableResponse implements Serializable {
 
 	public void setTableTarget(String tableTarget) {
 		this.tableTarget = tableTarget;
-	}
-
-	public String getSearchTarget() {
-		return searchTarget;
-	}
-
-	public void setSearchTarget(String searchTarget) {
-		this.searchTarget = searchTarget;
-	}
-
-	public String getToolbarTarget() {
-		return toolbarTarget;
-	}
-
-	public void setToolbarTarget(String toolbarTarget) {
-		this.toolbarTarget = toolbarTarget;
 	}
 
 	public String getUniqueId() {
