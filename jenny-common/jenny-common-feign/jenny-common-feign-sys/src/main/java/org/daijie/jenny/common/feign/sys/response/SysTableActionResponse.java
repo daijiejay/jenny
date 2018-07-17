@@ -1,61 +1,58 @@
-package org.daijie.jenny.common.feign.sys.request;
+package org.daijie.jenny.common.feign.sys.response;
 
-import org.daijie.core.result.Page;
-import org.daijie.jdbc.mybatis.example.ExampleConditions;
 import org.daijie.jenny.common.feign.sys.enumtype.ActionType;
 import org.daijie.jenny.common.feign.sys.enumtype.MutualType;
 
 import io.swagger.annotations.ApiModelProperty;
 
-@SuppressWarnings("serial")
-public class SysActionPageRequest extends Page implements ExampleConditions {
+public class SysTableActionResponse {
 
 	/**
      * 功能编号
      */
-	@ApiModelProperty(value = "功能编号")
+	@ApiModelProperty(value = "功能编号", required = true)
     private Integer actionId;
 
     /**
-     * 菜单编号
+     * 表格编号
      */
-	@ApiModelProperty(value = "菜单编号", required = true)
-    private Integer menuId;
+	@ApiModelProperty(value = "表格编号", required = true)
+    private Integer tableId;
 
     /**
      * 功能名称
      */
-	@ApiModelProperty(value = "功能名称")
+	@ApiModelProperty(value = "功能名称", required = true)
     private String actionName;
 
     /**
      * 功能类型：列表单行操作,列表工具栏
      */
-	@ApiModelProperty(value = "功能类型")
+	@ApiModelProperty(value = "功能类型", required = true)
     private ActionType actionType;
 
     /**
      * 交互类型：确认,表单
      */
-	@ApiModelProperty(value = "交互类型")
+	@ApiModelProperty(value = "交互类型", required = true)
     private MutualType mutualType;
 
     /**
      * 接口服务名
      */
-	@ApiModelProperty(value = "接口服务名")
+	@ApiModelProperty(value = "接口服务名", required = true)
     private String interfaceServerId;
 
     /**
      * 接口地址
      */
-	@ApiModelProperty(value = "接口地址")
+	@ApiModelProperty(value = "接口地址", required = true)
     private String interfaceUrl;
 
     /**
      * 接口方式
      */
-	@ApiModelProperty(value = "接口方式")
+	@ApiModelProperty(value = "接口方式", required = true)
     private String interfaceMethod;
 
     /**
@@ -72,12 +69,12 @@ public class SysActionPageRequest extends Page implements ExampleConditions {
 		this.actionId = actionId;
 	}
 
-	public Integer getMenuId() {
-		return menuId;
+	public Integer getTableId() {
+		return tableId;
 	}
 
-	public void setMenuId(Integer menuId) {
-		this.menuId = menuId;
+	public void setTableId(Integer tableId) {
+		this.tableId = tableId;
 	}
 
 	public String getActionName() {
@@ -91,10 +88,6 @@ public class SysActionPageRequest extends Page implements ExampleConditions {
 	public ActionType getActionType() {
 		return actionType;
 	}
-
-	public void setActionType(String actionType) {
-		this.actionType = ActionType.valueOf(actionType);
-	}
 	
 	public void setActionType(ActionType actionType) {
 		this.actionType = actionType;
@@ -102,10 +95,6 @@ public class SysActionPageRequest extends Page implements ExampleConditions {
 
 	public MutualType getMutualType() {
 		return mutualType;
-	}
-
-	public void setMutualType(String mutualType) {
-		this.mutualType = MutualType.valueOf(mutualType);
 	}
 
 	public void setMutualType(MutualType mutualType) {

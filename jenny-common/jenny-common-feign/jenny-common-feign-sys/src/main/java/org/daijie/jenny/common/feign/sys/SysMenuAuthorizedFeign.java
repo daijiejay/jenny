@@ -1,7 +1,7 @@
 package org.daijie.jenny.common.feign.sys;
 
 import org.daijie.core.result.ModelResult;
-import org.daijie.jenny.common.feign.sys.response.SysActionAuthorizedResponse;
+import org.daijie.jenny.common.feign.sys.response.SysTableAuthorizedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleMenuResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,5 +30,5 @@ public interface SysMenuAuthorizedFeign {
 	
 	@ApiOperation(value = "根据用户编号获取菜单")
 	@RequestMapping(value = "/action/{menuId}", method = RequestMethod.GET)
-	public ModelResult<SysActionAuthorizedResponse> getActionByMenu(@PathVariable(name = "menuId") Integer menuId);
+	public ModelResult<SysTableAuthorizedResponse> getActionByMenu(@PathVariable(name = "menuId") Integer menuId);
 }

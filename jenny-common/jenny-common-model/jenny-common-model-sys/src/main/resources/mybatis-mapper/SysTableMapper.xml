@@ -7,6 +7,7 @@
     -->
     <id column="table_id" jdbcType="INTEGER" property="tableId" />
     <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
     <result column="interface_server_id" jdbcType="VARCHAR" property="interfaceServerId" />
     <result column="interface_url" jdbcType="VARCHAR" property="interfaceUrl" />
     <result column="interface_method" jdbcType="VARCHAR" property="interfaceMethod" />
@@ -17,7 +18,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    table_id, menu_id, interface_server_id, interface_url, interface_method, table_target, 
-    unique_id
+    table_id, menu_id, table_name, interface_server_id, interface_url, interface_method, 
+    table_target, unique_id
   </sql>
 </mapper>

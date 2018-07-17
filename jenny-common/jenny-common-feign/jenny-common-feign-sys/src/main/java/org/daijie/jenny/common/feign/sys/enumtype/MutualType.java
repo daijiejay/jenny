@@ -6,7 +6,9 @@ public enum MutualType implements TypeFactory {
 
 	CONFIRM("确认"),
 	
-	FORM("表单");
+	FORM("表单"),
+	
+	EXTEND("扩展");
 	
 	private String describle;
 	

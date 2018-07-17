@@ -190,6 +190,12 @@ function countDown(times) {
 			},
 			operateFormatter: function(action, row) {
 				return true;
+			},
+			operateExtend: function(action, row) {
+				return;
+			},
+			listenModalShow: function(modal) {
+				return;
 			}
 		}
 	},
@@ -206,9 +212,12 @@ function countDown(times) {
 			tab.that = this;
 			tab.settings = settings;
 			var menuId = window.parent.$('#page-wrapper iframe').attr('menuId');
-			request('get', '', '/sysindex/menu/authorized/action/' + menuId, 'SYS', function(result) {
-				tab.table = result.data.tables[0];
-				tab.table.actions = result.data.actions;
+			request('get', '', '/sysindex/menu/authorized/table/' + menuId, 'SYS', function(result) {
+				result.data.tables.forEach(function(value, index) {
+					if (value.tableTarget == _this.selector) {
+						tab.table = value;
+					}
+				})
 				_this.initTableData(tab);
 				_this.listenSearch(tab);
 				_this.listenToolbar(tab);
@@ -279,10 +288,12 @@ function countDown(times) {
 			var tab = _tableMap.get('#' + ele.id);
 			var operate = new Array();
 			tab.table.actions.forEach(function(action, i) {
-				if(action.actionType == 'OPERATE' && tab.settings.operateFormatter(action, row)) {
-					if(action.mutualType == 'CONFIRM') {
+				if (action.actionType == 'OPERATE' && tab.settings.operateFormatter(action, row)) {
+					if (action.mutualType == 'CONFIRM') {
 						operate.push('<a actionId="' + action.actionId + '" class="btn active" href="#">' + action.actionName + '</a>');
-					} else if(action.mutualType == 'FORM') {
+					} else if (action.mutualType == 'FORM') {
+						operate.push('<a id="' + tab.that.getUniqueIdValue(row, tab) + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>');
+					} else if (action.mutualType == 'EXTEND') {
 						operate.push('<a id="' + tab.that.getUniqueIdValue(row, tab) + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>');
 					}
 				}
@@ -326,6 +337,10 @@ function countDown(times) {
 						modal.find('.modal-title').html(button.html());
 						modal.find('form')[0].reset();
 					}
+					if (typeof tab.settings.listenModalShow == 'function') {
+						tab.settings.listenModalShow(modal);
+					}
+					
 					modal.find('button.save').click(function() {
 						tab.that.saveFormData(tab, actionId, modal);
 					});
@@ -422,10 +437,8 @@ function countDown(times) {
 							formField.val(value);
 						}
 					} else if(fieldTagName == "select") {
-						//do something special  
 						formField.val(value);
 					} else if(fieldTagName == "textarea") {
-						//do something special  
 						formField.val(value);
 					} else {
 						formField.val(value);
@@ -453,8 +466,8 @@ function countDown(times) {
 		'click .btn': function(e, value, row, index, ele) {
 			var tab = _tableMap.get('#' + ele.id);
 			tab.table.actions.forEach(function(action, i) {
-				if(action.actionType == 'OPERATE' && action.actionName == e.target.innerHTML) {
-					if(action.mutualType == 'CONFIRM') {
+				if (action.actionType == 'OPERATE' && action.actionName == e.target.innerHTML) {
+					if (action.mutualType == 'CONFIRM') {
 						layer.confirm('确定需要' + action.actionName + '吗？', {
 							yes: function(index, layero) {
 								var url = tab.that.formatterUrl(action.interfaceUrl, row);
@@ -464,8 +477,12 @@ function countDown(times) {
 								})
 							}
 						});
-					} else if(action.mutualType == 'FORM') {
+					} else if (action.mutualType == 'FORM') {
 						tab.that.listenModalEvents(tab, action);
+					} else if (action.mutualType == 'EXTEND') {
+						if (typeof tab.settings.operateExtend == 'function') {
+							tab.settings.operateExtend(action, row);
+						}
 					}
 				}
 			});

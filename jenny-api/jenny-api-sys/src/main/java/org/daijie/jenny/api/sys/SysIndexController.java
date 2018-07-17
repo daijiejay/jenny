@@ -3,7 +3,7 @@ package org.daijie.jenny.api.sys;
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.jenny.common.feign.sys.SysMenuAuthorizedFeign;
-import org.daijie.jenny.common.feign.sys.response.SysActionAuthorizedResponse;
+import org.daijie.jenny.common.feign.sys.response.SysTableAuthorizedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleMenuResponse;
 import org.daijie.jenny.common.feign.sys.response.SysUserCacheResponse;
 import org.daijie.shiro.authc.Auth;
@@ -38,8 +38,15 @@ public class SysIndexController {
 	}
 	
 	@ApiOperation(value = "获取表格")
-	@RequestMapping(value = "/menu/authorized/action/{menuId}", method = RequestMethod.GET)
-	public ModelResult<SysActionAuthorizedResponse> getActionByMenu(@PathVariable(name = "menuId") Integer menuId) {
-		return sysMenuAuthorizedFeign.getActionByMenu(menuId);
+	@RequestMapping(value = "/menu/authorized/table/{menuId}", method = RequestMethod.GET)
+	public ModelResult<SysTableAuthorizedResponse> getActionByMenu(@PathVariable(name = "menuId") Integer menuId) {
+		SysUserCacheResponse sysUserResponse = Auth.getAuthc(SysUserCacheResponse.class);
+		SysTableAuthorizedResponse authorizedResponse = null;
+		if (sysUserResponse.getAdmin()) {
+			authorizedResponse = sysMenuAuthorizedFeign.getActionByMenu(menuId).getData();
+		} else {
+			
+		}
+		return Result.build(authorizedResponse);
 	}
 }

@@ -7,7 +7,7 @@ import org.daijie.jenny.common.feign.sys.enumtype.MoveType;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class SysActionMoveRequest {
+public class SysMenuMoveRequest {
 
 	@ApiModelProperty(value = "菜单编号数组", required = true)
 	private List<Integer> menuIds = new ArrayList<Integer>();

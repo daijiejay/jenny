@@ -13,7 +13,7 @@ import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.jdbc.mybatis.example.ExampleBuilder;
 import org.daijie.jenny.common.feign.sys.SysMenuFeign;
 import org.daijie.jenny.common.feign.sys.enumtype.MoveType;
-import org.daijie.jenny.common.feign.sys.request.SysActionMoveRequest;
+import org.daijie.jenny.common.feign.sys.request.SysMenuMoveRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuUpdateRequest;
@@ -206,7 +206,7 @@ public class SysMenuService implements SysMenuFeign {
 
 	@Override
 	@Transactional
-	public ModelResult<Boolean> moveMenu(SysActionMoveRequest sysMenuRequest) {
+	public ModelResult<Boolean> moveMenu(SysMenuMoveRequest sysMenuRequest) {
 		SysMenu menu = sysMenuMapper.selectByPrimaryKey(sysMenuRequest.getTargetId());
 		if (sysMenuRequest.getMoveType() == MoveType.INNER) {
 			if (menu.getSort() == 2) {

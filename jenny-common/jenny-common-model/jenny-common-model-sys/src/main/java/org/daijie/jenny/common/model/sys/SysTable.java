@@ -19,6 +19,12 @@ public class SysTable implements Serializable {
     private Integer menuId;
 
     /**
+     * 表格名称
+     */
+    @Column(name = "table_name")
+    private String tableName;
+
+    /**
      * 接口服务名
      */
     @Column(name = "interface_server_id")
@@ -94,6 +100,29 @@ public class SysTable implements Serializable {
      */
     public void setMenuId(Integer menuId) {
         this.menuId = menuId;
+    }
+
+    /**
+     * 获取表格名称
+     *
+     * @return table_name - 表格名称
+     */
+    public String getTableName() {
+        return tableName;
+    }
+
+    public SysTable withTableName(String tableName) {
+        this.setTableName(tableName);
+        return this;
+    }
+
+    /**
+     * 设置表格名称
+     *
+     * @param tableName 表格名称
+     */
+    public void setTableName(String tableName) {
+        this.tableName = tableName == null ? null : tableName.trim();
     }
 
     /**
@@ -219,6 +248,7 @@ public class SysTable implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", tableId=").append(tableId);
         sb.append(", menuId=").append(menuId);
+        sb.append(", tableName=").append(tableName);
         sb.append(", interfaceServerId=").append(interfaceServerId);
         sb.append(", interfaceUrl=").append(interfaceUrl);
         sb.append(", interfaceMethod=").append(interfaceMethod);
@@ -243,6 +273,7 @@ public class SysTable implements Serializable {
         SysTable other = (SysTable) that;
         return (this.getTableId() == null ? other.getTableId() == null : this.getTableId().equals(other.getTableId()))
             && (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()))
+            && (this.getTableName() == null ? other.getTableName() == null : this.getTableName().equals(other.getTableName()))
             && (this.getInterfaceServerId() == null ? other.getInterfaceServerId() == null : this.getInterfaceServerId().equals(other.getInterfaceServerId()))
             && (this.getInterfaceUrl() == null ? other.getInterfaceUrl() == null : this.getInterfaceUrl().equals(other.getInterfaceUrl()))
             && (this.getInterfaceMethod() == null ? other.getInterfaceMethod() == null : this.getInterfaceMethod().equals(other.getInterfaceMethod()))
@@ -256,6 +287,7 @@ public class SysTable implements Serializable {
         int result = 1;
         result = prime * result + ((getTableId() == null) ? 0 : getTableId().hashCode());
         result = prime * result + ((getMenuId() == null) ? 0 : getMenuId().hashCode());
+        result = prime * result + ((getTableName() == null) ? 0 : getTableName().hashCode());
         result = prime * result + ((getInterfaceServerId() == null) ? 0 : getInterfaceServerId().hashCode());
         result = prime * result + ((getInterfaceUrl() == null) ? 0 : getInterfaceUrl().hashCode());
         result = prime * result + ((getInterfaceMethod() == null) ? 0 : getInterfaceMethod().hashCode());

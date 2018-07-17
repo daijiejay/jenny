@@ -1,23 +1,26 @@
 package org.daijie.jenny.common.feign.sys.request;
 
+import org.daijie.core.result.Page;
+import org.daijie.jdbc.mybatis.example.ExampleConditions;
 import org.daijie.jenny.common.feign.sys.enumtype.ActionType;
 import org.daijie.jenny.common.feign.sys.enumtype.MutualType;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class SysActionUpdateRequest {
+@SuppressWarnings("serial")
+public class SysTableActionPageRequest extends Page implements ExampleConditions {
 
 	/**
      * 功能编号
      */
-	@ApiModelProperty(value = "功能编号", required = true)
+	@ApiModelProperty(value = "功能编号")
     private Integer actionId;
 
     /**
-     * 菜单编号
+     * 表格编号
      */
-	@ApiModelProperty(value = "菜单编号")
-    private Integer menuId;
+	@ApiModelProperty(value = "表格编号", required = true)
+    private Integer tableId;
 
     /**
      * 功能名称
@@ -69,12 +72,12 @@ public class SysActionUpdateRequest {
 		this.actionId = actionId;
 	}
 
-	public Integer getMenuId() {
-		return menuId;
+	public Integer getTableId() {
+		return tableId;
 	}
 
-	public void setMenuId(Integer menuId) {
-		this.menuId = menuId;
+	public void setTableId(Integer tableId) {
+		this.tableId = tableId;
 	}
 
 	public String getActionName() {

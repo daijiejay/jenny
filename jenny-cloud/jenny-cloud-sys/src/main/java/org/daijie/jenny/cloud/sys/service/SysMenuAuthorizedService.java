@@ -11,23 +11,23 @@ import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.jdbc.mybatis.example.ExampleBuilder;
 import org.daijie.jenny.common.feign.sys.SysMenuAuthorizedFeign;
-import org.daijie.jenny.common.feign.sys.response.SysActionAuthorizedResponse;
-import org.daijie.jenny.common.feign.sys.response.SysActionResponse;
 import org.daijie.jenny.common.feign.sys.response.SysMenuAuthorizedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleMenuResponse;
+import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
+import org.daijie.jenny.common.feign.sys.response.SysTableAuthorizedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableColumnResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableResponse;
-import org.daijie.jenny.common.mapper.sys.SysActionMapper;
 import org.daijie.jenny.common.mapper.sys.SysMenuAuthorizedMapper;
 import org.daijie.jenny.common.mapper.sys.SysMenuMapper;
 import org.daijie.jenny.common.mapper.sys.SysRoleAuthorizedMapper;
+import org.daijie.jenny.common.mapper.sys.SysTableActionMapper;
 import org.daijie.jenny.common.mapper.sys.SysTableColumnMapper;
 import org.daijie.jenny.common.mapper.sys.SysTableMapper;
-import org.daijie.jenny.common.model.sys.SysAction;
 import org.daijie.jenny.common.model.sys.SysMenu;
 import org.daijie.jenny.common.model.sys.SysMenuAuthorized;
 import org.daijie.jenny.common.model.sys.SysRoleAuthorized;
 import org.daijie.jenny.common.model.sys.SysTable;
+import org.daijie.jenny.common.model.sys.SysTableAction;
 import org.daijie.jenny.common.model.sys.SysTableColumn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,13 +42,13 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 	private SysMenuMapper sysMenuMapper;
 	
 	@Autowired
-	private SysActionMapper sysActionMapper;
-	
-	@Autowired
 	private SysTableMapper sysTableMapper;
 	
 	@Autowired
 	private SysTableColumnMapper sysTableConlumnMapper;
+	
+	@Autowired
+	private SysTableActionMapper sysTableActionMapper;
 	
 	@Autowired
 	private SysRoleAuthorizedMapper sysRoleAuthorizedMapper;
@@ -73,15 +73,6 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 		list2.forEach(sysMenu -> {
 			SysMenuAuthorizedResponse menuAuthorizedResponse = new SysMenuAuthorizedResponse();
 			BeanUtil.copyProperties(sysMenu, menuAuthorizedResponse);
-			List<SysAction> sysActions = sysActionMapper.selectByExample(
-					ExampleBuilder.create(SysAction.class).andEqualTo("menuId", sysMenu.getMenuId()).build());
-			List<SysActionResponse> sysActionResponses = new ArrayList<SysActionResponse>();
-			sysActions.forEach(sysAction -> {
-				SysActionResponse sysActionResponse = new SysActionResponse();
-				BeanUtil.copyProperties(sysAction, sysActionResponse, CopyOptions.create().setIgnoreError(true));
-				sysActionResponses.add(sysActionResponse);
-			});
-			menuAuthorizedResponse.setSysActions(sysActionResponses);
 			level2.add(menuAuthorizedResponse);
 		});
 		menuResponse.setLevel2(level2);
@@ -99,17 +90,18 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 		}).collect(Collectors.toList()));
 		
 		menuResponse.setLevel2(menuResponse.getLevel2().stream().filter(menu -> {
-			return menuAuthorities.stream().anyMatch(authorized -> {
-				boolean match = menu.getMenuId().equals(authorized.getMenuId());
-				if (match) {
-					menu.setSysActions(menu.getSysActions().stream().filter(sysAction -> {
-						return Arrays.asList(authorized.getActionIds().split(",")).stream().anyMatch(actionId -> {
-							return new Integer(Integer.parseInt(actionId)).equals(sysAction.getActionId());
-						});
-					}).collect(Collectors.toList()));
-				}
-				return match;
-			});
+			return menuAuthorities.stream().anyMatch(authorized -> menu.getMenuId().equals(authorized.getMenuId()));
+//			return menuAuthorities.stream().anyMatch(authorized -> {
+//				boolean match = menu.getMenuId().equals(authorized.getMenuId());
+//				if (match) {
+//					menu.setSysActions(menu.getSysActions().stream().filter(sysAction -> {
+//						return Arrays.asList(authorized.getActionIds().split(",")).stream().anyMatch(actionId -> {
+//							return new Integer(Integer.parseInt(actionId)).equals(sysAction.getActionId());
+//						});
+//					}).collect(Collectors.toList()));
+//				}
+//				return match;
+//			});
 		}).collect(Collectors.toList()));
 		return Result.build(menuResponse);
 	}
@@ -133,17 +125,14 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 	}
 
 	@Override
-	public ModelResult<SysActionAuthorizedResponse> getActionByMenu(Integer menuId) {
+	public ModelResult<SysTableAuthorizedResponse> getActionByMenu(Integer menuId) {
 		SysMenu sysMenu = sysMenuMapper.selectByPrimaryKey(menuId);
 		if (sysMenu == null) {
 			return Result.build("菜单编号不存在", ApiResult.ERROR, ResultCode.CODE_102);
 		}
-		SysActionAuthorizedResponse sysActionAuthorizedResponse = new SysActionAuthorizedResponse();
+		SysTableAuthorizedResponse sysActionAuthorizedResponse = new SysTableAuthorizedResponse();
 		List<SysTable> sysTables = sysTableMapper.selectByExample(
 				ExampleBuilder.create(SysTable.class).andEqualTo("menuId", menuId).build());
-		if (sysTables.size() != 1) {
-			return Result.build("此菜单配置表格数据错误", ApiResult.ERROR, ResultCode.CODE_102);
-		}
 		
 		for (SysTable sysTable : sysTables) {
 			SysTableResponse sysTableResponse = new SysTableResponse();
@@ -159,17 +148,17 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 				columns.add(sysTableConlumnResponse);
 			});
 			sysTableResponse.setColumns(columns);
+			
+			List<SysTableAction> sysTableActions = sysTableActionMapper.selectByExample(
+					ExampleBuilder.create(SysTableAction.class).andEqualTo("tableId", sysTable.getTableId()).build());
+			List<SysTableActionResponse> actions = new ArrayList<SysTableActionResponse>();
+			sysTableActions.forEach(action -> {
+				SysTableActionResponse actionResponse = new SysTableActionResponse();
+				BeanUtil.copyProperties(action, actionResponse, CopyOptions.create().setIgnoreError(true));
+				actions.add(actionResponse);
+			});
+			sysTableResponse.setActions(actions);
 		}
-		
-		List<SysAction> sysActions = sysActionMapper.selectByExample(
-				ExampleBuilder.create(SysAction.class).andEqualTo("menuId", menuId).build());
-		List<SysActionResponse> sysActionResponses = new ArrayList<SysActionResponse>();
-		sysActions.forEach(action -> {
-			SysActionResponse actionResponse = new SysActionResponse();
-			BeanUtil.copyProperties(action, actionResponse, CopyOptions.create().setIgnoreError(true));
-			sysActionResponses.add(actionResponse);
-		});
-		sysActionAuthorizedResponse.setActions(sysActionResponses);
 		return Result.build(sysActionAuthorizedResponse);
 	}
 

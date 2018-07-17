@@ -3,8 +3,8 @@ package org.daijie.jenny.common.model.sys;
 import java.io.Serializable;
 import javax.persistence.*;
 
-@Table(name = "sys_action")
-public class SysAction implements Serializable {
+@Table(name = "sys_table_action")
+public class SysTableAction implements Serializable {
     /**
      * 功能编号
      */
@@ -15,8 +15,8 @@ public class SysAction implements Serializable {
     /**
      * 菜单编号
      */
-    @Column(name = "menu_id")
-    private Integer menuId;
+    @Column(name = "table_id")
+    private Integer tableId;
 
     /**
      * 功能名称
@@ -71,7 +71,7 @@ public class SysAction implements Serializable {
         return actionId;
     }
 
-    public SysAction withActionId(Integer actionId) {
+    public SysTableAction withActionId(Integer actionId) {
         this.setActionId(actionId);
         return this;
     }
@@ -88,24 +88,24 @@ public class SysAction implements Serializable {
     /**
      * 获取菜单编号
      *
-     * @return menu_id - 菜单编号
+     * @return table_id - 菜单编号
      */
-    public Integer getMenuId() {
-        return menuId;
+    public Integer getTableId() {
+        return tableId;
     }
 
-    public SysAction withMenuId(Integer menuId) {
-        this.setMenuId(menuId);
+    public SysTableAction withTableId(Integer tableId) {
+        this.setTableId(tableId);
         return this;
     }
 
     /**
      * 设置菜单编号
      *
-     * @param menuId 菜单编号
+     * @param tableId 菜单编号
      */
-    public void setMenuId(Integer menuId) {
-        this.menuId = menuId;
+    public void setTableId(Integer tableId) {
+        this.tableId = tableId;
     }
 
     /**
@@ -117,7 +117,7 @@ public class SysAction implements Serializable {
         return actionName;
     }
 
-    public SysAction withActionName(String actionName) {
+    public SysTableAction withActionName(String actionName) {
         this.setActionName(actionName);
         return this;
     }
@@ -140,7 +140,7 @@ public class SysAction implements Serializable {
         return actionType;
     }
 
-    public SysAction withActionType(String actionType) {
+    public SysTableAction withActionType(String actionType) {
         this.setActionType(actionType);
         return this;
     }
@@ -163,7 +163,7 @@ public class SysAction implements Serializable {
         return mutualType;
     }
 
-    public SysAction withMutualType(String mutualType) {
+    public SysTableAction withMutualType(String mutualType) {
         this.setMutualType(mutualType);
         return this;
     }
@@ -186,7 +186,7 @@ public class SysAction implements Serializable {
         return interfaceServerId;
     }
 
-    public SysAction withInterfaceServerId(String interfaceServerId) {
+    public SysTableAction withInterfaceServerId(String interfaceServerId) {
         this.setInterfaceServerId(interfaceServerId);
         return this;
     }
@@ -209,7 +209,7 @@ public class SysAction implements Serializable {
         return interfaceUrl;
     }
 
-    public SysAction withInterfaceUrl(String interfaceUrl) {
+    public SysTableAction withInterfaceUrl(String interfaceUrl) {
         this.setInterfaceUrl(interfaceUrl);
         return this;
     }
@@ -232,7 +232,7 @@ public class SysAction implements Serializable {
         return interfaceMethod;
     }
 
-    public SysAction withInterfaceMethod(String interfaceMethod) {
+    public SysTableAction withInterfaceMethod(String interfaceMethod) {
         this.setInterfaceMethod(interfaceMethod);
         return this;
     }
@@ -255,7 +255,7 @@ public class SysAction implements Serializable {
         return formTarget;
     }
 
-    public SysAction withFormTarget(String formTarget) {
+    public SysTableAction withFormTarget(String formTarget) {
         this.setFormTarget(formTarget);
         return this;
     }
@@ -276,7 +276,7 @@ public class SysAction implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", actionId=").append(actionId);
-        sb.append(", menuId=").append(menuId);
+        sb.append(", tableId=").append(tableId);
         sb.append(", actionName=").append(actionName);
         sb.append(", actionType=").append(actionType);
         sb.append(", mutualType=").append(mutualType);
@@ -300,9 +300,9 @@ public class SysAction implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        SysAction other = (SysAction) that;
+        SysTableAction other = (SysTableAction) that;
         return (this.getActionId() == null ? other.getActionId() == null : this.getActionId().equals(other.getActionId()))
-            && (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()))
+            && (this.getTableId() == null ? other.getTableId() == null : this.getTableId().equals(other.getTableId()))
             && (this.getActionName() == null ? other.getActionName() == null : this.getActionName().equals(other.getActionName()))
             && (this.getActionType() == null ? other.getActionType() == null : this.getActionType().equals(other.getActionType()))
             && (this.getMutualType() == null ? other.getMutualType() == null : this.getMutualType().equals(other.getMutualType()))
@@ -317,7 +317,7 @@ public class SysAction implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getActionId() == null) ? 0 : getActionId().hashCode());
-        result = prime * result + ((getMenuId() == null) ? 0 : getMenuId().hashCode());
+        result = prime * result + ((getTableId() == null) ? 0 : getTableId().hashCode());
         result = prime * result + ((getActionName() == null) ? 0 : getActionName().hashCode());
         result = prime * result + ((getActionType() == null) ? 0 : getActionType().hashCode());
         result = prime * result + ((getMutualType() == null) ? 0 : getMutualType().hashCode());

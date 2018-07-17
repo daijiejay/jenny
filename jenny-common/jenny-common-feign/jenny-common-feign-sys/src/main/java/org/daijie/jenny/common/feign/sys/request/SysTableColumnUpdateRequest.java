@@ -1,11 +1,11 @@
-package org.daijie.jenny.common.feign.sys.response;
+package org.daijie.jenny.common.feign.sys.request;
 
 import java.io.Serializable;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
-public class SysTableColumnResponse implements Serializable {
+public class SysTableColumnUpdateRequest implements Serializable {
 
 	/**
      * 行编号
@@ -14,21 +14,15 @@ public class SysTableColumnResponse implements Serializable {
     private Integer columnId;
 
     /**
-     * 表格编号
-     */
-	@ApiModelProperty(value = "表格工具栏目录元素", required = true)
-    private Integer tableId;
-
-    /**
      * 列字段名
      */
-	@ApiModelProperty(value = "表格工具栏目录元素", required = true)
+	@ApiModelProperty(value = "表格工具栏目录元素")
     private String field;
 
     /**
      * 列字段标题
      */
-	@ApiModelProperty(value = "表格工具栏目录元素", required = true)
+	@ApiModelProperty(value = "表格工具栏目录元素")
     private String title;
 
 	public Integer getColumnId() {
@@ -37,14 +31,6 @@ public class SysTableColumnResponse implements Serializable {
 
 	public void setColumnId(Integer columnId) {
 		this.columnId = columnId;
-	}
-
-	public Integer getTableId() {
-		return tableId;
-	}
-
-	public void setTableId(Integer tableId) {
-		this.tableId = tableId;
 	}
 
 	public String getField() {

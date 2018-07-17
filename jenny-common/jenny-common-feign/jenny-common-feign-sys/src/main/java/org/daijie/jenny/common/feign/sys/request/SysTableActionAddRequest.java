@@ -5,13 +5,13 @@ import org.daijie.jenny.common.feign.sys.enumtype.MutualType;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class SysActionAddRequest {
+public class SysTableActionAddRequest {
 
     /**
-     * 菜单编号
+     * 表格编号
      */
-	@ApiModelProperty(value = "菜单编号", required = true)
-    private Integer menuId;
+	@ApiModelProperty(value = "表格编号", required = true)
+    private Integer tableId;
 
     /**
      * 功能名称
@@ -55,12 +55,12 @@ public class SysActionAddRequest {
 	@ApiModelProperty(value = "表单目标元素")
     private String formTarget;
 
-	public Integer getMenuId() {
-		return menuId;
+	public Integer getTableId() {
+		return tableId;
 	}
 
-	public void setMenuId(Integer menuId) {
-		this.menuId = menuId;
+	public void setTableId(Integer tableId) {
+		this.tableId = tableId;
 	}
 
 	public String getActionName() {

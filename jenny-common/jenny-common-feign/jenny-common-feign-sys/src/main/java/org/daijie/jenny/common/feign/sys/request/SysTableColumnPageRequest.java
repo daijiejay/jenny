@@ -1,34 +1,35 @@
-package org.daijie.jenny.common.feign.sys.response;
+package org.daijie.jenny.common.feign.sys.request;
 
-import java.io.Serializable;
+import org.daijie.core.result.Page;
+import org.daijie.jdbc.mybatis.example.ExampleConditions;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
-public class SysTableColumnResponse implements Serializable {
+public class SysTableColumnPageRequest extends Page implements ExampleConditions {
 
 	/**
      * 行编号
      */
-	@ApiModelProperty(value = "表格工具栏目录元素", required = true)
+	@ApiModelProperty(value = "表格工具栏目录元素")
     private Integer columnId;
 
     /**
      * 表格编号
      */
-	@ApiModelProperty(value = "表格工具栏目录元素", required = true)
+	@ApiModelProperty(value = "表格工具栏目录元素")
     private Integer tableId;
 
     /**
      * 列字段名
      */
-	@ApiModelProperty(value = "表格工具栏目录元素", required = true)
+	@ApiModelProperty(value = "表格工具栏目录元素")
     private String field;
 
     /**
      * 列字段标题
      */
-	@ApiModelProperty(value = "表格工具栏目录元素", required = true)
+	@ApiModelProperty(value = "表格工具栏目录元素")
     private String title;
 
 	public Integer getColumnId() {

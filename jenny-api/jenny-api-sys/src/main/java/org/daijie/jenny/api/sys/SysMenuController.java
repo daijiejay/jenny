@@ -5,7 +5,7 @@ import java.util.List;
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
 import org.daijie.jenny.common.feign.sys.SysMenuFeign;
-import org.daijie.jenny.common.feign.sys.request.SysActionMoveRequest;
+import org.daijie.jenny.common.feign.sys.request.SysMenuMoveRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuUpdateRequest;
@@ -83,7 +83,7 @@ public class SysMenuController {
 	
 	@ApiOperation(value = "移动菜单")
 	@RequestMapping(value = "/move", method = RequestMethod.PUT)
-	public ModelResult<Boolean> moveMenu(SysActionMoveRequest sysMenuRequest) {
+	public ModelResult<Boolean> moveMenu(SysMenuMoveRequest sysMenuRequest) {
 		return sysMenuFeign.moveMenu(sysMenuRequest);
 	}
 }
