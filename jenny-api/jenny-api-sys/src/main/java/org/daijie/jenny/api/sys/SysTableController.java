@@ -81,7 +81,7 @@ public class SysTableController {
 	
 	@ApiOperation(value = "条件查询表格列字段")
 	@RequestMapping(value = "/column/query", method = RequestMethod.GET)
-	public ModelResult<PageResult<SysTableActionResponse>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
+	public ModelResult<PageResult<SysTableColumnPageRequest>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
 		return sysTableFeign.getColumnByPage(sysColumnRequest);
 	}
 	

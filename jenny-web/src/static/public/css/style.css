@@ -1,3 +1,13 @@
+@import url('../bootstrap/css/bootstrap.css');
+@import url('../bootstrap/css/bootstrap-table.css');
+@import url('../jquery/css/jquery-ui.css');
+@import url('../fontIconPicker/css/jquery.fonticonpicker.css');
+@import url('../fontIconPicker/themes/bootstrap-theme/jquery.fonticonpicker.bootstrap.css');
+@import url('../layer/css/layer.css');
+@import url('../ztree/css/ztree.css');
+@import url('../fakeLoader/css/fakeLoader.css');
+@import url('font-awesome.css');
+
 h4,
 h5,
 h6,
@@ -2374,13 +2384,13 @@ h4.modal-title {
 }
 
 .general-grids-l {
-	padding: 2em 1.5em;
-	width: 30%;
+	padding: 0em 1.5em;
+	width: 27%;
 }
 
 .general-grids-r {
-	padding: 2em 1.5em;
-	width: 67%;
+	padding: 0em 1.5em;
+	width: 72%;
 }
 
 .general-grids.grids-right {

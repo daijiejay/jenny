@@ -1,3 +1,6 @@
+var local = window.location.href.substring(0, window.location.href.indexOf('static') + 6);
+//document.write("<script type='text/javascript' src='" + local + "/public/jquery/js/jquery-1.11.1.min.js'></script>");
+
 /**
  * 存储服务名地址
  */
@@ -286,15 +289,15 @@ function countDown(times) {
 		},
 		initOperates: function(value, row, index, field, field, ele) {
 			var tab = _tableMap.get('#' + ele.id);
-			var operate = new Array();
+			var operate = '';
 			tab.table.actions.forEach(function(action, i) {
 				if (action.actionType == 'OPERATE' && tab.settings.operateFormatter(action, row)) {
 					if (action.mutualType == 'CONFIRM') {
-						operate.push('<a actionId="' + action.actionId + '" class="btn active" href="#">' + action.actionName + '</a>');
+						operate += '<a mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" class="btn active" href="#">' + action.actionName + '</a>';
 					} else if (action.mutualType == 'FORM') {
-						operate.push('<a id="' + tab.that.getUniqueIdValue(row, tab) + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>');
+						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>';
 					} else if (action.mutualType == 'EXTEND') {
-						operate.push('<a id="' + tab.that.getUniqueIdValue(row, tab) + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>');
+						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>';
 					}
 				}
 			});
@@ -326,16 +329,23 @@ function countDown(times) {
 				_modalMap.set(action.formTarget, $(action.formTarget));
 				_modalMap.get(action.formTarget).on('shown.bs.modal', function(event) {
 					var modal = $(this);
+					if (typeof modal.draggable === 'function') {
+						modal.draggable();
+					}
 					var button = $(event.relatedTarget);
 					var id = button.attr('id');
 					var actionId = button.attr('actionId');
-					if(id) {
-						var row = tab.that.bootstrapTable('getRowByUniqueId', id);
-						modal.find('form').initForm(row);
-						modal.find('.modal-title').html(button.html());
-					} else {
-						modal.find('.modal-title').html(button.html());
-						modal.find('form')[0].reset();
+					var mutualType = button.attr('mutualType');
+					if (mutualType == 'FORM') {
+						if(id) {
+							var row = tab.that.bootstrapTable('getRowByUniqueId', id);
+							modal.find('form').initForm(row);
+							modal.find('.modal-title').html(button.html());
+						} else {
+							modal.find('.modal-title').html(button.html());
+						}
+					} else if (mutualType == 'EXTEND') {
+						
 					}
 					if (typeof tab.settings.listenModalShow == 'function') {
 						tab.settings.listenModalShow(modal);
@@ -344,6 +354,14 @@ function countDown(times) {
 					modal.find('button.save').click(function() {
 						tab.that.saveFormData(tab, actionId, modal);
 					});
+				});
+				_modalMap.get(action.formTarget).on('hidden.bs.modal', function(event) {
+					var modal = $(this);
+					if (modal.find('form').length > 0) {
+						modal.find('label.error').remove();
+						modal.find('.error').removeClass('error');
+						modal.find('form')[0].reset();
+					}
 				});
 			}
 		},

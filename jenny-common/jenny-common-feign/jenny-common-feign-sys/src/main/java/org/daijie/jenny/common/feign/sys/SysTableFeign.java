@@ -60,7 +60,7 @@ public interface SysTableFeign {
 	
 	@ApiOperation(value = "条件查询表格列字段")
 	@RequestMapping(value = "/column/query", method = RequestMethod.POST)
-	public ModelResult<PageResult<SysTableActionResponse>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest);
+	public ModelResult<PageResult<SysTableColumnPageRequest>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest);
 	
 	@ApiOperation(value = "添加表格列字段")
 	@RequestMapping(value = "/column/add", method = RequestMethod.POST)

@@ -199,15 +199,15 @@ function loadAction(tableId) {
 		},
 		columnFormatter: function(value, row, index, field) {
 			if (field == 'actionType') {
-				if(actionType == 'OPERATE') {
+				if(value == 'OPERATE') {
 					return '列表单行操作';
 				}
 				return '列表工具栏';
 			}
 			if (field == 'mutualType') {
-				if(mutualType == 'CONFIRM') {
+				if(value == 'CONFIRM') {
 					return '确认';
-				}else if (mutualType == 'EXTEND') {
+				}else if (value == 'EXTEND') {
 					return '扩展';
 				}
 				return '表单';
@@ -250,7 +250,7 @@ function validAction(form) {
 function loadColumn(tableId) {
 	$("#sysColumnTable").initTable({
 		listenModalSave: function(form, action) {
-			valid(form);
+			validColumn(form);
 			return form.valid();
 		},
 		columnFormatter: function(value, row, index, field) {

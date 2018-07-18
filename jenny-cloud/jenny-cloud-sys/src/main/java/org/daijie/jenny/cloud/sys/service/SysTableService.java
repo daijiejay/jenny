@@ -121,11 +121,11 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
-	public ModelResult<PageResult<SysTableActionResponse>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
+	public ModelResult<PageResult<SysTableColumnPageRequest>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
 		PageHelper.startPage(sysColumnRequest.getPageNumber(), sysColumnRequest.getPageSize());
 		List<SysTableColumn> columns = sysTableColumnMapper.selectByExample(sysColumnRequest.exampleBuild(SysTableColumn.class));
         PageInfo<SysTableColumn> pageInfo = new PageInfo<>(columns);
-		return Result.build(new PageResult<SysTableActionResponse>(pageInfo.getList(), pageInfo.getTotal(), SysTableActionResponse.class));
+		return Result.build(new PageResult<SysTableColumnPageRequest>(pageInfo.getList(), pageInfo.getTotal(), SysTableColumnPageRequest.class));
 	}
 
 	@Override

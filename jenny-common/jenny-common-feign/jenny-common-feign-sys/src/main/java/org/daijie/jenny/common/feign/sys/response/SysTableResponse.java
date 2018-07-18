@@ -17,6 +17,12 @@ public class SysTableResponse implements Serializable {
     private Integer tableId;
 
     /**
+     * 表格名称
+     */
+	@ApiModelProperty(value = "表格名称")
+    private String tableName;
+
+    /**
      * 菜单编号
      */
 	@ApiModelProperty(value = "菜单编号", required = true)
@@ -64,6 +70,14 @@ public class SysTableResponse implements Serializable {
 
 	public void setTableId(Integer tableId) {
 		this.tableId = tableId;
+	}
+
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
 	}
 
 	public Integer getMenuId() {
