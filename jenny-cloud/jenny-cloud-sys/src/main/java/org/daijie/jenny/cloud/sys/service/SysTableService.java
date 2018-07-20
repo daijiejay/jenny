@@ -2,9 +2,12 @@ package org.daijie.jenny.cloud.sys.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
 import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
+import org.daijie.jdbc.mybatis.example.ExampleBuilder;
 import org.daijie.jenny.common.feign.sys.SysTableFeign;
 import org.daijie.jenny.common.feign.sys.request.SysTableActionAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTableActionPageRequest;
@@ -53,6 +56,7 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableResponse> addTable(SysTableAddRequest sysTableRequest) {
 		SysTable sysTable = new SysTable();
 		BeanUtil.copyProperties(sysTableRequest, sysTable, CopyOptions.create().setIgnoreError(true));
@@ -63,6 +67,7 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableResponse> updateTable(SysTableUpdateRequest sysTableRequest) {
 		SysTable sysTable = new SysTable();
 		BeanUtil.copyProperties(sysTableRequest, sysTable, CopyOptions.create().setIgnoreError(true));
@@ -74,9 +79,12 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableResponse> deleteTable(Integer tableId) {
 		SysTable sysTable = sysTableMapper.selectByPrimaryKey(tableId);
 		sysTableMapper.deleteByPrimaryKey(tableId);
+		sysTableActionMapper.deleteByExample(ExampleBuilder.create(SysTableAction.class).andEqualTo("tableId", tableId).build());
+		sysTableColumnMapper.deleteByExample(ExampleBuilder.create(SysTableColumn.class).andEqualTo("tableId", tableId).build());
 		SysTableResponse sysTableResponse = new SysTableResponse();
 		BeanUtil.copyProperties(sysTable, sysTableResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableResponse);
@@ -91,6 +99,7 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableActionResponse> addAction(SysTableActionAddRequest sysActionRequest) {
 		SysTableAction sysTableAction = new SysTableAction();
 		BeanUtil.copyProperties(sysActionRequest, sysTableAction, CopyOptions.create().setIgnoreError(true));
@@ -101,6 +110,7 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableActionResponse> updateAction(SysTableActionUpdateRequest sysActionRequest) {
 		SysTableAction sysTableAction = new SysTableAction();
 		BeanUtil.copyProperties(sysActionRequest, sysTableAction, CopyOptions.create().setIgnoreError(true));
@@ -112,6 +122,7 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableActionResponse> deleteAction(Integer actionId) {
 		SysTableAction sysTableAction = sysTableActionMapper.selectByPrimaryKey(actionId);
 		sysTableActionMapper.deleteByPrimaryKey(actionId);
@@ -129,6 +140,7 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableColumnPageRequest> addColumn(SysTableColumnAddRequest sysColumnRequest) {
 		SysTableColumn sysTableColumn = new SysTableColumn();
 		BeanUtil.copyProperties(sysColumnRequest, sysTableColumn, CopyOptions.create().setIgnoreError(true));
@@ -139,6 +151,7 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableColumnPageRequest> updateColumn(SysTableColumnUpdateRequest sysColumnRequest) {
 		SysTableColumn sysTableColumn = new SysTableColumn();
 		BeanUtil.copyProperties(sysColumnRequest, sysTableColumn, CopyOptions.create().setIgnoreError(true));
@@ -150,6 +163,7 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysTableColumnPageRequest> deleteColumn(Integer columnId) {
 		SysTableColumn sysTableColumn = sysTableColumnMapper.selectByPrimaryKey(columnId);
 		sysTableColumnMapper.deleteByPrimaryKey(columnId);

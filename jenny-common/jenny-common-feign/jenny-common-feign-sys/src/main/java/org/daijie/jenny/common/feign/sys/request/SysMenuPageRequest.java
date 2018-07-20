@@ -1,13 +1,12 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import java.io.Serializable;
-
 import org.daijie.core.result.Page;
+import org.daijie.jdbc.mybatis.example.ExampleConditions;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
-public class SysMenuPageRequest extends Page implements Serializable {
+public class SysMenuPageRequest extends Page implements ExampleConditions {
 
 	/**
      * 菜单编号

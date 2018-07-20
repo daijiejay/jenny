@@ -181,8 +181,30 @@ function countDown(times) {
 			columns: []
 		},
 		this.settings = {
-			searchTarget: '.table-search',
-			listenModalSave: function(form, action) {
+			dataField: 'rows',
+			cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+			striped: true, //表格显示条纹，默认为false
+			pagination: true, // 在表格底部显示分页组件，默认false
+			sortable: true, //是否启用排序
+			showToggle: true, //是否显示详细视图和列表视图的切换按钮
+			cardView: false, //是否显示详细视图
+            detailView: false, //是否显示父子表
+            clickToSelect: true, //是否启用点击选中行
+            singleSelect: false, //是否禁止多选。
+            showRefresh: true,  //是否显示刷新按钮
+            showColumns: true, //是否显示所有的列（选择显示的列）
+            strictSearch: true,
+            search: false, //是否显示表格搜索
+			pageList: [10, 20, 50, 100], // 设置页面可以显示的数据条数
+			pageSize: 10, // 页面数据条数
+			pageNumber: 1, // 首页页码
+			checkbox: false,  //是否显示多选
+            visible: true,
+            showExport: true, //是否显示导出
+            exportDataType: "basic", //basic', 'all', 'selected' 表示导出的模式是当前页、所有数据还是选中数据
+            exportTypes: ['excel'],
+			searchTarget: '.table-search', 
+			listenModalSave: function(modal, action) {
 				return true;
 			},
 			searchParams: function(params) {
@@ -233,18 +255,32 @@ function countDown(times) {
 		},
 		initTableData: function(tab) {
 			var table = tab.table;
+			var defaultSettings = new _table().settings;
 			tab.that.bootstrapTable({
 				method: table.interfaceMethod,
 				url: serverMap.get(table.interfaceServerId) + table.interfaceUrl,
-				dataField: 'rows',
-				cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
-				striped: true, //表格显示条纹，默认为false
-				pagination: true, // 在表格底部显示分页组件，默认false
-				pageList: [10, 20, 50, 100], // 设置页面可以显示的数据条数
-				pageSize: 10, // 页面数据条数
-				pageNumber: 1, // 首页页码
-				uniqueId: table.uniqueId, //每一行的唯一标识，一般为主键列
-				sidePagination: 'server', // 设置为服务器端分页
+				dataField: tab.settings.dataField ? tab.settings.dataField : defaultSettings.dataField,
+				cache: tab.settings.cache ? tab.settings.cache : defaultSettings.cache,
+				striped: tab.settings.striped ? tab.settings.striped : defaultSettings.striped,
+				pagination: tab.settings.pagination ? tab.settings.pagination : defaultSettings.pagination,
+				sortable: tab.settings.sortable ? tab.settings.sortable : defaultSettings.sortable,
+				showToggle: tab.settings.showToggle ? tab.settings.showToggle : defaultSettings.showToggle,
+				cardView: tab.settings.cardView ? tab.settings.cardView : defaultSettings.cardView,
+                detailView: tab.settings.detailView ? tab.settings.detailView : defaultSettings.detailView,
+                clickToSelect: tab.settings.clickToSelect ? tab.settings.clickToSelect : defaultSettings.clickToSelect,
+                singleSelect: tab.settings.singleSelect ? tab.settings.singleSelect : defaultSettings.singleSelect,
+                showRefresh: tab.settings.showRefresh ? tab.settings.showRefresh : defaultSettings.showRefresh,
+                showColumns: tab.settings.showColumns ? tab.settings.showColumns : defaultSettings.showColumns,
+                strictSearch: tab.settings.strictSearch ? tab.settings.strictSearch : defaultSettings.strictSearch,
+                search: tab.settings.search ? tab.settings.search : defaultSettings.search,
+				pageList: tab.settings.pageList ? tab.settings.pageList : defaultSettings.pageList,
+				pageSize: tab.settings.pageSize ? tab.settings.pageSize : defaultSettings.pageSize,
+				pageNumber: tab.settings.pageNumber ? tab.settings.pageNumber : defaultSettings.pageNumber,
+				showExport: tab.settings.showExport ? tab.settings.showExport : defaultSettings.showExport,
+				exportDataType: tab.settings.exportDataType ? tab.settings.exportDataType : defaultSettings.exportDataType,
+				exportTypes: tab.settings.exportTypes ? tab.settings.exportTypes : defaultSettings.exportTypes,
+				uniqueId: table.uniqueId,
+				sidePagination: 'server',
 				queryParams: tab.that.initQueryParams,
 				toolbar: tab.that.initToolbar(tab),
 				columns: tab.that.initColumns(tab)
@@ -252,9 +288,18 @@ function countDown(times) {
 		},
 		initQueryParams: function(params, ele) {
 			var tab = _tableMap.get('#' + ele.id);
-			var queryParams = $(tab.settings.searchTarget).serializeJson();
+			var queryParams = {};
+			if (tab.settings.searchTarget) {
+				var form = $(tab.settings.searchTarget);
+				if (form[0].tagName != 'FORM') {
+					form = form.find('form');
+				}
+				queryParams = form.serializeJson();
+			}
 			queryParams.pageSize = params.limit;
 			queryParams.pageNumber = params.offset + 1;
+			queryParams.order = params.order;
+			queryParams.sort = params.sort;
 			if (typeof tab.settings.searchParams == 'function') {
 				return tab.settings.searchParams(queryParams);
 			}
@@ -267,7 +312,7 @@ function countDown(times) {
 			actions.forEach(function(action, i) {
 				if(action.actionType == 'TOOLBAR') {
 					if(action.mutualType == 'FORM') {
-						toolbar += '<a actionId="' + action.actionId + '" href="#" class="btn btn-primary" data-toggle="modal" data-target="' + action.formTarget + '">' + action.actionName + '</a>';
+						toolbar += '<a actionId="' + action.actionId + '" href="#" class="btn btn-default" data-toggle="modal" data-target="' + action.formTarget + '">' + action.actionName + '</a>';
 					}
 				}
 			});
@@ -278,7 +323,16 @@ function countDown(times) {
 			var columns = tab.table.columns;
 			columns.forEach(function(column, i) {
 				column.formatter = tab.settings.columnFormatter;
+				column.sortable = true;
+				column.editable = true;
 			})
+			if (tab.settings.checkbox) {
+				columns.unshift({
+					checkbox: tab.settings.checkbox,  
+                    visible: tab.settings.visible,
+                    formatter: tab.that.checkFormatter
+				});
+			}
 			columns.push({
 				field: 'operate',
 				title: '操作',
@@ -286,6 +340,11 @@ function countDown(times) {
 				formatter: tab.that.initOperates
 			});
 			return columns;
+		},
+		checkFormatter: function(value, row, index) {
+			return {
+		    	checked : row.checked
+		    };
 		},
 		initOperates: function(value, row, index, field, field, ele) {
 			var tab = _tableMap.get('#' + ele.id);
@@ -357,6 +416,7 @@ function countDown(times) {
 				});
 				_modalMap.get(action.formTarget).on('hidden.bs.modal', function(event) {
 					var modal = $(this);
+					modal.find('button.save').unbind("click");
 					if (modal.find('form').length > 0) {
 						modal.find('label.error').remove();
 						modal.find('.error').removeClass('error');
@@ -369,14 +429,32 @@ function countDown(times) {
 			var actions = tab.table.actions;
 			actions.forEach(function(action, i) {
 				if(action.actionId == actionId) {
-					if(tab.settings.listenModalSave(modal.find('form'), action)) {
-						var formData = modal.find('form').serializeJson();
-						var url = tab.that.formatterUrl(action.interfaceUrl, formData);
-						request(action.interfaceMethod, formData, url, action.interfaceServerId, function(result) {
+					if (action.mutualType == 'FORM') {
+						if(tab.settings.listenModalSave(modal, action)) {
+							var formData = modal.find('form').serializeJson();
+							var url = tab.that.formatterUrl(action.interfaceUrl, formData);
+							request(action.interfaceMethod, formData, url, action.interfaceServerId, function(result) {
+								modal.find('button.save').unbind("click");
+								modal.modal('hide');
+								tab.that.bootstrapTable('refresh');
+							});
+						}
+					} else if (action.mutualType == 'EXTEND') {
+						var table, tables = modal.find('table');
+						for (var i = 0; i < tables.length; i++) {
+							if (_tableMap.get('#' + tables[i].id)) {
+								table = _tableMap.get('#' + tables[i].id);
+							}
+						}
+						var rows = table.that.bootstrapTable('getAllSelections');
+						var data = {
+							rows: rows
+						};
+						if(table.settings.listenModalSave(modal, action, data)) {
 							modal.find('button.save').unbind("click");
 							modal.modal('hide');
 							tab.that.bootstrapTable('refresh');
-						});
+						}
 					}
 				}
 			});

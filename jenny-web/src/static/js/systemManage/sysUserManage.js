@@ -1,7 +1,8 @@
 $(function() {
 	$("#sysUserTable").initTable({
 		searchTarget: '.table-search',
-		listenModalSave: function(form, action) {
+		listenModalSave: function(modal, action) {
+			var form = modal.find('form');
 			if (action.actionName == '编辑') {
 				validUpdate(form);
 			} else {
@@ -30,6 +31,11 @@ $(function() {
 				return row.enable;
 			}
 			return true;
+		},
+		operateExtend: function(action, row) {
+			if (action.formTarget == '#setRole') {
+				loadRole(row.userId);
+			}
 		}
 	});
 });
@@ -97,6 +103,20 @@ function validUpdate(form) {
 				ele.find('label.error').remove();
 			}
 			ele.append(error[0].outerHTML);
+		}
+	});
+}
+
+function loadRole(userId) {
+	$("#sysRoleSelectedTable").initTable({
+		checkbox: true,
+		searchParams: function(params) {
+			params.userId = userId;
+			return params
+		},
+		listenModalSave: function(modal, action, data) {
+			console.log(data);
+			return false;
 		}
 	});
 }

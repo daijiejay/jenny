@@ -1,5 +1,7 @@
 @import url('../bootstrap/css/bootstrap.css');
 @import url('../bootstrap/css/bootstrap-table.css');
+@import url('../bootstrap/css/bootstrap-editable.css');
+@import url('../tableexport/css/tableexport.css');
 @import url('../jquery/css/jquery-ui.css');
 @import url('../fontIconPicker/css/jquery.fonticonpicker.css');
 @import url('../fontIconPicker/themes/bootstrap-theme/jquery.fonticonpicker.bootstrap.css');
@@ -4811,8 +4813,8 @@ i.fa.fa-facebook.profile-icon {
 }
 
 .table-search .row {
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 18px;
+	padding-right: 18px;
 }
 
 .table-search .row span {

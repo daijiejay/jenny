@@ -1,54 +1,52 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<script>
-    function myBrowser(){
-        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
-        var isOpera = userAgent.indexOf("Opera") > -1;
-        if (isOpera) {
-            return "Opera"
-        }; //判断是否Opera浏览器
-        if (userAgent.indexOf("Firefox") > -1) {
-            return "FF";
-        } //判断是否Firefox浏览器
-        if (userAgent.indexOf("Chrome") > -1){
-            return "Chrome";
-        }
-        if (userAgent.indexOf("Safari") > -1) {
-            return "Safari";
-        } //判断是否Safari浏览器
-        if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
-            return "IE";
-        }; //判断是否IE浏览器
-        if (userAgent.indexOf("Trident") > -1) {
-            return "Edge";
-        } //判断是否Edge浏览器
-    }
- 
-    function oDownLoad(url,id) {
-        if (myBrowser()==="IE" || myBrowser()==="Edge"){
-            var oPop = window.open(url,"","width=1, height=1, top=5000, left=5000");
-            for(; oPop.document.readyState != "complete"; )
-            {
-                if (oPop.document.readyState == "complete")break;
-            }
-            oPop.document.execCommand("SaveAs");
-            oPop.close();
-        }else{
-            //!IE
-            var odownLoad=document.getElementById(id);
-            odownLoad.href=url;
-            odownLoad.download="";
-        }
-    }
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+<link href="https://cdn.bootcss.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/extensions/editable/bootstrap-table-editable.js"></script>
+
+
+  </head>
+
+  <body>
+
+
+  <table id="table"></table>
+<script>
+  $('#table').bootstrapTable({
+    columns: [{
+        field: 'id',
+        title: 'Item ID',
+        editable: true
+    }, {
+        field: 'name',
+        title: 'Item Name'
+    }, {
+        field: 'price',
+        title: 'Item Price'
+    }],
+    data: [{
+        id: 1,
+        name: 'Item 1',
+        price: '$1'
+    }, {
+        id: 2,
+        name: 'Item 2',
+        price: '$2'
+    }]
+});
 </script>
-	</head>
-<body>
-
-<p>点击 W3School 的 logo 来下载该图片：<p>
-
-<a href="javascript:void(0);" id="oDownLoad" onclick="oDownLoad('http://www.w3school.com.cn/i/w3school_logo_white.gif','oDownLoad')">下载</a>
-
-</body>
-
+  </body>
 </html>

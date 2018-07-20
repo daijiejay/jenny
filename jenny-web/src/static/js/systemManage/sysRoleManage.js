@@ -1,7 +1,8 @@
 $(function() {
 	$("#sysRoleTable").initTable({
 		searchTarget: '.table-search',
-		listenModalSave: function(form, action) {
+		listenModalSave: function(modal, action) {
+			var form = modal.find('form');
 			validAdd(form);
 			return form.valid();
 		},

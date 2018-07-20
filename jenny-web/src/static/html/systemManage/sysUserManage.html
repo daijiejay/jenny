@@ -4,17 +4,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>系统用户管理</title>
-		<link href="../../public/bootstrap/css/bootstrap.css" rel='stylesheet' type='text/css' />
-		<link href="../../public/bootstrap/css/bootstrap-table.css" rel='stylesheet' type='text/css' />
-		<link href="../../public/layer/css/layer.css" rel='stylesheet' type='text/css' />
-    	<link href="../../public/fakeLoader/css/fakeLoader.css" rel="stylesheet" type='text/css' >
 		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
-		<link href="../../public/css/font-awesome.css" rel="stylesheet">
 		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
 		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
 		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../../public/tableexport/js/tableexport-2.1.js"></script>
 		<script src="../../public/bootstrap/js/bootstrap.js"></script>
 		<script src="../../public/bootstrap/js/bootstrap-table.js"></script>
+		<!--<script src="../../public/bootstrap/js/bootstrap-table-toolbar.js"></script>-->
+		<!--<script src="../../public/bootstrap/js/bootstrap-editable.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table-editable.js"></script>-->
+		<script src="../../public/bootstrap/js/bootstrap-table-export.js"></script>
 		<script src="../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
 		<script src="../../public/layer/js/layer.js"></script>
 		<script src="../../public/fakeLoader/js/fakeLoader.js"></script>
@@ -148,6 +148,28 @@
 						</div>
 					</form>
 				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="setRole" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 80%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<h4 class="modal-title">添加</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<table class="table table-hover" id="sysRoleSelectedTable">
+				</table>
 			</div>
 			<!-- 模态框底部 -->
 			<div class="modal-footer">

@@ -6,12 +6,13 @@ import org.daijie.core.result.Page;
 import org.daijie.jdbc.mybatis.example.ExampleConditions;
 
 import io.swagger.annotations.ApiModelProperty;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 @SuppressWarnings("serial")
 public class SysUserPageRequest extends Page implements ExampleConditions {
 
 	@ApiModelProperty(value = "用户编号")
-	private String userId;
+	private Integer userId;
 
 	@ApiModelProperty(value = "用户名称")
 	private String userName;
@@ -46,11 +47,11 @@ public class SysUserPageRequest extends Page implements ExampleConditions {
 	@ApiModelProperty(value = "是否删除")
 	private Boolean cancel;
 
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -140,5 +141,10 @@ public class SysUserPageRequest extends Page implements ExampleConditions {
 
 	public void setCancel(Boolean cancel) {
 		this.cancel = cancel;
+	}
+	
+	@Override
+	public void extendConditions(Criteria example) {
+		example.andEqualTo("admin", false);
 	}
 }

@@ -65,7 +65,8 @@ function zTreeBeforeClick(treeId, treeNode, clickFlag) {
 	});
 	
 	$("#sysTableTable").initTable({
-		listenModalSave: function(form, action) {
+		listenModalSave: function(modal, action) {
+			var form = modal.find('form');
 			validTable(form);
 			return form.valid();
 		},
@@ -193,7 +194,8 @@ function validTable(form) {
 //加载表格功能列表
 function loadAction(tableId) {
 	$("#sysActionTable").initTable({
-		listenModalSave: function(form, action) {
+		listenModalSave: function(modal, action) {
+			var form = modal.find('form');
 			validAction(form);
 			return form.valid();
 		},
@@ -249,7 +251,8 @@ function validAction(form) {
 //加载表格功能列表
 function loadColumn(tableId) {
 	$("#sysColumnTable").initTable({
-		listenModalSave: function(form, action) {
+		listenModalSave: function(modal, action) {
+			var form = modal.find('form');
 			validColumn(form);
 			return form.valid();
 		},
