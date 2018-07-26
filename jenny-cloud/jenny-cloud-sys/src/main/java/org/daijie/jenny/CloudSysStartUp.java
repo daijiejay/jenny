@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableMySwagger
-@EnableMybatis(basePackages = {"org.daijie.jenny.common.mapper.sys"})
+@EnableMybatis(basePackages = {"org.daijie.jenny.common.mapper.sys", "org.daijie.jenny.cloud.sys.mapper"})
 @EnableParametersFilter
 @EnableDiscoveryClient
 @EnableExceptionHandler

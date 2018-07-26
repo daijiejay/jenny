@@ -1,6 +1,8 @@
 package org.daijie.jenny.common.feign.sys.response;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -39,6 +41,12 @@ public class SysMenuAuthorizedResponse implements Serializable {
 	 */
 	@ApiModelProperty(value = "图标")
 	private String icon;
+
+	@ApiModelProperty(value = "功能编号集合")
+	private String actionIds;
+
+	@ApiModelProperty(value = "功能集合", required = true)
+	private List<SysTableActionResponse> actions = new ArrayList<SysTableActionResponse>();
 
 	public Integer getRoleId() {
 		return roleId;
@@ -102,5 +110,21 @@ public class SysMenuAuthorizedResponse implements Serializable {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public String getActionIds() {
+		return actionIds;
+	}
+
+	public void setActionIds(String actionIds) {
+		this.actionIds = actionIds;
+	}
+
+	public List<SysTableActionResponse> getActions() {
+		return actions;
+	}
+
+	public void setActions(List<SysTableActionResponse> actions) {
+		this.actions = actions;
 	}
 }

@@ -115,8 +115,15 @@ function loadRole(userId) {
 			return params
 		},
 		listenModalSave: function(modal, action, data) {
-			console.log(data);
-			return false;
+			var requestData = {userId: userId, roleIds: new Array()};
+			data.selectedRows.forEach(function(role, index) {
+				requestData.roleIds.push(role.roleId);
+			});
+			var res = false;
+			requestSynchronized('put', requestData, '/sysuser/setRoles', 'SYS', false, function(result) {
+				res = result.data;
+			});
+			return res;
 		}
 	});
 }

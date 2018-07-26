@@ -17,7 +17,7 @@ public class SysRolePageRequest extends Page implements ExampleConditions {
      * 角色代码
      */
 	@ApiModelProperty(value = "角色代码")
-    private Integer roleCode;
+    private String roleCode;
 
     /**
      * 角色名称
@@ -39,11 +39,11 @@ public class SysRolePageRequest extends Page implements ExampleConditions {
 		this.roleId = roleId;
 	}
 
-	public Integer getRoleCode() {
+	public String getRoleCode() {
 		return roleCode;
 	}
 
-	public void setRoleCode(Integer roleCode) {
+	public void setRoleCode(String roleCode) {
 		this.roleCode = roleCode;
 	}
 

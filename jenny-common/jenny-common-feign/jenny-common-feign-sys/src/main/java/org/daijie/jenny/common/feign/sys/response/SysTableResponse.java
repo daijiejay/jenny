@@ -58,10 +58,10 @@ public class SysTableResponse implements Serializable {
 	@ApiModelProperty(value = "表格行主键编号名", required = true)
     private String uniqueId;
 	
-	@ApiModelProperty(value = "表格列字段", required = true)
+	@ApiModelProperty(value = "表格列字段集合", required = true)
 	private List<SysTableColumnResponse> columns = new ArrayList<SysTableColumnResponse>();
 
-	@ApiModelProperty(value = "功能", required = true)
+	@ApiModelProperty(value = "功能集合", required = true)
 	private List<SysTableActionResponse> actions = new ArrayList<SysTableActionResponse>();
 
 	public Integer getTableId() {

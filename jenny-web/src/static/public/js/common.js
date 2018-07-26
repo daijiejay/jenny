@@ -12,14 +12,16 @@ serverMap.set('SYS', 'http://daijie.org:12801/')
  */
 var requestMap = new Map();
 /**
+ * 可同步请求
  * 请求封装，处理请求重复提交，加载效果展示，自动拦截用户过期跳转登录，请求错误提示
  * @param {Object} method 请求方式
  * @param {Object} data 请求数据
  * @param {Object} url 请求地址
  * @param {Object} serverId 请求服务名
+ * @param {Object} synType 是否异步请求
  * @param {Object} callback 请求回调
  */
-function request(method, data, url, serverId, callback) {
+function requestSynchronized(method, data, url, serverId, synType, callback) {
 	if(requestMap.get(url)) {
 		return;
 	}
@@ -33,6 +35,7 @@ function request(method, data, url, serverId, callback) {
 			type: method,
 			url: serverMap.get(serverId) + url,
 			data: data,
+			async: synType,
 			xhrFields: {
 				withCredentials: true
 			},
@@ -64,6 +67,7 @@ function request(method, data, url, serverId, callback) {
 			data: JSON.stringify(data),
 			dataType: 'json',
 			contentType: 'application/json',
+			async: synType,
 			xhrFields: {
 				withCredentials: true
 			},
@@ -89,6 +93,20 @@ function request(method, data, url, serverId, callback) {
 			}
 		});
 	}
+}
+/**
+ * 异步请求
+ * 请求封装，处理请求重复提交，加载效果展示，自动拦截用户过期跳转登录，请求错误提示
+ * @param {Object} method 请求方式
+ * @param {Object} data 请求数据
+ * @param {Object} url 请求地址
+ * @param {Object} serverId 请求服务名
+ * @param {Object} callback 请求回调
+ */
+function request(method, data, url, serverId, callback) {
+	requestSynchronized(method, data, url, serverId, true, function(result) {
+		return callback(result);
+	});
 }
 /**
  * 初始化加载效果
@@ -120,7 +138,7 @@ function initFakeloader() {
 async function changeFrameHeight() {
 	var ifm = parent.window.document.getElementById("iframepage");
 	if(ifm) {
-		ifm.height = document.body.clientHeight < 600 ? 600 : document.body.clientHeight;
+		ifm.height = document.body.clientHeight < 700 ? 700 : document.body.clientHeight;
 	}
 }
 /**
@@ -204,7 +222,7 @@ function countDown(times) {
             exportDataType: "basic", //basic', 'all', 'selected' 表示导出的模式是当前页、所有数据还是选中数据
             exportTypes: ['excel'],
 			searchTarget: '.table-search', 
-			listenModalSave: function(modal, action) {
+			listenModalSave: function(modal, action, data) {
 				return true;
 			},
 			searchParams: function(params) {
@@ -333,17 +351,20 @@ function countDown(times) {
                     formatter: tab.that.checkFormatter
 				});
 			}
-			columns.push({
-				field: 'operate',
-				title: '操作',
-				events: operateEvents,
-				formatter: tab.that.initOperates
-			});
+			if (JSON.stringify(tab.table.actions).indexOf('"mutualType":"FORM"') >= 0 
+				|| JSON.stringify(tab.table.actions).indexOf('"mutualType":"EXTEND"') >= 0) {
+				columns.push({
+					field: 'operate',
+					title: '操作',
+					events: operateEvents,
+					formatter: tab.that.initOperates
+				});
+			}
 			return columns;
 		},
 		checkFormatter: function(value, row, index) {
 			return {
-		    	checked : row.checked
+		    	checked : row.checked == undefined ? row.selected : row.checked
 		    };
 		},
 		initOperates: function(value, row, index, field, field, ele) {
@@ -395,13 +416,11 @@ function countDown(times) {
 					var id = button.attr('id');
 					var actionId = button.attr('actionId');
 					var mutualType = button.attr('mutualType');
+					modal.find('.modal-title').html(button.html());
 					if (mutualType == 'FORM') {
 						if(id) {
 							var row = tab.that.bootstrapTable('getRowByUniqueId', id);
 							modal.find('form').initForm(row);
-							modal.find('.modal-title').html(button.html());
-						} else {
-							modal.find('.modal-title').html(button.html());
 						}
 					} else if (mutualType == 'EXTEND') {
 						
@@ -446,14 +465,22 @@ function countDown(times) {
 								table = _tableMap.get('#' + tables[i].id);
 							}
 						}
-						var rows = table.that.bootstrapTable('getAllSelections');
-						var data = {
-							rows: rows
-						};
-						if(table.settings.listenModalSave(modal, action, data)) {
-							modal.find('button.save').unbind("click");
-							modal.modal('hide');
-							tab.that.bootstrapTable('refresh');
+						if (table) {
+							var selectedRows = table.that.bootstrapTable('getAllSelections');
+							var data = {
+								selectedRows: selectedRows
+							};
+							if(table.settings.listenModalSave(modal, action, data)) {
+								modal.find('button.save').unbind("click");
+								modal.modal('hide');
+								tab.that.bootstrapTable('refresh');
+							}
+						} else {
+							if(tab.settings.listenModalSave(modal, action, data)) {
+								modal.find('button.save').unbind("click");
+								modal.modal('hide');
+								tab.that.bootstrapTable('refresh');
+							}
 						}
 					}
 				}

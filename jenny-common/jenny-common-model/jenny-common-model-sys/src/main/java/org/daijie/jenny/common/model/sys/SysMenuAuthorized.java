@@ -24,12 +24,6 @@ public class SysMenuAuthorized implements Serializable {
     @Column(name = "menu_id")
     private Integer menuId;
 
-    /**
-     * 功能ID数组
-     */
-    @Column(name = "action_ids")
-    private String actionIds;
-
     private static final long serialVersionUID = 1L;
 
     /**
@@ -101,29 +95,6 @@ public class SysMenuAuthorized implements Serializable {
         this.menuId = menuId;
     }
 
-    /**
-     * 获取功能ID数组
-     *
-     * @return action_ids - 功能ID数组
-     */
-    public String getActionIds() {
-        return actionIds;
-    }
-
-    public SysMenuAuthorized withActionIds(String actionIds) {
-        this.setActionIds(actionIds);
-        return this;
-    }
-
-    /**
-     * 设置功能ID数组
-     *
-     * @param actionIds 功能ID数组
-     */
-    public void setActionIds(String actionIds) {
-        this.actionIds = actionIds == null ? null : actionIds.trim();
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -133,7 +104,6 @@ public class SysMenuAuthorized implements Serializable {
         sb.append(", menuAuthorizedId=").append(menuAuthorizedId);
         sb.append(", roleId=").append(roleId);
         sb.append(", menuId=").append(menuId);
-        sb.append(", actionIds=").append(actionIds);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -153,8 +123,7 @@ public class SysMenuAuthorized implements Serializable {
         SysMenuAuthorized other = (SysMenuAuthorized) that;
         return (this.getMenuAuthorizedId() == null ? other.getMenuAuthorizedId() == null : this.getMenuAuthorizedId().equals(other.getMenuAuthorizedId()))
             && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
-            && (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()))
-            && (this.getActionIds() == null ? other.getActionIds() == null : this.getActionIds().equals(other.getActionIds()));
+            && (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()));
     }
 
     @Override
@@ -164,7 +133,6 @@ public class SysMenuAuthorized implements Serializable {
         result = prime * result + ((getMenuAuthorizedId() == null) ? 0 : getMenuAuthorizedId().hashCode());
         result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
         result = prime * result + ((getMenuId() == null) ? 0 : getMenuId().hashCode());
-        result = prime * result + ((getActionIds() == null) ? 0 : getActionIds().hashCode());
         return result;
     }
 }

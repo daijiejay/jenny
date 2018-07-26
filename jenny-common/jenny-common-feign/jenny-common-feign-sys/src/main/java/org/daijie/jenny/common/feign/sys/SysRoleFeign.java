@@ -1,10 +1,14 @@
 package org.daijie.jenny.common.feign.sys;
 
+import java.util.List;
+
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
 import org.daijie.jenny.common.feign.sys.request.SysRoleAddRequest;
+import org.daijie.jenny.common.feign.sys.request.SysRoleAuthorizedSetRequest;
 import org.daijie.jenny.common.feign.sys.request.SysRolePageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysRoleUpdateRequest;
+import org.daijie.jenny.common.feign.sys.response.SysMenuSelectedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,4 +38,12 @@ public interface SysRoleFeign {
 	@ApiOperation(notes = "删除角色", value = "删除角色")
 	@RequestMapping(value = "/delete/roleId/{roleId}", method = RequestMethod.DELETE)
 	public ModelResult<SysRoleResponse> deleteRole(@PathVariable(name = "roleId") Integer roleId);
+	
+	@ApiOperation(value = "根据系统用户ID获取用户信息")
+	@RequestMapping(value = "/query/selectedMenus/{roleId}", method = RequestMethod.GET)
+	public ModelResult<List<SysMenuSelectedResponse>> getRoleMenu(@PathVariable(name = "roleId") Integer roleId);
+	
+	@ApiOperation(value = "角色设置菜单操作权限")
+	@RequestMapping(value = "/update/selectedMenus", method = RequestMethod.PUT)
+	public ModelResult<Boolean> updateRoleMenu(SysRoleAuthorizedSetRequest sysRoleAuthorizedSetRequest);
 }

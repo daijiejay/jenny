@@ -1,13 +1,18 @@
 package org.daijie.jenny.api.sys;
 
+import java.util.List;
+
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
 import org.daijie.jenny.common.feign.sys.SysRoleFeign;
 import org.daijie.jenny.common.feign.sys.request.SysRoleAddRequest;
+import org.daijie.jenny.common.feign.sys.request.SysRoleAuthorizedSetRequest;
 import org.daijie.jenny.common.feign.sys.request.SysRolePageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysRoleUpdateRequest;
+import org.daijie.jenny.common.feign.sys.response.SysMenuSelectedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,5 +68,17 @@ public class SysRoleController {
 		sysRoleRequest.setRoleId(roleId);
 		sysRoleRequest.setEnable(false);
 		return sysRoleFeign.updateRole(sysRoleRequest);
+	}
+	
+	@ApiOperation(value = "根据系统用户ID获取用户信息")
+	@RequestMapping(value = "/query/selectedMenus/{roleId}", method = RequestMethod.GET)
+	public ModelResult<List<SysMenuSelectedResponse>> getRoleMenu(Integer roleId) {
+		return sysRoleFeign.getRoleMenu(roleId);
+	}
+	
+	@ApiOperation(value = "角色设置菜单操作权限")
+	@RequestMapping(value = "/update/selectedMenus", method = RequestMethod.PUT)
+	public ModelResult<Boolean> updateRoleMenu(@RequestBody SysRoleAuthorizedSetRequest sysRoleAuthorizedSetRequest) {
+		return sysRoleFeign.updateRoleMenu(sysRoleAuthorizedSetRequest);
 	}
 }

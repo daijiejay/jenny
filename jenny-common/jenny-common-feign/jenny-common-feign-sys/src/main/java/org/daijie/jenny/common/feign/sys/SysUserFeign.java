@@ -4,6 +4,7 @@ import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
 import org.daijie.jenny.common.feign.sys.request.SysUserAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserPageRequest;
+import org.daijie.jenny.common.feign.sys.request.SysUserSetRolesRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysUserCacheResponse;
 import org.daijie.jenny.common.feign.sys.response.SysUserPasswordResponse;
@@ -48,4 +49,8 @@ public interface SysUserFeign {
 	@ApiOperation(value = "删除用户")
 	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.DELETE)
 	public ModelResult<SysUserResponse> deleteUser(@PathVariable(name = "userId") Integer userId);
+	
+	@ApiOperation(value = "系统用户设置角色")
+	@RequestMapping(value = "/setRoles", method = RequestMethod.PUT) 
+	public ModelResult<Boolean> setRoles(SysUserSetRolesRequest sysUserRequest);
 }

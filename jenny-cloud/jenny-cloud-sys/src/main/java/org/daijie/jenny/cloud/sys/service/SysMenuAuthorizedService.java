@@ -91,17 +91,6 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 		
 		menuResponse.setLevel2(menuResponse.getLevel2().stream().filter(menu -> {
 			return menuAuthorities.stream().anyMatch(authorized -> menu.getMenuId().equals(authorized.getMenuId()));
-//			return menuAuthorities.stream().anyMatch(authorized -> {
-//				boolean match = menu.getMenuId().equals(authorized.getMenuId());
-//				if (match) {
-//					menu.setSysActions(menu.getSysActions().stream().filter(sysAction -> {
-//						return Arrays.asList(authorized.getActionIds().split(",")).stream().anyMatch(actionId -> {
-//							return new Integer(Integer.parseInt(actionId)).equals(sysAction.getActionId());
-//						});
-//					}).collect(Collectors.toList()));
-//				}
-//				return match;
-//			});
 		}).collect(Collectors.toList()));
 		return Result.build(menuResponse);
 	}

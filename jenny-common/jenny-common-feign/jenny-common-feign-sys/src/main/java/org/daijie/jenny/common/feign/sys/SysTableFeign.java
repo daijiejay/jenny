@@ -1,5 +1,7 @@
 package org.daijie.jenny.common.feign.sys;
 
+import java.util.List;
+
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
 import org.daijie.jenny.common.feign.sys.request.SysTableActionAddRequest;
@@ -11,6 +13,7 @@ import org.daijie.jenny.common.feign.sys.request.SysTableColumnPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTableColumnUpdateRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTablePageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTableUpdateRequest;
+import org.daijie.jenny.common.feign.sys.response.SysMenuTreeResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -46,6 +49,10 @@ public interface SysTableFeign {
 	@RequestMapping(value = "/action/query", method = RequestMethod.POST)
 	public ModelResult<PageResult<SysTableActionResponse>> getActionByPage(SysTableActionPageRequest sysActionRequest);
 	
+	@ApiOperation(value = "功能功能编号查询")
+	@RequestMapping(value = "/action/query/{actionId}", method = RequestMethod.GET)
+	public ModelResult<SysTableActionResponse> getActionById(@PathVariable(name = "actionId") Integer actionId);
+	
 	@ApiOperation(value = "添加表格操作功能")
 	@RequestMapping(value = "/action/add", method = RequestMethod.POST)
 	public ModelResult<SysTableActionResponse> addAction(SysTableActionAddRequest sysActionRequest);
@@ -73,4 +80,8 @@ public interface SysTableFeign {
 	@ApiOperation(value = "删除表格列字段")
 	@RequestMapping(value = "/column/delete/{columnId}", method = RequestMethod.DELETE)
 	public ModelResult<SysTableColumnPageRequest> deleteColumn(@PathVariable(name = "columnId") Integer columnId);
+	
+	@ApiOperation(value = "获取表格功能树")
+	@RequestMapping(value = "/action/query/tree", method = RequestMethod.GET)
+	public ModelResult<List<SysMenuTreeResponse>> getTableActionTree();
 }

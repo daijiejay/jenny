@@ -1,5 +1,6 @@
 package org.daijie.jenny.cloud.sys.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,6 +19,7 @@ import org.daijie.jenny.common.feign.sys.request.SysTableColumnPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTableColumnUpdateRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTablePageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTableUpdateRequest;
+import org.daijie.jenny.common.feign.sys.response.SysMenuTreeResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableResponse;
 import org.daijie.jenny.common.mapper.sys.SysTableActionMapper;
@@ -97,6 +99,14 @@ public class SysTableService implements SysTableFeign {
         PageInfo<SysTableAction> pageInfo = new PageInfo<>(actions);
 		return Result.build(new PageResult<SysTableActionResponse>(pageInfo.getList(), pageInfo.getTotal(), SysTableActionResponse.class));
 	}
+	
+	@Override
+	public ModelResult<SysTableActionResponse> getActionById(Integer actionId) {
+		SysTableAction sysTableAction = sysTableActionMapper.selectByPrimaryKey(actionId);
+		SysTableActionResponse sysTableActionResponse = new SysTableActionResponse();
+		BeanUtil.copyProperties(sysTableAction, sysTableActionResponse, CopyOptions.create().setIgnoreError(true));
+		return Result.build(sysTableActionResponse);
+	}
 
 	@Override
 	@Transactional
@@ -170,5 +180,22 @@ public class SysTableService implements SysTableFeign {
 		SysTableColumnPageRequest sysTableColumnResponse = new SysTableColumnPageRequest();
 		BeanUtil.copyProperties(sysTableColumn, sysTableColumnResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableColumnResponse);
+	}
+
+	@Override
+	public ModelResult<List<SysMenuTreeResponse>> getTableActionTree() {
+		List<SysMenuTreeResponse> sysMenuTreeResponses = new ArrayList<SysMenuTreeResponse>();
+		List<SysTable> sysTables = sysTableMapper.selectAll();
+		List<SysTableAction> sysTableActions = sysTableActionMapper.selectAll();
+		sysTableActions.forEach(sysTableAction -> {
+			SysTable table = sysTables.stream().filter(
+					sysTable -> sysTable.getTableId().equals(sysTableAction.getTableId())).findFirst().get();
+			SysMenuTreeResponse sysMenuTreeResponse = new SysMenuTreeResponse();
+			sysMenuTreeResponse.setId(sysTableAction.getActionId()*-1);
+			sysMenuTreeResponse.setPId(table.getMenuId());
+			sysMenuTreeResponse.setName(table.getTableName() + "-" + sysTableAction.getActionName());
+			sysMenuTreeResponses.add(sysMenuTreeResponse);
+		});
+		return Result.build(sysMenuTreeResponses);
 	}
 }

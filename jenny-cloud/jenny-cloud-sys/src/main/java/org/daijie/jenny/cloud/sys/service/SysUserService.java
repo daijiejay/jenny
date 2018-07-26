@@ -3,6 +3,8 @@ package org.daijie.jenny.cloud.sys.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.daijie.core.controller.enums.ResultCode;
 import org.daijie.core.result.ApiResult;
 import org.daijie.core.result.ModelResult;
@@ -12,11 +14,14 @@ import org.daijie.jdbc.mybatis.example.ExampleBuilder;
 import org.daijie.jenny.common.feign.sys.SysUserFeign;
 import org.daijie.jenny.common.feign.sys.request.SysUserAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserPageRequest;
+import org.daijie.jenny.common.feign.sys.request.SysUserSetRolesRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysUserCacheResponse;
 import org.daijie.jenny.common.feign.sys.response.SysUserPasswordResponse;
 import org.daijie.jenny.common.feign.sys.response.SysUserResponse;
+import org.daijie.jenny.common.mapper.sys.SysRoleAuthorizedMapper;
 import org.daijie.jenny.common.mapper.sys.SysUserMapper;
+import org.daijie.jenny.common.model.sys.SysRoleAuthorized;
 import org.daijie.jenny.common.model.sys.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +36,9 @@ public class SysUserService implements SysUserFeign {
 	
 	@Autowired
 	private SysUserMapper sysUserMapper;
+	
+	@Autowired
+	private SysRoleAuthorizedMapper sysRoleAuthorizedMapper;
 
 	@Override
 	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserPageRequest) {
@@ -77,6 +85,7 @@ public class SysUserService implements SysUserFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysUserResponse> addUser(SysUserAddRequest sysUserRequest) {
 		if (sysUserMapper.selectByExample(ExampleBuilder.create(SysUser.class)
 				.andEqualTo("userName", sysUserRequest.getUserName())
@@ -94,6 +103,7 @@ public class SysUserService implements SysUserFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysUserResponse> updateUser(SysUserUpdateRequest sysUserRequest) {
 		SysUser sysUser = new SysUser();
 		BeanUtil.copyProperties(sysUserRequest, sysUser);
@@ -108,6 +118,7 @@ public class SysUserService implements SysUserFeign {
 	}
 
 	@Override
+	@Transactional
 	public ModelResult<SysUserResponse> deleteUser(Integer userId) {
 		SysUser sysUser = sysUserMapper.selectByPrimaryKey(userId);
 		if (sysUser != null) {
@@ -119,6 +130,26 @@ public class SysUserService implements SysUserFeign {
 			return Result.build(sysUserResponse);
 		}
 		return Result.build("无效的用户编号！", ApiResult.ERROR, ResultCode.CODE_102);
+	}
+
+	@Override
+	@Transactional
+	public ModelResult<Boolean> setRoles(SysUserSetRolesRequest sysUserRequest) {
+		sysRoleAuthorizedMapper.deleteByExample(ExampleBuilder.create(SysRoleAuthorized.class)
+				.andEqualTo("userId", sysUserRequest.getUserId())
+				.andNotIn("roleId", sysUserRequest.getRoleIds()).build());
+		for (Integer roleId : sysUserRequest.getRoleIds()) {
+			if (sysRoleAuthorizedMapper.selectByExample(ExampleBuilder.create(SysRoleAuthorized.class)
+					.andEqualTo("userId", sysUserRequest.getUserId())
+					.andEqualTo("roleId", roleId).build()).size() > 0) {
+				continue;		
+			}
+			SysRoleAuthorized sysRoleAuthorized = new SysRoleAuthorized();
+			sysRoleAuthorized.setUserId(sysUserRequest.getUserId());
+			sysRoleAuthorized.setRoleId(roleId);
+			sysRoleAuthorizedMapper.insertSelective(sysRoleAuthorized);
+		}
+		return Result.build(true, true);
 	}
 
 }

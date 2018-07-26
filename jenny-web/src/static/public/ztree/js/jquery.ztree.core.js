@@ -1664,7 +1664,7 @@
         init: function (obj, zSetting, zNodes) {
             var setting = tools.clone(_setting);
             $.extend(true, setting, zSetting);
-            setting.treeId = obj.attr("id");
+            setting.treeId = zSetting.treeId == '' ? obj.attr("id") : zSetting.treeId;
             setting.treeObj = obj;
             setting.treeObj.empty();
             settings[setting.treeId] = setting;

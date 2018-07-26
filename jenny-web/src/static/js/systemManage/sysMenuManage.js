@@ -137,6 +137,9 @@ function zTreeBeforeAddNode(treeId, treeNode, callback) {
 
 var newCount = 1;
 function addHoverDom(treeId, treeNode) {
+	if (treeNode.level >= 1) {
+		return;
+	}
 	var sObj = $("#" + treeNode.tId + "_span");
 	if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
 	var addStr = "<span class='button add' id='addBtn_" + treeNode.tId

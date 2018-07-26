@@ -13,6 +13,12 @@ public class SysRoleUpdateRequest implements Serializable {
 	@ApiModelProperty(value = "角色代码", required = true)
     private Integer roleId;
 
+	/**
+     * 角色代码
+     */
+	@ApiModelProperty(value = "角色代码")
+    private String roleCode;
+
     /**
      * 角色名称
      */
@@ -31,6 +37,14 @@ public class SysRoleUpdateRequest implements Serializable {
 
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
+	}
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
 	}
 
 	public String getRoleName() {

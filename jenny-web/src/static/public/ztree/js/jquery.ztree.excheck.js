@@ -417,9 +417,9 @@
 				if (node[checkedKey] && setting.check.chkboxType.Y.indexOf("p") > -1) {
 					view.setParentNodeCheckBox(setting, node, true);
 				}
-				if (!node[checkedKey] && setting.check.chkboxType.N.indexOf("p") > -1) {
-					view.setParentNodeCheckBox(setting, node, false);
-				}
+//				if (!node[checkedKey] && setting.check.chkboxType.N.indexOf("p") > -1) {
+//					view.setParentNodeCheckBox(setting, node, false);
+//				}
 			}
 		},
 		makeChkClass: function(setting, node) {

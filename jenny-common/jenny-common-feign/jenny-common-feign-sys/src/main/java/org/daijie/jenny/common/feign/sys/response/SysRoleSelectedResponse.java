@@ -9,13 +9,13 @@ public class SysRoleSelectedResponse extends SysRoleResponse {
      * 是否选中
      */
 	@ApiModelProperty(value = "是否选中", required = true)
-	private boolean selected = false;
+	private Boolean isSelected = false;
 
 	public boolean isSelected() {
-		return selected;
+		return isSelected;
 	}
 
-	public void setSelected(boolean selected) {
-		this.selected = selected;
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 }

@@ -12,6 +12,7 @@ import org.daijie.jenny.common.feign.sys.SysUserFeign;
 import org.daijie.jenny.common.feign.sys.request.SysRoleSelectedPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserPageRequest;
+import org.daijie.jenny.common.feign.sys.request.SysUserSetRolesRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysRoleResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleSelectedResponse;
@@ -123,5 +124,11 @@ public class SysUserController {
 			roles.setTotal(data.getTotal());
 		});
 		return Result.build(roles);
+	}
+	
+	@ApiOperation(value = "系统用户设置角色")
+	@RequestMapping(value = "/setRoles", method = RequestMethod.PUT) 
+	public ModelResult<Boolean> setRoles(SysUserSetRolesRequest sysUserRequest) {
+		return sysUserFeign.setRoles(sysUserRequest);
 	}
 }
