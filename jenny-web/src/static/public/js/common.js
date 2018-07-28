@@ -51,7 +51,7 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 					location.href = '../html/login.html';
 				} else {
 					layer.alert(result.msg);
-					return;
+					return callback(result);
 				}
 			},
 			error: function(e) {
@@ -83,7 +83,7 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 					location.href = '../html/login.html';
 				} else {
 					layer.alert(result.msg);
-					return;
+					return callback(result);
 				}
 			},
 			error: function(e) {

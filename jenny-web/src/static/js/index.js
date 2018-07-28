@@ -67,3 +67,10 @@ function sys_index_link() {
 		}
 	});
 }
+
+//退出登录
+function logout() {
+	request('post', '', '/syslogout', 'SYS', function(result) {
+		location.href = 'login.html';
+	});
+}

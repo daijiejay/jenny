@@ -1,11 +1,13 @@
 .login-body {
-	background:url(../images/login_bg_0.jpg) #f8f6e9;
+	background-image: url(../images/slider-2.jpg);
+	background-size: cover;
 }
 
 .signin {
 	width:477px;
 	height:479px;
-	background:url(../images/login_bg.png) no-repeat;
+	background: -webkit-linear-gradient(top, rgba(146, 135, 187, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+    background: linear-gradient(to bottom, rgba(146, 135, 187, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
 	margin:0 auto;
 	
 	position:absolute;
@@ -16,7 +18,7 @@
 }
 .signin-head {
 	margin:0 auto;
-	padding-top:30px;
+	padding-top:80px;
 	width:120px;
 }
 .form-signin {
@@ -42,7 +44,7 @@
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="text"] {
+/*.form-signin input[type="text"] {
   margin-bottom: 14px;
   border-radius: 0;
   background: url(../images/login_user.png) 0 0 #bdbdbd no-repeat;
@@ -58,4 +60,243 @@
 }
 .form-signin button {
   border-radius: 0;
+}*/
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-size: 62.5%;
+  height: 100%;
+  overflow: hidden;
+}
+@media (max-width: 768px) {
+  html, body {
+    font-size: 50%;
+  }
+}
+
+.login-form svg {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  overflow: visible;
+}
+
+.svg-icon {
+  cursor: pointer;
+}
+.svg-icon path {
+  stroke: rgba(255, 255, 255, 0.9);
+  fill: none;
+  stroke-width: 1;
+}
+.login-row input::-webkit-input-placeholder {
+    color: #9f8f9f;
+}
+.has-error .svg-icon path {
+  stroke: red;
+}
+.has-error input::-webkit-input-placeholder {
+    color: red;
+}
+
+.login-form input, button {
+  outline: none;
+  border: none;
+}
+
+.cont {
+  position: relative;
+  height: 100%;
+  background-image: url("../images/slider-2.jpg");
+  background-size: cover;
+  overflow: auto;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+.demo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.login {
+  position: relative;
+  height: 100%;
+  background: -webkit-linear-gradient(top, rgba(146, 135, 187, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  background: linear-gradient(to bottom, rgba(146, 135, 187, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  -webkit-transition: opacity 0.1s, -webkit-transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
+  transition: opacity 0.1s, -webkit-transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
+  transition: opacity 0.1s, transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
+  transition: opacity 0.1s, transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25), -webkit-transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.login.inactive {
+  opacity: 0;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+.img-circle {
+	border-radius: 50%;
+}
+.login-form {
+  position: absolute;
+  top: 42%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  padding: 1.5rem 2.5rem;
+  text-align: center;
+}
+.login-row {
+  height: 5rem;
+  padding-top: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+.login-icon {
+  margin-bottom: -0.4rem;
+  margin-right: 0.5rem;
+}
+.login-icon.name path {
+  stroke-dasharray: 73.50196075439453;
+  stroke-dashoffset: 73.50196075439453;
+  -webkit-animation: animatePath 2s 0.5s forwards;
+          animation: animatePath 2s 0.5s forwards;
+}
+.login-icon.pass path {
+  stroke-dasharray: 92.10662841796875;
+  stroke-dashoffset: 92.10662841796875;
+  -webkit-animation: animatePath 2s 0.5s forwards;
+          animation: animatePath 2s 0.5s forwards;
+}
+.login-input {
+  display: inline-block;
+  width: 22rem;
+  height: 100%;
+  padding-left: 1.5rem;
+  font-size: 1.5rem;
+  background: transparent;
+  color: #FDFCFD;
+}
+.login-submit {
+  position: relative;
+  width: 100%;
+  height: 4rem;
+  margin: 5rem 0 2.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: #FF3366;
+  font-size: 1.5rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+  transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+}
+.login-submit:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -1.5rem;
+  margin-top: -1.5rem;
+  width: 3rem;
+  height: 3rem;
+  border: 2px dotted #fff;
+  border-radius: 50%;
+  border-left: none;
+  border-bottom: none;
+  -webkit-transition: opacity 0.1s 0.4s;
+  transition: opacity 0.1s 0.4s;
+  opacity: 0;
+}
+.login-submit.processing {
+  width: 4rem;
+  font-size: 0;
+}
+.login-submit.processing:after {
+  opacity: 1;
+  -webkit-animation: rotate 0.5s 0.4s infinite linear;
+          animation: rotate 0.5s 0.4s infinite linear;
+}
+.login-submit.success {
+  -webkit-transition: opacity 0.1s 0.3s, background-color 0.1s 0.3s, -webkit-transform 0.3s 0.1s ease-out;
+  transition: opacity 0.1s 0.3s, background-color 0.1s 0.3s, -webkit-transform 0.3s 0.1s ease-out;
+  transition: transform 0.3s 0.1s ease-out, opacity 0.1s 0.3s, background-color 0.1s 0.3s;
+  transition: transform 0.3s 0.1s ease-out, opacity 0.1s 0.3s, background-color 0.1s 0.3s, -webkit-transform 0.3s 0.1s ease-out;
+  -webkit-transform: scale(30);
+          transform: scale(30);
+  opacity: 0.9;
+}
+.login-submit.success:after {
+  -webkit-transition: opacity 0.1s 0s;
+  transition: opacity 0.1s 0s;
+  opacity: 0;
+  -webkit-animation: none;
+          animation: none;
+}
+.login-signup {
+  font-size: 1.2rem;
+  color: #ABA8AE;
+}
+.login-signup a {
+  color: #fff;
+  cursor: pointer;
+}
+
+.ripple {
+  position: absolute;
+  width: 15rem;
+  height: 15rem;
+  margin-left: -7.5rem;
+  margin-top: -7.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-animation: animRipple 0.4s;
+          animation: animRipple 0.4s;
+  border-radius: 50%;
+}
+
+@-webkit-keyframes animRipple {
+  to {
+    -webkit-transform: scale(3.5);
+            transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+@keyframes animRipple {
+  to {
+    -webkit-transform: scale(3.5);
+            transform: scale(3.5);
+    opacity: 0;
+  }
+}
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes animatePath {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes animatePath {
+  to {
+    stroke-dashoffset: 0;
+  }
 }

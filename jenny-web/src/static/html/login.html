@@ -15,6 +15,7 @@
 		<script src="../public/jquery/js/jquery-1.11.1.min.js"></script>
 		<script src="../public/jquery/js/jquery.validate.min.js"></script>
 		<script src="../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../public/jquery/js/jquery.cookie.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.js"></script>
 		<script src="../public/layer/js/layer.js"></script>
 		<script src="../public/fakeLoader/js/fakeLoader.js"></script>
@@ -26,20 +27,58 @@
 	</head>
 
 	<body class="login-body">
-		<div class="signin">
+		<div class="signin" id="form-computer">
 			<div class="signin-head"><img src="../public/images/test/head_120.png" alt="" class="img-circle"></div>
-			<form class="form-signin" role="form">
-				<div class="form-group has-success has-feedback"> 
-					<input type="text" class="form-control" id="username" name="username" placeholder="用户名" aria-describedby="inputSuccess2Status" required autofocus autocomplete="off">
+			<form role="form">
+				<div class="login-form">
+					<div class="login-row">
+						<svg class="login-icon name svg-icon" viewBox="0 0 20 20">
+							<path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
+						</svg>
+						<input type="text" class="login-input name" name="username" placeholder="用户名" required autofocus autocomplete="off"/>
+					</div>
+					<div class="login-row">
+						<svg class="login-icon pass svg-icon" viewBox="0 0 20 20">
+							<path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
+						</svg>
+						<input type="password" class="login-input pass" name="password" class="form-control" placeholder="密码" />
+					</div>
+					<button type="button" class="login-submit">登录</button>
+					<p class="login-signup">忘记密码? &nbsp;
+						<a>联系管理员</a>
+					</p>
+					<!--<p class="login-signup" style="text-align: left;margin-top: -14px;">
+						<input type="checkbox" value="remember-me"> 记住我</input>
+					</p>-->
 				</div>
-				<div class="form-group has-success has-feedback"> 
-					<input type="password" id="password" name="password" class="form-control" placeholder="密码" required aria-describedby="inputSuccess2Status"/>
-				</div>
-				<button class="btn btn-lg btn-success btn-block" type="button" id="login">登录</button>
-				<label class="checkbox">
-					<input type="checkbox" value="remember-me"> 记住我
-				</label>
 			</form>
+		</div>
+		<div class="cont" id="form-mobile" style="display: none;">
+			<div class="demo">
+				<div class="login">
+					<div class="signin-head"><img src="../public/images/test/head_120.png" alt="" class="img-circle"></div>
+					<form role="form">
+						<div class="login-form">
+							<div class="login-row">
+								<svg class="login-icon name svg-icon" viewBox="0 0 20 20">
+									<path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
+								</svg>
+								<input type="text" class="login-input name" name="username" placeholder="用户名" required autofocus autocomplete="off"/>
+							</div>
+							<div class="login-row">
+								<svg class="login-icon pass svg-icon" viewBox="0 0 20 20">
+									<path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
+								</svg>
+								<input type="password" class="login-input pass" name="password" class="form-control" placeholder="密码" required/>
+							</div>
+							<button type="button" class="login-submit">登录</button>
+							<p class="login-signup">忘记密码? &nbsp;
+								<a>联系管理员</a>
+							</p>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 		<div class="fakeloader"></div>
 	</body>
