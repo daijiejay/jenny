@@ -65,11 +65,16 @@ function validAdd(form) {
 			}
 		},
 		errorPlacement: function(error, element) {
-			var ele = element.parent('.input-group').parent();
-			if(ele.find('label.error')) {
-				ele.find('label.error').remove();
-			}
-			ele.append(error[0].outerHTML);
+			var ele = element.parent('.input-group').parent().parent();
+			ele.addClass('has-error');
+			ele.removeClass('has-success');
+			ele.find('.help-block').html('<i class="fa fa-times-circle"></i>'+error[0].outerText);
+		},
+		success: function(label) {
+			var ele = form.find('input[name="' + label[0].htmlFor + '"]').parent().parent().parent();
+			ele.addClass('has-success');
+			ele.removeClass('has-error');
+			ele.find('.help-block').html('<i class="fa fa-check"></i>');
 		}
 	});
 }
@@ -98,11 +103,16 @@ function validUpdate(form) {
 			}
 		},
 		errorPlacement: function(error, element) {
-			var ele = element.parent('.input-group').parent();
-			if(ele.find('label.error')) {
-				ele.find('label.error').remove();
-			}
-			ele.append(error[0].outerHTML);
+			var ele = element.parent('.input-group').parent().parent();
+			ele.addClass('has-error');
+			ele.removeClass('has-success');
+			ele.find('.help-block').html('<i class="fa fa-times-circle"></i>'+error[0].outerText);
+		},
+		success: function(label) {
+			var ele = form.find('input[name="' + label[0].htmlFor + '"]').parent().parent().parent();
+			ele.addClass('has-success');
+			ele.removeClass('has-error');
+			ele.find('.help-block').html('<i class="fa fa-check"></i>');
 		}
 	});
 }

@@ -1,7 +1,9 @@
 package org.daijie.jenny.common.feign.sys;
 
+import java.util.List;
+
 import org.daijie.core.result.ModelResult;
-import org.daijie.jenny.common.feign.sys.response.SysRoleMenuResponse;
+import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableAuthorizedResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,16 +19,8 @@ import io.swagger.annotations.ApiOperation;
 public interface SysMenuAuthorizedFeign {
 	
 	@ApiOperation(value = "获取所有菜单")
-	@RequestMapping(value = "/query/all", method = RequestMethod.GET)
-	public ModelResult<SysRoleMenuResponse> getMenuAll();
-	
-	@ApiOperation(value = "根据角色编号获取菜单")
-	@RequestMapping(value = "/query/roleIds", method = RequestMethod.GET)
-	public ModelResult<SysRoleMenuResponse> getMenuByRoles(Integer... roleIds);
-	
-	@ApiOperation(value = "根据用户编号获取已授权的菜单")
-	@RequestMapping(value = "/query/user/{userId}", method = RequestMethod.GET)
-	public ModelResult<SysRoleMenuResponse> getMenuByUser(@PathVariable(name = "userId") Integer userId);
+	@RequestMapping(value = "/query/all/{userId}", method = RequestMethod.GET)
+	public ModelResult<List<SysMenuResponse>> getMenuAuthrozied(@PathVariable(name = "userId") Integer userId);
 	
 	@ApiOperation(value = "根据菜单编号获取表格信息")
 	@RequestMapping(value = "/query/table/{menuId}", method = RequestMethod.GET)

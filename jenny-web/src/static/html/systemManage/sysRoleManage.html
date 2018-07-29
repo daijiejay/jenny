@@ -4,6 +4,39 @@
 		<meta charset="UTF-8">
 		<title>系统角色管理</title>
 		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../assets/fonts/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+		<link href="../../assets/css/styles.css" type="text/css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-tasks"></i><span> 查询条件</span>
+						</div>
+						<div class="panel-body">
+							<div class="table-search froms">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="userName">角色名称：</label>
+										<input type="text" class="form-control" id="roleName" placeholder="用户名称">
+									</div>
+									<button type="button" class="btn btn-default query">查询</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-hover" id="sysRoleTable">
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="fakeloader"></div>
 		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
 		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
 		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
@@ -18,29 +51,6 @@
 		<script src="../../public/js/custom.validate.js"></script>
 		<script src="../../public/js/common.js"></script>
 		<script src="../../js/systemManage/sysRoleManage.js"></script>
-	</head>
-	<body>
-		<div class="table-search froms">
-			<div class="row">
-				<div class="widget-shadow">
-					<div class="form-title">
-						<i class="fa fa-tasks"></i><span>查询条件</span>
-					</div>
-					<div class="form-body" data-example-id="simple-form-inline">
-						<form class="form-inline">
-							<div class="form-group">
-								<label for="userName">角色名称：</label>
-								<input type="text" class="form-control" id="roleName" placeholder="用户名称">
-							</div>
-							<button type="button" class="btn btn-default query">查询</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<table class="table table-hover" id="sysRoleTable">
-		</table>
-		<div class="fakeloader"></div>
 	</body>
 </html>
 
@@ -49,8 +59,8 @@
 		<div class="modal-content">
 			<!-- 模态框头部 -->
 			<div class="modal-header">
-				<h4 class="modal-title">添加</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
 			</div>
 			<!-- 模态框主体 -->
 			<div class="modal-body">
@@ -59,29 +69,29 @@
 						<input type="hidden" id="roleId" name="roleId"/>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">角色代码</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-font"></i>
 									</span>
-									<input type="text" class="form-control1" maxlength="20" name="roleCode" id="roleCode" placeholder="角色代码">
+									<input type="text" class="form-control" maxlength="20" name="roleCode" id="roleCode" placeholder="角色代码">
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">角色名称</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-font"></i>
 									</span>
-									<input type="text" class="form-control1" maxlength="20" name="roleName" id="roleName" placeholder="角色名称">
+									<input type="text" class="form-control" maxlength="20" name="roleName" id="roleName" placeholder="角色名称">
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
@@ -102,8 +112,8 @@
 		<div class="modal-content">
 			<!-- 模态框头部 -->
 			<div class="modal-header">
-				<h4 class="modal-title">添加</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
 			</div>
 			<!-- 模态框主体 -->
 			<div class="modal-body">

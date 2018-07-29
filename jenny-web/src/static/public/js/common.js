@@ -136,9 +136,9 @@ function initFakeloader() {
  * 子页面变动iframe高度自适应
  */
 async function changeFrameHeight() {
-	var ifm = parent.window.document.getElementById("iframepage");
-	if(ifm) {
-		ifm.height = document.body.clientHeight < 700 ? 700 : document.body.clientHeight;
+	var ifm = window.parent.$('#page-wrapper .tab-content div.active iframe');
+	if(ifm.length > 0) {
+		ifm[0].height = document.body.clientHeight < 600 ? 600 : document.body.clientHeight;
 	}
 }
 /**
@@ -255,6 +255,9 @@ function countDown(times) {
 			tab.that = this;
 			tab.settings = settings;
 			var menuId = window.parent.$('#page-wrapper iframe').attr('menuId');
+			if (menuId <= 0) {
+				menuId = window.parent.$('#page-wrapper .tab-content div.active iframe').attr('menuId');
+			}
 			request('get', '', '/sysindex/menu/authorized/table/' + menuId, 'SYS', function(result) {
 				result.data.tables.forEach(function(value, index) {
 					if (value.tableTarget == _this.selector) {

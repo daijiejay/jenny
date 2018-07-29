@@ -1,31 +1,25 @@
 package org.daijie.jenny.cloud.sys.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.daijie.core.controller.enums.ResultCode;
 import org.daijie.core.result.ApiResult;
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.jdbc.mybatis.example.ExampleBuilder;
+import org.daijie.jenny.cloud.sys.mapper.SysRoleMenuAuthorizedMapper;
 import org.daijie.jenny.common.feign.sys.SysMenuAuthorizedFeign;
-import org.daijie.jenny.common.feign.sys.response.SysMenuAuthorizedResponse;
-import org.daijie.jenny.common.feign.sys.response.SysRoleMenuResponse;
+import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableAuthorizedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableColumnResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableResponse;
-import org.daijie.jenny.common.mapper.sys.SysMenuAuthorizedMapper;
 import org.daijie.jenny.common.mapper.sys.SysMenuMapper;
-import org.daijie.jenny.common.mapper.sys.SysRoleAuthorizedMapper;
 import org.daijie.jenny.common.mapper.sys.SysTableActionMapper;
 import org.daijie.jenny.common.mapper.sys.SysTableColumnMapper;
 import org.daijie.jenny.common.mapper.sys.SysTableMapper;
 import org.daijie.jenny.common.model.sys.SysMenu;
-import org.daijie.jenny.common.model.sys.SysMenuAuthorized;
-import org.daijie.jenny.common.model.sys.SysRoleAuthorized;
 import org.daijie.jenny.common.model.sys.SysTable;
 import org.daijie.jenny.common.model.sys.SysTableAction;
 import org.daijie.jenny.common.model.sys.SysTableColumn;
@@ -51,66 +45,11 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 	private SysTableActionMapper sysTableActionMapper;
 	
 	@Autowired
-	private SysRoleAuthorizedMapper sysRoleAuthorizedMapper;
-	
-	@Autowired
-	private SysMenuAuthorizedMapper sysMenuAuthorizedMapper;
+	private SysRoleMenuAuthorizedMapper sysRoleMenuAuthorizedMapper;
 
 	@Override
-	public ModelResult<SysRoleMenuResponse> getMenuAll() {
-		SysRoleMenuResponse menuResponse = new SysRoleMenuResponse();
-		List<SysMenu> list1 = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("level", 1).orderByAsc("parentCode").build());
-		List<SysMenuAuthorizedResponse> level1 = new ArrayList<SysMenuAuthorizedResponse>();
-		list1.forEach(sysMenu -> {
-			SysMenuAuthorizedResponse menuAuthorizedResponse = new SysMenuAuthorizedResponse();
-			BeanUtil.copyProperties(sysMenu, menuAuthorizedResponse);
-			level1.add(menuAuthorizedResponse);
-		});
-		menuResponse.setLevel1(level1);
-		
-		List<SysMenu> list2 = sysMenuMapper.selectByExample(ExampleBuilder.create(SysMenu.class).andEqualTo("level", 2).orderByAsc("parentCode").build());
-		List<SysMenuAuthorizedResponse> level2 = new ArrayList<SysMenuAuthorizedResponse>();
-		list2.forEach(sysMenu -> {
-			SysMenuAuthorizedResponse menuAuthorizedResponse = new SysMenuAuthorizedResponse();
-			BeanUtil.copyProperties(sysMenu, menuAuthorizedResponse);
-			level2.add(menuAuthorizedResponse);
-		});
-		menuResponse.setLevel2(level2);
-		return Result.build(menuResponse);
-	}
-
-	@Override
-	public ModelResult<SysRoleMenuResponse> getMenuByRoles(Integer... roleIds) {
-		SysRoleMenuResponse menuResponse = getMenuAll().getData();
-		List<SysMenuAuthorized> menuAuthorities = sysMenuAuthorizedMapper
-				.selectByExample(ExampleBuilder.create(SysMenuAuthorized.class).andIn("roleId", Arrays.asList(roleIds)).build());
-		
-		menuResponse.setLevel1(menuResponse.getLevel1().stream().filter(menu -> {
-			return menuAuthorities.stream().anyMatch(authorized -> menu.getMenuId().equals(authorized.getMenuId()));
-		}).collect(Collectors.toList()));
-		
-		menuResponse.setLevel2(menuResponse.getLevel2().stream().filter(menu -> {
-			return menuAuthorities.stream().anyMatch(authorized -> menu.getMenuId().equals(authorized.getMenuId()));
-		}).collect(Collectors.toList()));
-		return Result.build(menuResponse);
-	}
-
-	@Override
-	public ModelResult<SysRoleMenuResponse> getMenuByUser(Integer userId) {
-		List<SysRoleAuthorized> list = sysRoleAuthorizedMapper
-				.selectByExample(ExampleBuilder.create(SysRoleAuthorized.class).andEqualTo("userId", userId).build());
-		if (list.size() == 0) {
-			return Result.build(new SysRoleMenuResponse());
-		}
-		Integer[] roleIds = new Integer[list.size()];
-		list.stream().forEach(sysUserAuthorized -> {
-			int i = 0;
-			roleIds[i] = sysUserAuthorized.getRoleId();
-			i ++;
-		});
-		SysRoleMenuResponse menuResponse = getMenuByRoles(roleIds).getData();
-		menuResponse.setUserId(userId);
-		return Result.build(menuResponse);
+	public ModelResult<List<SysMenuResponse>> getMenuAuthrozied(Integer userId) {
+		return Result.build(sysRoleMenuAuthorizedMapper.selectRoleMenuAuthorized(userId));
 	}
 
 	@Override

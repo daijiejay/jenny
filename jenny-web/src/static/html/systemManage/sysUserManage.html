@@ -5,6 +5,44 @@
 		<meta charset="UTF-8">
 		<title>系统用户管理</title>
 		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../assets/fonts/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+		<link href="../../assets/css/styles.css" type="text/css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-tasks"></i><span> 查询条件</span>
+						</div>
+						<div class="panel-body">
+							<div class="table-search froms">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="userName">用户名称：</label>
+										<input type="text" class="form-control" name="userName" placeholder="用户名称">
+									</div>
+									<div class="form-group">
+										<label for="mobile">手机号：</label>
+										<input type="email" class="form-control" name="mobile" placeholder="手机号">
+									</div>
+									<button type="button" class="btn btn-default query">查询</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-bordered" id="sysUserTable">
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="fakeloader"></div>
 		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
 		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
 		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
@@ -21,34 +59,6 @@
 		<script src="../../public/js/custom.validate.js"></script>
 		<script src="../../public/js/common.js"></script>
 		<script src="../../js/systemManage/sysUserManage.js"></script>
-	</head>
-
-	<body>
-		<div class="table-search froms">
-			<div class="row">
-				<div class="widget-shadow">
-					<div class="form-title">
-						<i class="fa fa-tasks"></i><span>查询条件</span>
-					</div>
-					<div class="form-body" data-example-id="simple-form-inline">
-						<form class="form-inline">
-							<div class="form-group">
-								<label for="userName">用户名称：</label>
-								<input type="text" class="form-control" name="userName" placeholder="用户名称">
-							</div>
-							<div class="form-group">
-								<label for="mobile">手机号：</label>
-								<input type="email" class="form-control" name="mobile" placeholder="手机号">
-							</div>
-							<button type="button" class="btn btn-default query">查询</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<table class="table table-hover" id="sysUserTable">
-		</table>
-		<div class="fakeloader"></div>
 	</body>
 
 </html>
@@ -58,91 +68,91 @@
 		<div class="modal-content">
 			<!-- 模态框头部 -->
 			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title">添加</h4>
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<!-- 模态框主体 -->
 			<div class="modal-body">
 				<div class="form-three widget-shadow">
 					<form class="form-horizontal">
-						<input type="hidden" id="userId" name="userId"/>
+						<input type="hidden" id="userId" name="userId" />
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">用户名</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-user"></i>
 									</span>
-									<input type="text" class="form-control1" maxlength="20" name="userName" id="userName" placeholder="用户名">
+									<input type="text" class="form-control" maxlength="20" name="userName" id="userName" placeholder="用户名">
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">手机号</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-phone"></i>
 									</span>
-									<input type="text" class="form-control1" name="mobile" id="mobile" placeholder="手机号">
+									<input type="text" class="form-control" name="mobile" id="mobile" placeholder="手机号">
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">密码</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-key"></i>
 									</span>
-									<input type="password" class="form-control1" name="password" id="password" placeholder="密码">
+									<input type="password" class="form-control" name="password" id="password" placeholder="密码">
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">邮箱</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-envelope"></i>
 									</span>
-									<input type="email" class="form-control1" name="email" id="email" placeholder="邮箱">
+									<input type="email" class="form-control" name="email" id="email" placeholder="邮箱">
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">生日</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-birthday-cake"></i>
 									</span>
-									<input type="date" class="form-control1" name="birthday" id="birthday" placeholder="生日">
+									<input type="date" class="form-control" name="birthday" id="birthday" placeholder="生日">
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">性别</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="radio block"><label><input type="radio" name="gander" value="1">男</label></div>
 								<div class="radio block"><label><input type="radio" name="gander" value="0">女</label></div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
@@ -163,8 +173,8 @@
 		<div class="modal-content">
 			<!-- 模态框头部 -->
 			<div class="modal-header">
-				<h4 class="modal-title">添加</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
 			</div>
 			<!-- 模态框主体 -->
 			<div class="modal-body">
