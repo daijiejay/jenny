@@ -37,12 +37,14 @@ function sys_index_link() {
 		$(this).parent().addClass('active');
 		if ($(this).attr('src')) {
 			var menuId = $(this).attr('menuId');
+			
 			var menuName = $(this).html();
 			if ($(this).find('span').length > 0) {
 				menuName = $(this).find('span').eq('0').html();
 			}
 			item = {'id':menuId,'name':menuName,'url':$(this).attr('src'),'closable':true};
 			closableTab.addTab(item);
+			$('#page-wrapper .tab-content div.active iframe').attr('src', $(this).attr('src'));
 		}
 	});
 }

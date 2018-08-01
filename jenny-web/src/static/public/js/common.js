@@ -375,12 +375,13 @@ function countDown(times) {
 			var operate = '';
 			tab.table.actions.forEach(function(action, i) {
 				if (action.actionType == 'OPERATE' && tab.settings.operateFormatter(action, row)) {
+					var actionName = action.icon ? '' : action.actionName;
 					if (action.mutualType == 'CONFIRM') {
-						operate += '<a mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" class="btn active" href="#">' + action.actionName + '</a>';
+						operate += '<a mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="btn active ' + action.icon + '" href="#">' + actionName + '</a>';
 					} else if (action.mutualType == 'FORM') {
-						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>';
+						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="btn active ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
 					} else if (action.mutualType == 'EXTEND') {
-						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" class="btn active" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + action.actionName + '</a>';
+						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="btn active ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
 					}
 				}
 			});
