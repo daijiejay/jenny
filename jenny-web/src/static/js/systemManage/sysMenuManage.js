@@ -11,10 +11,22 @@ $(function() {
 		emptyIcon: true,
         hasSearch: true
 	});
+		
+	$('#menuForm').find('.submit').click(function() {
+		var formData = $('#menuForm').serializeJson();
+		if (!formData.menuId) {
+			layer.alert('请选中左侧菜单进行编辑保存！')
+			return;
+		}
+		request('put', formData, '/sysmenu/update', 'SYS');
+	});
 });
 var dynamicIconsElement;
 var treeName = 'tree';
 
+/**
+ * 初始化菜单树
+ */
 function initZTree() {
 	var setting = {
 		treeId: treeName,
@@ -23,9 +35,6 @@ function initZTree() {
 			removeHoverDom: removeHoverDom,
 			selectedMulti: false
 		},
-//		check: {
-//			enable: true
-//		},
 		data: {
 			simpleData: {
 				enable: true,
@@ -42,8 +51,7 @@ function initZTree() {
 			beforeClick: zTreeBeforeClick,
 			beforeRemove: zTreeBeforeRemove,
 			beforeRename: zTreeBeforeRename,
-			beforeDrop: zTreeBeforeDrop,
-			beforeExpand: zTreeBeforeExpand
+			beforeDrop: zTreeBeforeDrop
 		}
 	};
 	request('get', '', '/sysmenu/query/tree', 'SYS', function(result) {
@@ -51,6 +59,12 @@ function initZTree() {
 	});
 }
 
+/**
+ * 监听点击菜单前事件
+ * @param {Object} treeId
+ * @param {Object} treeNode
+ * @param {Object} clickFlag
+ */
 function zTreeBeforeClick(treeId, treeNode, clickFlag) {
 	var parentNode = treeNode.getParentNode();
 	request('get', '', '/sysmenu/query/'+treeNode.id, 'SYS', function(result) {
@@ -94,10 +108,22 @@ function zTreeBeforeClick(treeId, treeNode, clickFlag) {
 	});
 }
 
+/**
+ * 删除菜单前监听事件
+ * @param {Object} treeId
+ * @param {Object} treeNode
+ */
 function zTreeBeforeRemove(treeId, treeNode) {
 	request('delete', '', '/sysmenu/delete/'+treeNode.id, 'SYS');
 }
 
+/**
+ * 修改菜单名前监听事件
+ * @param {Object} treeId
+ * @param {Object} treeNode
+ * @param {Object} newName
+ * @param {Object} isCancel
+ */
 function zTreeBeforeRename(treeId, treeNode, newName, isCancel) {
 	var formData = {
 		'menuId': treeNode.id,
@@ -106,25 +132,63 @@ function zTreeBeforeRename(treeId, treeNode, newName, isCancel) {
 	request('put', formData, '/sysmenu/update', 'SYS');
 }
 
+/**
+ * 拖拽菜单前监听事件
+ * @param {Object} treeId
+ * @param {Object} treeNodes
+ * @param {Object} targetNode
+ * @param {Object} moveType
+ */
 function zTreeBeforeDrop(treeId, treeNodes, targetNode, moveType) {
 	if (!targetNode) {
 		return false;
 	}
 	var formData = {'targetId': targetNode.id};
 	var ids = new Array();
+	var parentLevel = targetNode.level+1,chlidLevel;
+	if (moveType.toUpperCase() != 'INNER') {
+		parentLevel--;
+	}
 	$.each(treeNodes,function(index,value){  
 		ids.push(value.id);
+		chlidLevel = deeply(value);
 	})
+	if ((parentLevel + chlidLevel) > 3) {
+		layer.alert('不能创建3级及以上菜单');
+		return false;
+	}
 	formData.menuIds = ids;
 	formData.moveType = moveType.toUpperCase();
 	request('put', formData, '/sysmenu/move', 'SYS');
 }
 
-var zNodesExtandMap = new Map();
-function zTreeBeforeExpand(treeId, treeNode) {
-//	zNodesExtandMap.set(treeNode.id, treeNode);
+/**
+ * 获取节点的子节点深度
+ */
+var deeplyLevel;
+function deeply(treeNode, rootLevel) {
+	if (!rootLevel) {
+		rootLevel = treeNode.level;
+		deeplyLevel = rootLevel;
+	}
+	if (treeNode.level >= deeplyLevel) {
+		deeplyLevel = treeNode.level + 1;
+	}
+	var treeNodes = treeNode.children;
+	if (treeNodes && treeNodes.length > 0) {
+		$.each(treeNodes,function(index,value){  
+			deeply(value, rootLevel);
+		})
+	}
+	return deeplyLevel - rootLevel;
 }
 
+/**
+ * 点击菜单后面的添加按扭监听事件
+ * @param {Object} treeId
+ * @param {Object} treeNode
+ * @param {Object} callback
+ */
 function zTreeBeforeAddNode(treeId, treeNode, callback) {
 	var formData = {
 		'menuName': treeNode.name,
@@ -135,9 +199,12 @@ function zTreeBeforeAddNode(treeId, treeNode, callback) {
 	});
 }
 
+/**
+ * 鼠标指针放在菜单上监听事件
+ */
 var newCount = 1;
 function addHoverDom(treeId, treeNode) {
-	if (treeNode.level >= 1) {
+	if (treeNode.level >= 2) {
 		return;
 	}
 	var sObj = $("#" + treeNode.tId + "_span");
@@ -156,6 +223,11 @@ function addHoverDom(treeId, treeNode) {
 		return false;
 	});
 };
+/**
+ * 鼠标指针移出菜单上监听事件
+ * @param {Object} treeId
+ * @param {Object} treeNode
+ */
 function removeHoverDom(treeId, treeNode) {
 	$("#addBtn_"+treeNode.tId).unbind().remove();
 };

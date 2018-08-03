@@ -3,7 +3,6 @@ package org.daijie.jenny.api.sys;
 import java.util.List;
 
 import org.daijie.core.result.ModelResult;
-import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.jenny.common.feign.sys.SysMenuAuthorizedFeign;
 import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableAuthorizedResponse;
@@ -41,12 +40,10 @@ public class SysIndexController {
 	@RequestMapping(value = "/menu/authorized/table/{menuId}", method = RequestMethod.GET)
 	public ModelResult<SysTableAuthorizedResponse> getActionByMenu(@PathVariable(name = "menuId") Integer menuId) {
 		SysUserCacheResponse sysUserResponse = Auth.getAuthc(SysUserCacheResponse.class);
-		SysTableAuthorizedResponse authorizedResponse = null;
 		if (sysUserResponse.getAdmin()) {
-			authorizedResponse = sysMenuAuthorizedFeign.getActionByMenu(menuId).getData();
+			return sysMenuAuthorizedFeign.getTableByMenu(menuId);
 		} else {
-			
+			return sysMenuAuthorizedFeign.getTableAuthrozied(menuId, sysUserResponse.getUserId());
 		}
-		return Result.build(authorizedResponse);
 	}
 }

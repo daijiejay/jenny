@@ -21,7 +21,7 @@ function loadMenu() {
 				str += '<li code="'+result.data[i].menuId+'" level="'+result.data[i].level+'">'
 					+'<a href="#" src="'+result.data[i].mapping+'" menuId="'+result.data[i].menuId+'">'+result.data[i].menuName+'</a>'
 					+'</li>';
-				$('#side-menu li[code="'+result.data[i].parentId+'"] ul').append(str);
+				$('#side-menu li[code="'+result.data[i].parentId+'"]').children('ul').append(str);
 			}
 		}
 		sys_index_link();

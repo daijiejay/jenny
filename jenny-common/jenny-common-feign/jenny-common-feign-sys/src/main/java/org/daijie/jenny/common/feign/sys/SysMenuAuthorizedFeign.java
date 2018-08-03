@@ -24,5 +24,9 @@ public interface SysMenuAuthorizedFeign {
 	
 	@ApiOperation(value = "根据菜单编号获取表格信息")
 	@RequestMapping(value = "/query/table/{menuId}", method = RequestMethod.GET)
-	public ModelResult<SysTableAuthorizedResponse> getActionByMenu(@PathVariable(name = "menuId") Integer menuId);
+	public ModelResult<SysTableAuthorizedResponse> getTableByMenu(@PathVariable(name = "menuId") Integer menuId);
+	
+	@ApiOperation(value = "根据菜单编号获取表格信息")
+	@RequestMapping(value = "/query/table/{menuId}/{userId}", method = RequestMethod.GET)
+	public ModelResult<SysTableAuthorizedResponse> getTableAuthrozied(@PathVariable(name = "menuId") Integer menuId, @PathVariable(name = "userId") Integer userId);
 }

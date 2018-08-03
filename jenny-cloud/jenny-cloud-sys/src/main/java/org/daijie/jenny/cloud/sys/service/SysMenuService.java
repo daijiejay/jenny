@@ -209,7 +209,7 @@ public class SysMenuService implements SysMenuFeign {
 	public ModelResult<Boolean> moveMenu(SysMenuMoveRequest sysMenuRequest) {
 		SysMenu menu = sysMenuMapper.selectByPrimaryKey(sysMenuRequest.getTargetId());
 		if (sysMenuRequest.getMoveType() == MoveType.INNER) {
-			if (menu.getSort() == 2) {
+			if (menu.getLevel() > 3) {
 				throw new ApiException(ResultCode.CODE_100, "不能创建3级及以上菜单");
 			}
 			renewMoveMenu(menu, sysMenuRequest.getMenuIds());
@@ -218,7 +218,7 @@ public class SysMenuService implements SysMenuFeign {
 		} else if (sysMenuRequest.getMoveType() == MoveType.NEXT) {
 			moveAfterMenu(menu, sysMenuRequest.getMenuIds());
 		}
-		return Result.build();
+		return Result.build(true);
 	}
 	
 	/**
@@ -327,9 +327,13 @@ public class SysMenuService implements SysMenuFeign {
 		int menuCode = menus.size() > 0 ? menus.get(0).getMenuCode() : parentMenu.getMenuCode();
 		int sort = menus.size();
 		for (int menuId: menuIds) {
+			if (parentMenu.getLevel() == 3) {
+				throw new ApiException("不能创建3级及以上菜单");
+			}
 			menuCode = generatorMenuId(menuCode, parentMenu.getLevel()+1, 1);
 			SysMenu sysMenu = sysMenuMapper.selectByPrimaryKey(menuId);
 			sysMenu.setMenuCode(menuCode);
+			sysMenu.setParentId(parentMenu.getMenuId());
 			sysMenu.setLevel(parentMenu.getLevel()+1);
 			sysMenu.setSort(++sort);
 			sysMenu.setParentCode(parentMenu.getMenuCode());
@@ -350,6 +354,9 @@ public class SysMenuService implements SysMenuFeign {
 		int menuCode = parentMenu.getMenuCode();
 		int sort = 0;
 		for (SysMenu sysMenu : menus) {
+			if (parentMenu.getLevel() == 3) {
+				throw new ApiException("不能创建3级及以上菜单");
+			}
 			menuCode = generatorMenuId(menuCode, parentMenu.getLevel()+1, 1); 
 			sysMenu.setMenuCode(menuCode);
 			sysMenu.setLevel(parentMenu.getLevel()+1);
@@ -390,6 +397,9 @@ public class SysMenuService implements SysMenuFeign {
 				int menuCode = parentMenu.getMenuCode();
 				int sort = 0;
 				for (SysMenu sysMenu : menus) {
+					if (parentMenu.getLevel() == 3) {
+						throw new ApiException("不能创建3级及以上菜单");
+					}
 					menuCode = generatorMenuId(menuCode, parentMenu.getLevel()+1, 1); 
 					sysMenu.setMenuCode(menuCode);
 					sysMenu.setLevel(parentMenu.getLevel()+1);
