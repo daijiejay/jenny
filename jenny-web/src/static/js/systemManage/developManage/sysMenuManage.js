@@ -104,6 +104,8 @@ function zTreeBeforeClick(treeId, treeNode, clickFlag) {
 		listenModalShow: function(modal) {
 			modal.find('form #menuId').val(treeNode.id);
 			modal.find('form #menuName').val(treeNode.name);
+			modal.find('form div').removeClass('has-success').removeClass('has-error');
+			modal.find('.help-block').html('');
 		}
 	});
 }
@@ -305,6 +307,8 @@ function loadAction(tableId) {
 		},
 		listenModalShow: function(modal) {
 			modal.find('form #tableId').val(tableId);
+			modal.find('form div').removeClass('has-success').removeClass('has-error');
+			modal.find('.help-block').html('');
 		}
 	});
 }
@@ -353,6 +357,8 @@ function loadColumn(tableId) {
 		},
 		listenModalShow: function(modal) {
 			modal.find('form #tableId').val(tableId);
+			modal.find('form div').removeClass('has-success').removeClass('has-error');
+			modal.find('.help-block').html('');
 		}
 	});
 }

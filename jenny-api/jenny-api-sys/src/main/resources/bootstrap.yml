@@ -28,7 +28,7 @@ ribbon.ReadTimeout: 5000
 #ribbon.MaxAutoRetriesNextServer: 2
 
 #对象转json串时，去除为null的属性
-spring.jackson.default-property-inclusion: non_null
+#spring.jackson.default-property-inclusion: non_null
 #指定jackson日期转换格式
 spring.jackson.date-format: yyyy-MM-dd HH\:mm\:ss
 #指定jackson日期转换时区

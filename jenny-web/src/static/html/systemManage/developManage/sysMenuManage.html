@@ -4,9 +4,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>系统菜单管理</title>
-		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
-		<link href="../../assets/fonts/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
-		<link href="../../assets/css/styles.css" type="text/css" rel="stylesheet">
+		<link href="../../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../../assets/fonts/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+		<link href="../../../assets/css/styles.css" type="text/css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -101,23 +101,23 @@
 			</div>
 		</div>
 		<div class="fakeloader"></div>
-		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
-		<script src="../../public/jquery/js/jquery-ui.js"></script>
-		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
-		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
-		<script src="../../public/fontIconPicker/js/jquery.fonticonpicker.js"></script>
-		<script src="../../public/fakeLoader/js/fakeLoader.js"></script>
-		<script src="../../public/ztree/js/jquery.ztree.core.js"></script>
-		<script src="../../public/ztree/js/jquery.ztree.excheck.js"></script>
-		<script src="../../public/ztree/js/jquery.ztree.exedit.js"></script>
-		<script src="../../public/bootstrap/js/bootstrap.js"></script>
-		<script src="../../public/bootstrap/js/bootstrap-table.js"></script>
-		<script src="../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
-		<script src="../../public/layer/js/layer.js"></script>
-		<script src="../../public/fakeLoader/js/fakeLoader.js"></script>
-		<script src="../../public/js/custom.validate.js"></script>
-		<script src="../../public/js/common.js"></script>
-		<script src="../../js/systemManage/sysMenuManage.js"></script>
+		<script src="../../../public/jquery/js/jquery-1.11.1.min.js"></script>
+		<script src="../../../public/jquery/js/jquery-ui.js"></script>
+		<script src="../../../public/jquery/js/jquery.validate.min.js"></script>
+		<script src="../../../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../../../public/fontIconPicker/js/jquery.fonticonpicker.js"></script>
+		<script src="../../../public/fakeLoader/js/fakeLoader.js"></script>
+		<script src="../../../public/ztree/js/jquery.ztree.core.js"></script>
+		<script src="../../../public/ztree/js/jquery.ztree.excheck.js"></script>
+		<script src="../../../public/ztree/js/jquery.ztree.exedit.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap-table.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../../public/layer/js/layer.js"></script>
+		<script src="../../../public/fakeLoader/js/fakeLoader.js"></script>
+		<script src="../../../public/js/custom.validate.js"></script>
+		<script src="../../../public/js/common.js"></script>
+		<script src="../../../js/systemManage/developManage/sysMenuManage.js"></script>
 	</body>
 
 </html>
@@ -152,7 +152,7 @@
 						</div>
 						<div class="form-group">
 							<label for="focusedinput" class="col-sm-2 control-label">表格名称</label>
-							<div class="col-sm-8">
+							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="fa fa-font"></i>
@@ -160,7 +160,7 @@
 									<input type="text" class="form-control" maxlength="20" name="tableName" id="tableName">
 								</div>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-sm-3">
 								<p class="help-block"></p>
 							</div>
 						</div>
@@ -384,9 +384,14 @@
 							<div class="col-sm-7">
 								<div class="input-group">
 									<span class="input-group-addon">
-										<i class="fa fa-font"></i>
+										<i class="fa fa-list"></i>
 									</span>
-									<input type="text" class="form-control" name="interfaceMethod" id="interfaceMethod">
+									<select class="form-control" name="interfaceMethod" id="interfaceMethod">
+										<option value="GET">GET</option>
+										<option value="POST">POST</option>
+										<option value="PUT">PUT</option>
+										<option value="DELETE">DELETE</option>
+									</select>
 								</div>
 							</div>
 							<div class="col-sm-3">

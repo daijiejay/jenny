@@ -17,10 +17,17 @@ function loadMenu() {
 			} else {
 				if ($('#side-menu li[code="'+result.data[i].parentId+'"]').children('ul').length == 0) {
 					$('#side-menu li[code="'+result.data[i].parentId+'"]').append('<ul class="acc-menu"></ul>');
+					$('#side-menu li[code="'+result.data[i].parentId+'"]').addClass('hasChild');
 				}
-				str += '<li code="'+result.data[i].menuId+'" level="'+result.data[i].level+'">'
-					+'<a href="#" src="'+result.data[i].mapping+'" menuId="'+result.data[i].menuId+'">'+result.data[i].menuName+'</a>'
-					+'</li>';
+				if (result.data[i].mapping) {
+					str += '<li code="'+result.data[i].menuId+'" level="'+result.data[i].level+'">'
+						+'<a href="#" src="'+result.data[i].mapping+'" menuId="'+result.data[i].menuId+'">'+result.data[i].menuName+'</a>'
+						+'</li>';
+				} else {
+					str += '<li code="'+result.data[i].menuId+'" level="'+result.data[i].level+'">'
+						+'<a href="#" menuId="'+result.data[i].menuId+'">'+result.data[i].menuName+'</a>'
+						+'</li>';
+				}
 				$('#side-menu li[code="'+result.data[i].parentId+'"]').children('ul').append(str);
 			}
 		}

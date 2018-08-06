@@ -105,7 +105,9 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
  */
 function request(method, data, url, serverId, callback) {
 	requestSynchronized(method, data, url, serverId, true, function(result) {
-		return callback(result);
+		if (typeof callback === 'function') {
+			return callback(result);
+		}
 	});
 }
 /**
@@ -220,23 +222,54 @@ function countDown(times) {
             visible: true,
             showExport: true, //是否显示导出
             exportDataType: "basic", //basic', 'all', 'selected' 表示导出的模式是当前页、所有数据还是选中数据
-            exportTypes: ['excel'],
-			searchTarget: '.table-search', 
+            exportTypes: ['excel'], //导出文件
+			searchTarget: '.table-search', //搜索表单元素
+			/**
+			 * 模态框保存前监听事件
+			 * @param {Object} modal 模态框元素
+			 * @param {Object} action 功能对象
+			 * @param {Object} data 数据
+			 */
 			listenModalSave: function(modal, action, data) {
 				return true;
 			},
+			/**
+			 * 监听加载表格数据前设置请求参数
+			 * @param {Object} params 请求参数
+			 */
 			searchParams: function(params) {
 				return params;
 			},
+			/**
+			 * 表格列字段值格式化
+			 * @param {Object} value 行字段值
+			 * @param {Object} row 行对象
+			 * @param {Object} index 行下标
+			 * @param {Object} field 行字段名
+			 */
 			columnFormatter: function(value, row, index, field) {
 				return value;
 			},
+			/**
+			 * 功能按扭格式化
+			 * @param {Object} action 功能对象
+			 * @param {Object} row 行对象
+			 */
 			operateFormatter: function(action, row) {
 				return true;
 			},
+			/**
+			 * 功能按扭自定义扩展
+			 * @param {Object} action 功能对象
+			 * @param {Object} row 行对象
+			 */
 			operateExtend: function(action, row) {
 				return;
 			},
+			/**
+			 * 模态框显示监听事件
+			 * @param {Object} modal 模态框元素
+			 */
 			listenModalShow: function(modal) {
 				return;
 			}
@@ -374,7 +407,7 @@ function countDown(times) {
 			var tab = _tableMap.get('#' + ele.id);
 			var operate = '';
 			tab.table.actions.forEach(function(action, i) {
-				if (action.actionType == 'OPERATE' && tab.settings.operateFormatter(action, row)) {
+				if (action.actionType == 'OPERATE' && (!tab.settings.operateFormatter || tab.settings.operateFormatter(action, row))) {
 					var actionName = action.icon ? '' : action.actionName;
 					if (action.mutualType == 'CONFIRM') {
 						operate += '<a mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="btn active ' + action.icon + '" href="#">' + actionName + '</a>';
@@ -457,9 +490,11 @@ function countDown(times) {
 							var formData = modal.find('form').serializeJson();
 							var url = tab.that.formatterUrl(action.interfaceUrl, formData);
 							request(action.interfaceMethod, formData, url, action.interfaceServerId, function(result) {
-								modal.find('button.save').unbind("click");
-								modal.modal('hide');
-								tab.that.bootstrapTable('refresh');
+								if(result.code == '200') {
+									modal.find('button.save').unbind("click");
+									modal.modal('hide');
+									tab.that.bootstrapTable('refresh');
+								}
 							});
 						}
 					} else if (action.mutualType == 'EXTEND') {

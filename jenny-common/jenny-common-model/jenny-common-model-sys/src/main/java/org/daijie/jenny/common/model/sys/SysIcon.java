@@ -12,6 +12,9 @@ public class SysIcon implements Serializable {
     @Column(name = "icon_id")
     private Integer iconId;
 
+    /**
+     * 图标代码
+     */
     @Column(name = "icon_code")
     private String iconCode;
 
@@ -47,7 +50,9 @@ public class SysIcon implements Serializable {
     }
 
     /**
-     * @return icon_code
+     * 图标代码
+     * 
+     * @return icon_code 图标代码
      */
     public String getIconCode() {
         return iconCode;
@@ -59,7 +64,9 @@ public class SysIcon implements Serializable {
     }
 
     /**
-     * @param iconCode
+     * 图标代码
+     * 
+     * @param iconCode 图标代码
      */
     public void setIconCode(String iconCode) {
         this.iconCode = iconCode == null ? null : iconCode.trim();

@@ -38,6 +38,10 @@ $(function() {
 			if (action.formTarget == '#setMenu') {
 				loadMenuTree(row);
 			}
+		},
+		listenModalShow: function(modal) {
+			modal.find('form div').removeClass('has-success').removeClass('has-error');
+			modal.find('.help-block').html('');
 		}
 	});
 });
