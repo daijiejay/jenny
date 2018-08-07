@@ -61,6 +61,12 @@ public class SysTableActionResponse {
 	@ApiModelProperty(value = "表单目标元素")
     private String formTarget;
 
+    /**
+     * 图标
+     */
+	@ApiModelProperty(value = "图标")
+    private String icon;
+
 	public Integer getActionId() {
 		return actionId;
 	}
@@ -131,5 +137,13 @@ public class SysTableActionResponse {
 
 	public void setFormTarget(String formTarget) {
 		this.formTarget = formTarget;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 }

@@ -1,16 +1,7 @@
 $(function() {
 	initZTree();
 	
-	dynamicIconsElement = $('#icon').fontIconPicker({
-		source: fa_icons,
-		searchSource: fa_icon_search,
-		useAttribute: true,
-		attributeName: 'data-icomoon',
-		theme: 'fip-bootstrap',
-		iconsPerPage: 10,
-		emptyIcon: true,
-        hasSearch: true
-	});
+	initFontIconPicker('#icon');
 		
 	$('#menuForm').find('.submit').click(function() {
 		var formData = $('#menuForm').serializeJson();
@@ -305,8 +296,9 @@ function loadAction(tableId) {
 			params.tableId = tableId;
 			return params
 		},
-		listenModalShow: function(modal) {
+		listenModalShow: function(modal, row) {
 			modal.find('form #tableId').val(tableId);
+			initFontIconPicker(modal.find('form input[name="icon"]'), row.icon);
 			modal.find('form div').removeClass('has-success').removeClass('has-error');
 			modal.find('.help-block').html('');
 		}
@@ -389,11 +381,3 @@ function validColumn(form) {
 		}
 	});
 }
-	
-var fa_icons = [
-	'fa-home','fa-cogs'
-];
-
-var fa_icon_search = [
-	'首页','设置'
-];

@@ -111,6 +111,28 @@ function request(method, data, url, serverId, callback) {
 	});
 }
 /**
+ * 初始化图标
+ * @param {Object} ele 元素对象
+ * @param {Object} defaultIcon 默认图标
+ */
+function initFontIconPicker(ele, defaultIcon){
+	request('get', '', '/sysicon/query/fontIconPicker', 'SYS', function(result){
+		if (result.code == '200') {
+			dynamicIconsElement = $(ele).fontIconPicker({
+				source: result.data.iconCodes,
+				searchSource: result.data.iconNames,
+				useAttribute: true,
+				attributeName: 'data-icomoon',
+				theme: 'fip-bootstrap',
+				iconsPerPage: 10,
+				emptyIcon: true,
+		        hasSearch: true
+			});
+			dynamicIconsElement.refreshToInput(defaultIcon);
+		}
+	})
+}
+/**
  * 初始化加载效果
  */
 var loader;
@@ -139,8 +161,12 @@ function initFakeloader() {
  */
 async function changeFrameHeight() {
 	var ifm = window.parent.$('#page-wrapper .tab-content div.active iframe');
-	if(ifm.length > 0) {
-		ifm[0].height = document.body.clientHeight < 600 ? 600 : document.body.clientHeight;
+	if (ifm.length > 0) {
+		var height = window.screen.height - 115;
+//		if (ifm[0].attr('menuId') == -1) {
+//			return;
+//		}
+		ifm[0].height = document.body.clientHeight < height ? height : document.body.clientHeight;
 	}
 }
 /**
@@ -269,8 +295,9 @@ function countDown(times) {
 			/**
 			 * 模态框显示监听事件
 			 * @param {Object} modal 模态框元素
+			 * @param {Object} row 行对象
 			 */
-			listenModalShow: function(modal) {
+			listenModalShow: function(modal, row) {
 				return;
 			}
 		}
@@ -366,7 +393,8 @@ function countDown(times) {
 			actions.forEach(function(action, i) {
 				if(action.actionType == 'TOOLBAR') {
 					if(action.mutualType == 'FORM') {
-						toolbar += '<a actionId="' + action.actionId + '" href="#" class="btn btn-default" data-toggle="modal" data-target="' + action.formTarget + '">' + action.actionName + '</a>';
+						var actionName = action.icon ? '' : action.actionName;
+						toolbar += '<a actionId="' + action.actionId + '" href="#" class="btn btn-default fa ' + action.icon + '" title="' + action.actionName + '" data-toggle="modal" data-target="' + action.formTarget + '">' + actionName + '</a>';
 					}
 				}
 			});
@@ -410,11 +438,11 @@ function countDown(times) {
 				if (action.actionType == 'OPERATE' && (!tab.settings.operateFormatter || tab.settings.operateFormatter(action, row))) {
 					var actionName = action.icon ? '' : action.actionName;
 					if (action.mutualType == 'CONFIRM') {
-						operate += '<a mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="btn active ' + action.icon + '" href="#">' + actionName + '</a>';
+						operate += '<a mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action fa ' + action.icon + '" href="#">' + actionName + '</a>';
 					} else if (action.mutualType == 'FORM') {
-						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="btn active ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
+						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action fa ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
 					} else if (action.mutualType == 'EXTEND') {
-						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="btn active ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
+						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action fa ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
 					}
 				}
 			});
@@ -453,17 +481,18 @@ function countDown(times) {
 					var id = button.attr('id');
 					var actionId = button.attr('actionId');
 					var mutualType = button.attr('mutualType');
-					modal.find('.modal-title').html(button.html());
+					modal.find('.modal-title').html(button.attr('title'));
+					var row;
 					if (mutualType == 'FORM') {
 						if(id) {
-							var row = tab.that.bootstrapTable('getRowByUniqueId', id);
+							row = tab.that.bootstrapTable('getRowByUniqueId', id);
 							modal.find('form').initForm(row);
 						}
 					} else if (mutualType == 'EXTEND') {
 						
 					}
 					if (typeof tab.settings.listenModalShow == 'function') {
-						tab.settings.listenModalShow(modal);
+						tab.settings.listenModalShow(modal, row);
 					}
 					
 					modal.find('button.save').click(function() {
@@ -625,10 +654,10 @@ function countDown(times) {
 	};
 
 	window.operateEvents = {
-		'click .btn': function(e, value, row, index, ele) {
+		'click .action': function(e, value, row, index, ele) {
 			var tab = _tableMap.get('#' + ele.id);
 			tab.table.actions.forEach(function(action, i) {
-				if (action.actionType == 'OPERATE' && action.actionName == e.target.innerHTML) {
+				if (action.actionType == 'OPERATE' && action.actionName == e.target.title) {
 					if (action.mutualType == 'CONFIRM') {
 						layer.confirm('确定需要' + action.actionName + '吗？', {
 							yes: function(index, layero) {

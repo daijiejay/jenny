@@ -54,9 +54,7 @@ public class SysRoleService implements SysRoleFeign {
 	@Override
 	public ModelResult<PageResult<SysRoleResponse>> getRoleAll(SysRolePageRequest sysRolePageRequest) {
 		PageHelper.startPage(sysRolePageRequest.getPageNumber(), sysRolePageRequest.getPageSize());
-		SysRole role = new SysRole();
-		BeanUtil.copyProperties(sysRolePageRequest, role);
-		List<SysRole> users = sysRoleMapper.select(role);
+		List<SysRole> users = sysRoleMapper.selectByExample(sysRolePageRequest.exampleBuild(SysRole.class));
         PageInfo<SysRole> pageInfo = new PageInfo<>(users);
 		return Result.build(new PageResult<SysRoleResponse>(pageInfo.getList(), pageInfo.getTotal(), SysRoleResponse.class));
 	}

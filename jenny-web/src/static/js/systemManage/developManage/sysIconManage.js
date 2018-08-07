@@ -11,6 +11,7 @@ $(function() {
 		listenModalShow: function(modal) {
 			modal.find('form div').removeClass('has-success').removeClass('has-error');
 			modal.find('.help-block').html('');
+			$('#iconShow').removeAttr('class');
 		},
 		columnFormatter: function(value, row, index, field) {
 			if (field == 'class') {

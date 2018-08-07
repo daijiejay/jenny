@@ -8,4 +8,33 @@
 @import url('../layer/css/layer.css');
 @import url('../ztree/css/ztree.css');
 @import url('../fakeLoader/css/fakeLoader.css');
+@import url('../fontawesome/css/all.css');
 @import url('font-awesome.css');
+
+table a.btn {
+	font-weight: 900;
+}
+.static-content-tab {
+	padding: 0;
+}
+.tab-title {
+	width: 100%;
+    position: fixed;
+    border-bottom: 1px solid #dadfe3;
+    background-color: #bab3c1;
+}
+.static-content-tab .tab-content {
+	padding-top: 35px;
+}
+.table>tbody>tr>td>a {
+	padding: 0 5px;
+}
+.table>tbody>tr>td>a:link, .table>tbody>tr>td>a:hover {
+	text-decoration:none;
+}
+.table {
+	font-size: 0.9em;
+}
+.fixed-table-toolbar .btn-group .btn {
+	font-weight: 900; 
+}

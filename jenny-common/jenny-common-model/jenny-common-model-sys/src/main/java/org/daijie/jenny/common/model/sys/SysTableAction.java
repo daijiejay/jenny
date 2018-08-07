@@ -13,7 +13,7 @@ public class SysTableAction implements Serializable {
     private Integer actionId;
 
     /**
-     * 菜单编号
+     * 表格编号
      */
     @Column(name = "table_id")
     private Integer tableId;
@@ -31,7 +31,7 @@ public class SysTableAction implements Serializable {
     private String actionType;
 
     /**
-     * 交互类型：确认,表单
+     * 交互类型：确认,表单,扩展
      */
     @Column(name = "mutual_type")
     private String mutualType;
@@ -60,6 +60,12 @@ public class SysTableAction implements Serializable {
     @Column(name = "form_target")
     private String formTarget;
 
+    /**
+     * 图标
+     */
+    @Column(name = "icon")
+    private String icon;
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -86,9 +92,9 @@ public class SysTableAction implements Serializable {
     }
 
     /**
-     * 获取菜单编号
+     * 获取表格编号
      *
-     * @return table_id - 菜单编号
+     * @return table_id - 表格编号
      */
     public Integer getTableId() {
         return tableId;
@@ -100,9 +106,9 @@ public class SysTableAction implements Serializable {
     }
 
     /**
-     * 设置菜单编号
+     * 设置表格编号
      *
-     * @param tableId 菜单编号
+     * @param tableId 表格编号
      */
     public void setTableId(Integer tableId) {
         this.tableId = tableId;
@@ -155,9 +161,9 @@ public class SysTableAction implements Serializable {
     }
 
     /**
-     * 获取交互类型：确认,表单
+     * 获取交互类型：确认,表单,扩展
      *
-     * @return mutual_type - 交互类型：确认,表单
+     * @return mutual_type - 交互类型：确认,表单,扩展
      */
     public String getMutualType() {
         return mutualType;
@@ -169,9 +175,9 @@ public class SysTableAction implements Serializable {
     }
 
     /**
-     * 设置交互类型：确认,表单
+     * 设置交互类型：确认,表单,扩展
      *
-     * @param mutualType 交互类型：确认,表单
+     * @param mutualType 交互类型：确认,表单,扩展
      */
     public void setMutualType(String mutualType) {
         this.mutualType = mutualType == null ? null : mutualType.trim();
@@ -269,6 +275,29 @@ public class SysTableAction implements Serializable {
         this.formTarget = formTarget == null ? null : formTarget.trim();
     }
 
+    /**
+     * 获取图标
+     *
+     * @return icon - 图标
+     */
+    public String getIcon() {
+        return icon;
+    }
+
+    public SysTableAction withIcon(String icon) {
+        this.setIcon(icon);
+        return this;
+    }
+
+    /**
+     * 设置图标
+     *
+     * @param icon 图标
+     */
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -284,6 +313,7 @@ public class SysTableAction implements Serializable {
         sb.append(", interfaceUrl=").append(interfaceUrl);
         sb.append(", interfaceMethod=").append(interfaceMethod);
         sb.append(", formTarget=").append(formTarget);
+        sb.append(", icon=").append(icon);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -309,7 +339,8 @@ public class SysTableAction implements Serializable {
             && (this.getInterfaceServerId() == null ? other.getInterfaceServerId() == null : this.getInterfaceServerId().equals(other.getInterfaceServerId()))
             && (this.getInterfaceUrl() == null ? other.getInterfaceUrl() == null : this.getInterfaceUrl().equals(other.getInterfaceUrl()))
             && (this.getInterfaceMethod() == null ? other.getInterfaceMethod() == null : this.getInterfaceMethod().equals(other.getInterfaceMethod()))
-            && (this.getFormTarget() == null ? other.getFormTarget() == null : this.getFormTarget().equals(other.getFormTarget()));
+            && (this.getFormTarget() == null ? other.getFormTarget() == null : this.getFormTarget().equals(other.getFormTarget()))
+            && (this.getIcon() == null ? other.getIcon() == null : this.getIcon().equals(other.getIcon()));
     }
 
     @Override
@@ -325,6 +356,7 @@ public class SysTableAction implements Serializable {
         result = prime * result + ((getInterfaceUrl() == null) ? 0 : getInterfaceUrl().hashCode());
         result = prime * result + ((getInterfaceMethod() == null) ? 0 : getInterfaceMethod().hashCode());
         result = prime * result + ((getFormTarget() == null) ? 0 : getFormTarget().hashCode());
+        result = prime * result + ((getIcon() == null) ? 0 : getIcon().hashCode());
         return result;
     }
 }

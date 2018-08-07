@@ -1,5 +1,7 @@
 package org.daijie.jenny.common.feign.sys;
 
+import java.util.List;
+
 import org.daijie.core.result.ModelResult;
 import org.daijie.core.result.PageResult;
 import org.daijie.jenny.common.feign.sys.request.SysIconAddRequest;
@@ -20,8 +22,12 @@ import io.swagger.annotations.ApiOperation;
 public interface SysIconFeign {
 	
 	@ApiOperation(value = "条件查询用户")
-	@RequestMapping(value = "/query/all", method = RequestMethod.POST)
-	public ModelResult<PageResult<SysIconResponse>> getIconAll(SysIconPageRequest sysIconRequest);
+	@RequestMapping(value = "/query", method = RequestMethod.POST)
+	public ModelResult<PageResult<SysIconResponse>> getIcon(SysIconPageRequest sysIconRequest);
+	
+	@ApiOperation(value = "条件查询用户")
+	@RequestMapping(value = "/query/all", method = RequestMethod.GET)
+	public ModelResult<List<SysIconResponse>> getIconAll();
 
 	@ApiOperation(value = "添加用户")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

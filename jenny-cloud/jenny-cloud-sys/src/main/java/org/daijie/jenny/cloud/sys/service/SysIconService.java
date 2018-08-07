@@ -33,11 +33,18 @@ public class SysIconService implements SysIconFeign {
 	private SysIconMapper sysIconMapper;
 
 	@Override
-	public ModelResult<PageResult<SysIconResponse>> getIconAll(SysIconPageRequest sysIconPageRequest) {
+	public ModelResult<PageResult<SysIconResponse>> getIcon(SysIconPageRequest sysIconPageRequest) {
 		PageHelper.startPage(sysIconPageRequest.getPageNumber(), sysIconPageRequest.getPageSize());
 		List<SysIcon> icons = sysIconMapper.selectByExample(sysIconPageRequest.exampleBuild(SysIcon.class));
         PageInfo<SysIcon> pageInfo = new PageInfo<>(icons);
 		return Result.build(new PageResult<SysIconResponse>(pageInfo.getList(), pageInfo.getTotal(), SysIconResponse.class));
+	}
+	
+	@Override
+	public ModelResult<List<SysIconResponse>> getIconAll() {
+		List<SysIcon> icons = sysIconMapper.selectAll();
+		PageInfo<SysIcon> pageInfo = new PageInfo<>(icons);
+		return Result.build(new PageResult<SysIconResponse>(pageInfo.getList(), pageInfo.getTotal(), SysIconResponse.class).getRows());
 	}
 
 	@Override
@@ -57,7 +64,10 @@ public class SysIconService implements SysIconFeign {
 	@Override
 	@Transactional
 	public ModelResult<SysIconResponse> updateIcon(SysIconUpdateRequest sysIconRequest) {
-		if (sysIconMapper.selectByExample(ExampleBuilder.create(SysIcon.class).andEqualTo("iconCode", sysIconRequest.getIconCode()).build()).size() > 0) {
+		if (sysIconMapper.selectByExample(ExampleBuilder.create(SysIcon.class)
+				.andEqualTo("iconCode", sysIconRequest.getIconCode())
+				.andNotEqualTo("iconId", sysIconRequest.getIconId())
+				.build()).size() > 0) {
 			throw new ApiException(ResultCode.CODE_100, sysIconRequest.getIconCode()+"图标代码已存在");
 		}
 		SysIcon sysIcon = new SysIcon();
