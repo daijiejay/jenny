@@ -394,7 +394,7 @@ function countDown(times) {
 				if(action.actionType == 'TOOLBAR') {
 					if(action.mutualType == 'FORM') {
 						var actionName = action.icon ? '' : action.actionName;
-						toolbar += '<a actionId="' + action.actionId + '" href="#" class="btn btn-default fa ' + action.icon + '" title="' + action.actionName + '" data-toggle="modal" data-target="' + action.formTarget + '">' + actionName + '</a>';
+						toolbar += '<a actionId="' + action.actionId + '" href="#" class="btn btn-default ' + action.icon + '" title="' + action.actionName + '" data-toggle="modal" data-target="' + action.formTarget + '">' + actionName + '</a>';
 					}
 				}
 			});
@@ -438,11 +438,11 @@ function countDown(times) {
 				if (action.actionType == 'OPERATE' && (!tab.settings.operateFormatter || tab.settings.operateFormatter(action, row))) {
 					var actionName = action.icon ? '' : action.actionName;
 					if (action.mutualType == 'CONFIRM') {
-						operate += '<a mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action fa ' + action.icon + '" href="#">' + actionName + '</a>';
+						operate += '<a mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action ' + action.icon + '" href="#">' + actionName + '</a>';
 					} else if (action.mutualType == 'FORM') {
-						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action fa ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
+						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
 					} else if (action.mutualType == 'EXTEND') {
-						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action fa ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
+						operate += '<a id="' + tab.that.getUniqueIdValue(row, tab) + '" mutualType="' + action.mutualType + '" actionId="' + action.actionId + '" title="' + action.actionName + '" class="action ' + action.icon + '" data-toggle="modal" data-target="' + action.formTarget + '" href="#">' + actionName + '</a>';
 					}
 				}
 			});

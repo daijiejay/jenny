@@ -9,7 +9,7 @@ function loadMenu() {
 			var str = '';
 			if (result.data[i].level == 1) {
 				str += '<li code="'+result.data[i].menuId+'" level="'+result.data[i].level
-				+'"><a href="#"><i class="fa '+result.data[i].icon+'"></i><span>'
+				+'"><a href="#"><i class="'+result.data[i].icon+'"></i><span>'
 				+result.data[i].menuName+'</span>'
 				+'<span class="badge badge-dark">1</span>'
 				+'</a></li>';

@@ -15,7 +15,7 @@ $(function() {
 		},
 		columnFormatter: function(value, row, index, field) {
 			if (field == 'class') {
-				return '<i class="fa '+row.iconCode+'"></i>';
+				return '<i class="'+row.iconCode+'"></i>';
 			}
 			return value;
 		}

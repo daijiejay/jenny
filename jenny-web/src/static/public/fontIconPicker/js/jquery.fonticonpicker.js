@@ -637,7 +637,7 @@
 
 				// Set the icon box
 				$('<span/>', {
-					html:      '<i class="fa ' + item + '" data-fip-value="' + item + '" ' + (this.settings.useAttribute ? (this.settings.attributeName + '="' + ( this.settings.convertToHex ? '&#x' + parseInt(item, 10).toString(16) + ';' : item ) + '"') : 'class="' + item + '"') + '></i>',
+					html:      '<i class="' + item + '" data-fip-value="' + item + '" ' + (this.settings.useAttribute ? (this.settings.attributeName + '="' + ( this.settings.convertToHex ? '&#x' + parseInt(item, 10).toString(16) + ';' : item ) + '"') : 'class="' + item + '"') + '></i>',
 					'class':   'fip-box',
 					title: flipBoxTitle
 				}).appendTo(this.iconContainer);
@@ -686,7 +686,7 @@
 			if ( this.settings.useAttribute ) {
 				if ( theIcon ) {
 					if (theIcon.indexOf('fa') >= 0) {
-						this.iconPicker.find('.selected-icon').html('<i class="fa ' + theIcon + '"></i>' );
+						this.iconPicker.find('.selected-icon').html('<i class="' + theIcon + '"></i>' );
 					} else {
 						this.iconPicker.find('.selected-icon').html('<i ' + this.settings.attributeName + '="' + ( this.settings.convertToHex ? '&#x' + parseInt(theIcon, 10).toString(16) + ';' : theIcon ) + '"></i>' );
 					}
