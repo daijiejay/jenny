@@ -405,7 +405,6 @@ function countDown(times) {
 			var columns = tab.table.columns;
 			columns.forEach(function(column, i) {
 				column.formatter = tab.settings.columnFormatter;
-				column.sortable = true;
 				column.editable = true;
 			})
 			if (tab.settings.checkbox) {

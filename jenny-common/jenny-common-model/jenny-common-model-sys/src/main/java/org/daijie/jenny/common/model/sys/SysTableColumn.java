@@ -30,6 +30,24 @@ public class SysTableColumn implements Serializable {
     @Column(name = "title")
     private String title;
 
+    /**
+     * 是否显示排序按扭
+     */
+    @Column(name = "sortable")
+    private Boolean sortable;
+
+    /**
+     * 展示排序
+     */
+    @Column(name = "show_sort")
+    private Integer showSort;
+
+    /**
+     * 宽度
+     */
+    @Column(name = "width")
+    private Double width;
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -124,6 +142,75 @@ public class SysTableColumn implements Serializable {
         this.title = title == null ? null : title.trim();
     }
 
+    /**
+     * 获取是否显示排序按扭
+     *
+     * @return sortable - 是否显示排序按扭
+     */
+    public Boolean getSortable() {
+        return sortable;
+    }
+
+    public SysTableColumn withSortable(Boolean sortable) {
+        this.setSortable(sortable);
+        return this;
+    }
+
+    /**
+     * 设置是否显示排序按扭
+     *
+     * @param sortable 是否显示排序按扭
+     */
+    public void setSortable(Boolean sortable) {
+        this.sortable = sortable;
+    }
+
+    /**
+     * 获取展示排序
+     *
+     * @return show_sort - 展示排序
+     */
+    public Integer getShowSort() {
+        return showSort;
+    }
+
+    public SysTableColumn withShowSort(Integer showSort) {
+        this.setShowSort(showSort);
+        return this;
+    }
+
+    /**
+     * 设置展示排序
+     *
+     * @param showSort 展示排序
+     */
+    public void setShowSort(Integer showSort) {
+        this.showSort = showSort;
+    }
+
+    /**
+     * 获取宽度
+     *
+     * @return width - 宽度
+     */
+    public Double getWidth() {
+        return width;
+    }
+
+    public SysTableColumn withWidth(Double width) {
+        this.setWidth(width);
+        return this;
+    }
+
+    /**
+     * 设置宽度
+     *
+     * @param width 宽度
+     */
+    public void setWidth(Double width) {
+        this.width = width;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -134,6 +221,9 @@ public class SysTableColumn implements Serializable {
         sb.append(", tableId=").append(tableId);
         sb.append(", field=").append(field);
         sb.append(", title=").append(title);
+        sb.append(", sortable=").append(sortable);
+        sb.append(", showSort=").append(showSort);
+        sb.append(", width=").append(width);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -154,7 +244,10 @@ public class SysTableColumn implements Serializable {
         return (this.getColumnId() == null ? other.getColumnId() == null : this.getColumnId().equals(other.getColumnId()))
             && (this.getTableId() == null ? other.getTableId() == null : this.getTableId().equals(other.getTableId()))
             && (this.getField() == null ? other.getField() == null : this.getField().equals(other.getField()))
-            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()));
+            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
+            && (this.getSortable() == null ? other.getSortable() == null : this.getSortable().equals(other.getSortable()))
+            && (this.getShowSort() == null ? other.getShowSort() == null : this.getShowSort().equals(other.getShowSort()))
+            && (this.getWidth() == null ? other.getWidth() == null : this.getWidth().equals(other.getWidth()));
     }
 
     @Override
@@ -165,6 +258,9 @@ public class SysTableColumn implements Serializable {
         result = prime * result + ((getTableId() == null) ? 0 : getTableId().hashCode());
         result = prime * result + ((getField() == null) ? 0 : getField().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
+        result = prime * result + ((getSortable() == null) ? 0 : getSortable().hashCode());
+        result = prime * result + ((getShowSort() == null) ? 0 : getShowSort().hashCode());
+        result = prime * result + ((getWidth() == null) ? 0 : getWidth().hashCode());
         return result;
     }
 }

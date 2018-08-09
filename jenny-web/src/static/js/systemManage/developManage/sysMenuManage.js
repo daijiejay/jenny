@@ -297,8 +297,9 @@ function loadAction(tableId) {
 			return params
 		},
 		listenModalShow: function(modal, row) {
+			var icon = row ? row.icon : "";
 			modal.find('form #tableId').val(tableId);
-			initFontIconPicker(modal.find('form input[name="icon"]'), row.icon);
+			initFontIconPicker(modal.find('form input[name="icon"]'), icon);
 			modal.find('form div').removeClass('has-success').removeClass('has-error');
 			modal.find('.help-block').html('');
 		}

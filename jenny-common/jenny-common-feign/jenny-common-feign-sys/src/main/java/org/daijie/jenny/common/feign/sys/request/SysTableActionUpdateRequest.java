@@ -64,6 +64,12 @@ public class SysTableActionUpdateRequest implements Serializable {
 	@ApiModelProperty(value = "图标")
     private String icon;
 
+    /**
+     * 展示排序
+     */
+	@ApiModelProperty(value = "展示排序")
+    private Integer showSort;
+
 	public Integer getActionId() {
 		return actionId;
 	}
@@ -142,5 +148,13 @@ public class SysTableActionUpdateRequest implements Serializable {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public Integer getShowSort() {
+		return showSort;
+	}
+
+	public void setShowSort(Integer showSort) {
+		this.showSort = showSort;
 	}
 }

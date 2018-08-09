@@ -79,7 +79,8 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 			sysTableAuthorizedResponse.getTables().add(sysTableResponse);
 			
 			List<SysTableColumn> sysTableColumns = sysTableConlumnMapper.selectByExample(
-					ExampleBuilder.create(SysTableColumn.class).andEqualTo("tableId", sysTable.getTableId()).build());
+					ExampleBuilder.create(SysTableColumn.class).andEqualTo("tableId", sysTable.getTableId())
+					.orderByAsc("showSort").build());
 			List<SysTableColumnResponse> columns = new ArrayList<SysTableColumnResponse>();
 			sysTableColumns.forEach(sysTableConlumn -> {
 				SysTableColumnResponse sysTableConlumnResponse = new SysTableColumnResponse();
@@ -89,7 +90,8 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 			sysTableResponse.setColumns(columns);
 			
 			List<SysTableAction> sysTableActions = sysTableActionMapper.selectByExample(
-					ExampleBuilder.create(SysTableAction.class).andEqualTo("tableId", sysTable.getTableId()).build());
+					ExampleBuilder.create(SysTableAction.class).andEqualTo("tableId", sysTable.getTableId())
+					.orderByAsc("showSort").build());
 			List<SysTableActionResponse> actions = new ArrayList<SysTableActionResponse>();
 			sysTableActions.forEach(action -> {
 				SysTableActionResponse actionResponse = new SysTableActionResponse();

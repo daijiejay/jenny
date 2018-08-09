@@ -29,7 +29,7 @@ function validAdd(form) {
 		rules: {
 			iconCode: {
 				required: true,
-				maxlength: 20
+				maxlength: 50
 			},
 			iconName: {
 				required: true,

@@ -66,6 +66,12 @@ public class SysTableAction implements Serializable {
     @Column(name = "icon")
     private String icon;
 
+    /**
+     * 展示排序
+     */
+    @Column(name = "show_sort")
+    private Integer showSort;
+
     private static final long serialVersionUID = 1L;
 
     /**
@@ -298,6 +304,29 @@ public class SysTableAction implements Serializable {
         this.icon = icon == null ? null : icon.trim();
     }
 
+    /**
+     * 获取展示排序
+     *
+     * @return show_sort - 展示排序
+     */
+    public Integer getShowSort() {
+        return showSort;
+    }
+
+    public SysTableAction withShowSort(Integer showSort) {
+        this.setShowSort(showSort);
+        return this;
+    }
+
+    /**
+     * 设置展示排序
+     *
+     * @param showSort 展示排序
+     */
+    public void setShowSort(Integer showSort) {
+        this.showSort = showSort;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -314,6 +343,7 @@ public class SysTableAction implements Serializable {
         sb.append(", interfaceMethod=").append(interfaceMethod);
         sb.append(", formTarget=").append(formTarget);
         sb.append(", icon=").append(icon);
+        sb.append(", showSort=").append(showSort);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -340,7 +370,8 @@ public class SysTableAction implements Serializable {
             && (this.getInterfaceUrl() == null ? other.getInterfaceUrl() == null : this.getInterfaceUrl().equals(other.getInterfaceUrl()))
             && (this.getInterfaceMethod() == null ? other.getInterfaceMethod() == null : this.getInterfaceMethod().equals(other.getInterfaceMethod()))
             && (this.getFormTarget() == null ? other.getFormTarget() == null : this.getFormTarget().equals(other.getFormTarget()))
-            && (this.getIcon() == null ? other.getIcon() == null : this.getIcon().equals(other.getIcon()));
+            && (this.getIcon() == null ? other.getIcon() == null : this.getIcon().equals(other.getIcon()))
+            && (this.getShowSort() == null ? other.getShowSort() == null : this.getShowSort().equals(other.getShowSort()));
     }
 
     @Override
@@ -357,6 +388,7 @@ public class SysTableAction implements Serializable {
         result = prime * result + ((getInterfaceMethod() == null) ? 0 : getInterfaceMethod().hashCode());
         result = prime * result + ((getFormTarget() == null) ? 0 : getFormTarget().hashCode());
         result = prime * result + ((getIcon() == null) ? 0 : getIcon().hashCode());
+        result = prime * result + ((getShowSort() == null) ? 0 : getShowSort().hashCode());
         return result;
     }
 }
