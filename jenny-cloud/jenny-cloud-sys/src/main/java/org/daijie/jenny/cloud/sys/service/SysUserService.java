@@ -26,9 +26,6 @@ import org.daijie.jenny.common.model.sys.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
 import cn.hutool.core.bean.BeanUtil;
 
 @RestController
@@ -42,10 +39,7 @@ public class SysUserService implements SysUserFeign {
 
 	@Override
 	public ModelResult<PageResult<SysUserResponse>> getUserAll(SysUserPageRequest sysUserPageRequest) {
-		PageHelper.startPage(sysUserPageRequest.getPageNumber(), sysUserPageRequest.getPageSize());
-		List<SysUser> users = sysUserMapper.selectByExample(sysUserPageRequest.exampleBuild(SysUser.class));
-        PageInfo<SysUser> pageInfo = new PageInfo<>(users);
-		return Result.build(new PageResult<SysUserResponse>(pageInfo.getList(), pageInfo.getTotal(), SysUserResponse.class));
+		return Result.build(sysUserPageRequest.executePage(sysUserMapper));
 	}
 
 	@Override

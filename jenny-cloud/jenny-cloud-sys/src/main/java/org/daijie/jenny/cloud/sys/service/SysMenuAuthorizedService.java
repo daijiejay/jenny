@@ -107,7 +107,7 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 	public ModelResult<SysTableAuthorizedResponse> getTableAuthrozied(Integer menuId, Integer userId) {
 		SysTableAuthorizedResponse sysTableAuthorizedResponse = getTableByMenu(menuId).getData();
 		List<SysRoleAuthorized> roles = sysRoleAuthorizedMapper.selectByExample(
-				ExampleBuilder.create(SysOperateAuthorized.class).andEqualTo("userId", userId).build());
+				ExampleBuilder.create(SysRoleAuthorized.class).andEqualTo("userId", userId).build());
 		List<Integer> roleIds = new ArrayList<>();
 		roles.forEach(role -> roleIds.add(role.getRoleId()));
 		List<SysOperateAuthorized> sysOperateAuthorizeds = sysOperateAuthorizedMapper.selectByExample(

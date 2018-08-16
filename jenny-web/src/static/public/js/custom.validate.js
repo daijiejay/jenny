@@ -46,7 +46,7 @@ jQuery.validator.addMethod("zipCode", function(value, element) {
 }, "请正确填写您的邮编");
 
 //密码 最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
-jQuery.validator.addMethod("password", function(value, element) {
+jQuery.validator.addMethod("password3", function(value, element) {
 	if (value.length == 0) {
 		return true;
 	}

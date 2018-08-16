@@ -2,14 +2,15 @@ package org.daijie.jenny.common.feign.sys.request;
 
 import java.util.Date;
 
-import org.daijie.core.result.Page;
-import org.daijie.jdbc.mybatis.example.ExampleConditions;
+import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
+import org.daijie.jenny.common.feign.sys.response.SysUserResponse;
+import org.daijie.jenny.common.model.sys.SysUser;
 
 import io.swagger.annotations.ApiModelProperty;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
 @SuppressWarnings("serial")
-public class SysUserPageRequest extends Page implements ExampleConditions {
+public class SysUserPageRequest extends ExampleExecutePage<SysUser, SysUserResponse> {
 
 	@ApiModelProperty(value = "用户编号")
 	private Integer userId;

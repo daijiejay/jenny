@@ -117,7 +117,7 @@
 			</div>
 			<!-- 模态框主体 -->
 			<div class="modal-body">
-				<div class="form-horizontal">
+				<!--<div class="form-horizontal">
 					<div class="form-group">
 						<label class="col-sm-2 control-label">角色代码</label>
 						<div class="col-sm-4">
@@ -130,8 +130,21 @@
 							<p class="form-control-static" id="roleName"></p>
 						</div>
 					</div>
+				</div>-->
+				<div class="table-responsive table-userinfo">
+					<h4>角色信息</h4>
+					<table class="table table-condensed" style="margin-bottom: 0;">
+						<tbody>
+							<tr>
+								<td>角色代码：<span id="roleCode"></span></td>
+								<td>角色名称：<span id="roleName"></span></td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
+				<hr class="outsider">
 				<div>
+					<h4>选择菜单</h4>
 					<ul id="selectedMenu" class="ztree">
 					</ul>
 				</div>

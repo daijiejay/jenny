@@ -29,7 +29,7 @@
                 dataType = "#",
                 dataObject = "",
                 fileName = settings.fileName,
-                $caption = $el.find('caption:not(.head)');
+                $caption = $el.parents('.bootstrap-table').find('.fixed-table-toolbar .bs-bars .btn-group');
 
             switch (fileName) {
                 case "id":
@@ -58,12 +58,20 @@
                     fileName += ".txt";
                     break;
             }
+            var exportButton = "<a style='display:none' href='" + dataType + "' type='" + settings.type + "' data-obj='" + dataObject + "' download='" + fileName + "' role='button' class='" + settings.defaultClass + " "  + settings.defaultTheme + " " + settings.addClass + "'>" + settings.buttonContent + "</a>";
+			if ($caption.length == 0) {
+				
+			} else if ($caption.find('a[type="'+settings.type+'"]').length > 0) {
+				$caption.find('a[type="'+settings.type+'"]').attr('href', dataType);
+			} else {
+				$caption.append(exportButton);
+			}
 
-            var exportButton = "<a href='" + dataType + "' data-obj='" + dataObject + "' download='" + fileName + "' role='button' class='" + settings.defaultClass + " "  + settings.defaultTheme + " " + settings.addClass + "'>" + settings.buttonContent + "</a>";
+//          $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + spacing + ' ' + settings.position + '">' + exportButton + '</caption>');
 
-            $caption.length ? $caption.append(exportButton) : $el.prepend('<caption class="' + spacing + ' ' + settings.position + '">' + exportButton + '</caption>');
-
-        }), $.fn.tableExport.addEvent(eventEl)];
+			$caption.find('a[type="'+settings.type+'"]')[0].click();
+        })];
+//      }), $.fn.tableExport.addEvent(eventEl)];
     };
 
     // Define the plugin default properties.

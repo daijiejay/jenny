@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../assets/css/styles.css" type="text/css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel">
+						<div class="panel-body panel-no-padding">
+							<table class="table table-striped table-bordered table-vam mb0">
+								<thead>
+									<tr>
+										<th width="250">功能</th>
+										<th width="150">状态</th>
+										<th class="hidden-xs">描述</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>登录密码</td>
+										<td><i class="fa fa-check-circle pr10 font-color-green"></i><a href="#" class="btn btn-primary btn-xs btn-label" data-toggle="modal" data-target="#setPassword"><i class="fa fa-wrench"></i>修改密码</a></td>
+										<td class="hidden-xs">用于登录当前系统账号的密码</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../assets/js/jquery-1.10.2.min.js"></script>
+		<script src="../assets/js/jqueryui-1.9.2.min.js"></script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<script src="../assets/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+		<script src="../assets/plugins/sparklines/jquery.sparklines.min.js"></script>
+		<script src="../assets/plugins/jstree/dist/jstree.min.js"></script>
+		<script src="../assets/plugins/codeprettifier/prettify.js"></script>
+		<script src="../assets/plugins/bootstrap-switch/bootstrap-switch.js"></script>
+		<script src="../assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>
+		<script src="../assets/plugins/iCheck/icheck.min.js"></script>
+		<script src="../assets/js/enquire.min.js"></script>
+		<script src="../assets/js/application.js"></script>
+		<script src="../assets/demo/demo.js"></script>
+		<script src="../assets/demo/demo-switcher.js"></script>
+		<script src="../public/jquery/js/jquery.validate.min.js"></script>
+		<script src="../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../public/bootstrap/js/bootstrap-closable-tab.js"></script>
+		<script src="../public/fakeLoader/js/fakeLoader.js"></script>
+		<script src="../public/layer/js/layer.js"></script>
+		<script src="../public/js/custom.validate.js"></script>
+		<script src="../public/js/jsencrypt.min.js"></script>
+		<script src="../public/js/common.js"></script>
+		<script src="../js/settings.js"></script>
+	</body>
+</html>
+
+<div class="modal fade" id="setPassword" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 60%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">修改密码</h4>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<div class="form-three widget-shadow">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">旧密码</label>
+							<div class="col-sm-7">
+								<input type="password" class="form-control" name="oldPassword" placeholder="输入旧的密码">
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">新密码</label>
+							<div class="col-sm-7">
+								<input type="password" class="form-control" name="newPassword" placeholder="输入新的密码">
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">确认新密码</label>
+							<div class="col-sm-7">
+								<input type="password" class="form-control" name="rePassword" placeholder="再次确认输入新的密码">
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>

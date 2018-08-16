@@ -250,13 +250,13 @@ function validTable(form) {
 			}
 		},
 		errorPlacement: function(error, element) {
-			var ele = element.parent('.input-group').parent().parent();
+			var ele = element.parents('.form-group');
 			ele.addClass('has-error');
 			ele.removeClass('has-success');
 			ele.find('.help-block').html('<i class="fa fa-times-circle"></i>'+error[0].outerText);
 		},
 		success: function(label) {
-			var ele = form.find('input[name="' + label[0].htmlFor + '"]').parent().parent().parent();
+			var ele = form.find('input[name="' + label[0].htmlFor + '"]').parents('.form-group');
 			ele.addClass('has-success');
 			ele.removeClass('has-error');
 			ele.find('.help-block').html('<i class="fa fa-check"></i>');
@@ -316,13 +316,13 @@ function validAction(form) {
 			}
 		},
 		errorPlacement: function(error, element) {
-			var ele = element.parent('.input-group').parent().parent();
+			var ele = element.parents('.form-group');
 			ele.addClass('has-error');
 			ele.removeClass('has-success');
 			ele.find('.help-block').html('<i class="fa fa-times-circle"></i>'+error[0].outerText);
 		},
 		success: function(label) {
-			var ele = form.find('input[name="' + label[0].htmlFor + '"]').parent().parent().parent();
+			var ele = form.find('input[name="' + label[0].htmlFor + '"]').parents('.form-group');
 			ele.addClass('has-success');
 			ele.removeClass('has-error');
 			ele.find('.help-block').html('<i class="fa fa-check"></i>');
@@ -369,13 +369,13 @@ function validColumn(form) {
 			}
 		},
 		errorPlacement: function(error, element) {
-			var ele = element.parent('.input-group').parent().parent();
+			var ele = element.parents('.form-group');
 			ele.addClass('has-error');
 			ele.removeClass('has-success');
 			ele.find('.help-block').html('<i class="fa fa-times-circle"></i>'+error[0].outerText);
 		},
 		success: function(label) {
-			var ele = form.find('input[name="' + label[0].htmlFor + '"]').parent().parent().parent();
+			var ele = form.find('input[name="' + label[0].htmlFor + '"]').parents('.form-group');
 			ele.addClass('has-success');
 			ele.removeClass('has-error');
 			ele.find('.help-block').html('<i class="fa fa-check"></i>');

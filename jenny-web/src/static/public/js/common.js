@@ -247,7 +247,7 @@ function countDown(times) {
 			checkbox: false,  //是否显示多选
             visible: true,
             showExport: true, //是否显示导出
-            exportDataType: "basic", //basic', 'all', 'selected' 表示导出的模式是当前页、所有数据还是选中数据
+            exportDataType: "all", //basic', 'all', 'selected' 表示导出的模式是当前页、所有数据还是选中数据
             exportTypes: ['excel'], //导出文件
 			searchTarget: '.table-search', //搜索表单元素
 			/**
@@ -377,8 +377,10 @@ function countDown(times) {
 				}
 				queryParams = form.serializeJson();
 			}
-			queryParams.pageSize = params.limit;
-			queryParams.pageNumber = params.offset + 1;
+			if (params.limit && params.offset) {
+				queryParams.pageSize = params.limit;
+				queryParams.pageNumber = params.offset + 1;
+			}
 			queryParams.order = params.order;
 			queryParams.sort = params.sort;
 			if (typeof tab.settings.searchParams == 'function') {

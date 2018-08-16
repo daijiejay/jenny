@@ -40,10 +40,10 @@ table a.btn {
 
 .table {
 	font-size: 0.9em;
-	table-layout: fixed;
+	/*table-layout: fixed;*/
 }
 
-td {
+/*td {
 	width: 100%;
 	word-break: keep-all;
 	white-space: nowrap;
@@ -54,7 +54,7 @@ td {
 	-khtml-text-overflow: ellipsis;
 	-moz-text-overflow: ellipsis;
 	-webkit-text-overflow: ellipsis;
-}
+}*/
 
 .fixed-table-toolbar .btn-group .btn {
 	font-weight: 900;
@@ -62,4 +62,8 @@ td {
 
 .margin0 {
 	margin: 0;
+}
+
+.font-color-green {
+	color: #48d09b;
 }

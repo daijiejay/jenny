@@ -1,5 +1,19 @@
 $(function() {
 	loadMenu();
+	
+	var item = {'id':'-1','name':'首页','url':'main.html','closable':false};
+	closableTab.addTab(item);
+	sys_index_link($(document).find('.userinfo'));
+	
+	request('get', '', '/sysuser/userCache', 'SYS', function(result) {
+		if (!result.data.portrait) {
+			result.data.portrait = '../assets/demo/avatar/profile.png';
+		}
+		$('#header_userName').html(result.data.userName);
+		$('#header_portrait').attr('src', result.data.portrait);
+		$('#menu_userName').html(result.data.userName);
+		$('#menu_portrait').attr('src', result.data.portrait);
+	});
 });
 
 //加载菜单
@@ -31,16 +45,14 @@ function loadMenu() {
 				$('#side-menu li[code="'+result.data[i].parentId+'"]').children('ul').append(str);
 			}
 		}
-		sys_index_link();
+		sys_index_link($(document).find('#side-menu'));
 	});
 }
 
 //菜单连接加载页面
-function sys_index_link() {
-	var item = {'id':'-1','name':'首页','url':'main.html','closable':false};
-	closableTab.addTab(item);
-	$(document).find('#side-menu a').click(function() {
-		$('#side-menu li').removeClass('active');
+function sys_index_link(doc) {
+	doc.find('a').click(function() {
+		doc.find('li').removeClass('active');
 		$(this).parent().addClass('active');
 		if ($(this).attr('src')) {
 			var menuId = $(this).attr('menuId');

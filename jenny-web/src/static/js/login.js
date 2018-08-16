@@ -90,7 +90,7 @@ function valid(form) {
 			},
 			password: {
 				required: true,
-				password: true
+				minlength: 6
 			}
 		},
 		errorPlacement: function(error, element) {
