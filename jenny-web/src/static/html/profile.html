@@ -4,8 +4,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link href="../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../public/css/style.css" rel='stylesheet' type='text/css'/>
+		<link href="../public/cropper/css/cropper.css" rel='stylesheet' type='text/css'/>
 		<link href="../assets/css/styles.css" type="text/css" rel="stylesheet">
+		<link href="../assets/plugins/form-xeditable/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" rel="stylesheet">
+		<link href="../public/cropper/css/main.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -18,11 +21,12 @@
 								<div class="col-md-2">
 									<img id="portrait" src="" alt="" class="avatar pull-left" style="margin: 0 20px 20px 0">
 									<div class="text-center">
-										<a>修改图像</a>
+										<a class="btn btn-primary btn-lg w100" data-toggle="modal" data-target="#cropperPortrait">修改图像</a>
 									</div>
 								</div>
-								<div class="col-md-5">
-									<form action="" class="form-horizontal">
+								<div class="col-md-10">
+									<form action="" class="form-horizontal" id="profileForm">
+										<input type="hidden" name="portrait"/>
 										<div class="form-group mb10">
 											<label class="col-sm-3 control-label mb0">用户名</label>
 											<div class="col-sm-7">
@@ -32,34 +36,34 @@
 										<div class="form-group mb10">
 											<label class="col-sm-3 control-label mb0">邮箱</label>
 											<div class="col-sm-7">
-												<a href="#" id="email" data-type="email" data-pk="1" data-title="邮箱"></a>
+												<a href="#" id="email" data-type="email" data-pk="1" data-placement="right" data-placeholder="请输入邮箱" data-title="邮箱"></a>
 											</div>
 										</div>
 										<div class="form-group mb10">
 											<label class="col-sm-3 control-label mb0">手机号</label>
 											<div class="col-sm-7">
-												<a href="#" id="mobile" data-type="text" data-pk="1" data-title="手机号"></a>
+												<a href="#" id="mobile" data-type="text" data-pk="1" data-placement="right" data-placeholder="请输入手机号" data-title="手机号"></a>
 											</div>
 										</div>
 										<div class="form-group mb10">
 											<label class="col-sm-3 control-label mb0">生日</label>
 											<div class="col-sm-7">
-												<a href="#" id="birthday" data-type="combodate" data-value="" data-format="YYYY-MM-DD" data-viewformat="YYYY/MM/DD" data-template="YYYY / MMM / D" data-pk="1"  data-title="生日"></a>
+												<a href="#" id="birthday" data-type="combodate" data-placement="right" data-value="" data-format="YYYY-MM-DD" data-viewformat="YYYY/MM/DD" data-template="YYYY / MMM / D" data-pk="1"  data-title="生日"></a>
 											</div>
 										</div>
 										<div class="form-group mb10">
 											<label class="col-sm-3 control-label mb0">性别</label>
 											<div class="col-sm-7">
-												<a href="#" id="gander" data-type="select" data-pk="1" data-value="" data-title="性别"></a>
+												<a href="#" id="gender" data-type="select" data-pk="1" data-placement="right" data-value="" data-title="性别"></a>
 											</div>
 										</div>
+										<!--<div class="form-group mb10">
+											<label class="col-sm-3 control-label mb0">简介</label>
+											<div class="col-sm-7">
+												<a href="#" id="intro" data-type="textarea" data-pk="1" data-value="" data-placement="bottom" data-title="简介">我是管理员</a>
+											</div>
+										</div>-->
 									</form>
-								</div>
-								<div class="col-md-5">
-									<h3 class="mt0">简介</h3>
-									<p>
-										我是管理员
-									</p>
 								</div>
 							</div>
 							<!--<hr class="outsider">-->
@@ -69,26 +73,95 @@
 			</div>
 		</div>
 		<script src="../assets/js/jquery-1.10.2.min.js"></script>
-		<script src="../assets/js/jqueryui-1.9.2.min.js"></script>
 		<script src="../assets/js/bootstrap.min.js"></script>
-		<script src="../assets/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
-		<script src="../assets/plugins/sparklines/jquery.sparklines.min.js"></script>
-		<script src="../assets/plugins/jstree/dist/jstree.min.js"></script>
-		<script src="../assets/plugins/codeprettifier/prettify.js"></script>
-		<script src="../assets/plugins/bootstrap-switch/bootstrap-switch.js"></script>
-		<script src="../assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>
-		<script src="../assets/plugins/iCheck/icheck.min.js"></script>
-		<script src="../assets/plugins/form-daterangepicker/moment.min.js"></script>
+		<script src="../assets/plugins/form-daterangepicker/moment.min.js"></script> 
 		<script src="../assets/plugins/form-xeditable/bootstrap3-editable/js/bootstrap-editable.js"></script>  
-		<script src="../assets/js/enquire.min.js"></script>
-		<script src="../assets/js/application.js"></script>
-		<script src="../assets/demo/demo.js"></script>
-		<script src="../assets/demo/demo-switcher.js"></script>
-		<script src="../public/bootstrap/js/bootstrap-closable-tab.js"></script>
 		<script src="../public/fakeLoader/js/fakeLoader.js"></script>
 		<script src="../public/layer/js/layer.js"></script>
+		<script src="../public/cropper/js/common.js"></script>
+		<script src="../public/cropper/js/cropper.js"></script>
 		<script src="../public/js/common.js"></script>
 		<script src="../js/profile.js"></script>
 	</body>
 
 </html>
+
+<div class="modal fade" id="cropperPortrait" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 90%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">修改图像</h4>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<div class="row cropper-wrapper cropper-circle">
+					<div class="col-xs-7">
+						<div class="img-container">
+							<img id="image" src="" class="cropper-hidden">
+						</div>
+					</div>
+					<div class="col-xs-5 pl0">
+						<div class="clearfix">
+							<div class="img-preview img-circle preview-lg" style="width: 140px; height: 140px;"></div>
+							<div class="img-preview img-circle preview-md" style="width: 90px; height: 90px;"></div>
+							<div class="img-preview img-circle preview-sm" style="width: 45px; height: 45px;"></div>
+							<div class="img-preview img-circle preview-xs" style="width: 22px; height: 22px;"></div>
+						</div>
+				        <div class="clearfix mt20"></div>
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" data-method="zoom" data-option="0.1" title="放大">
+								<span class="fa fa-fw fa-search-plus"></span>
+							</button>
+							<button type="button" class="btn btn-default" data-method="zoom" data-option="-0.1" title="缩小">
+								<span class="fa fa-fw fa-search-minus"></span>
+							</button>
+						</div>
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" data-method="move" data-option="-10" data-second-option="0" title="向左移动">
+								<span class="fa fa-fw fa-arrow-left"></span>
+							</button>
+							<button type="button" class="btn btn-default" data-method="move" data-option="10" data-second-option="0" title="向右移动">
+								<span class="fa fa-fw fa-arrow-right"></span>
+							</button>
+							<button type="button" class="btn btn-default" data-method="move" data-option="0" data-second-option="-10" title="向上移动">
+								<span class="fa fa-fw fa-arrow-up"></span>
+							</button>
+							<button type="button" class="btn btn-default" data-method="move" data-option="0" data-second-option="10" title="向下移动">
+								<span class="fa fa-fw fa-arrow-down"></span>
+							</button>
+						</div>
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" data-method="rotate" data-option="-45" title="逆时针旋转">
+								<span class="fa fa-fw fa-rotate-left"></span>
+							</button>
+							<button type="button" class="btn btn-default" data-method="rotate" data-option="45" title="顺时针旋转">
+								<span class="fa fa-fw fa-rotate-right"></span>
+							</button>
+						</div>
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" data-method="scaleX" data-option="-1" title="水平反转">
+								<span class="fa fa-fw fa-arrows-h"></span>
+							</button>
+							<button type="button" class="btn btn-default" data-method="scaleY" data-option="-1" title="左右反转">
+								<span class="fa fa-fw fa-arrows-v"></span>
+							</button>
+						</div>
+						<div class="btn-group">
+							<label class="btn btn-info btn-upload" for="inputImage" title="选择图片">
+								<input type="file" class="sr-only" id="inputImage" name="file" accept=".jpg,.jpeg,.png,.gif">
+								<span class="fa fa-fw fa-upload"></span> &nbsp;<b>选择图片</b>
+							</label>
+				       </div>
+				    </div>
+				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save" data-method="getCroppedCanvas">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>

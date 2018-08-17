@@ -11,5 +11,6 @@
 	<build />
 	<modules>
 		<module>jenny-api-sys</module>
+		<module>jenny-api-doc</module>
 	</modules>
 </project>

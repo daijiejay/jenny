@@ -1,9 +1,11 @@
 package org.daijie.jenny.common.model.sys;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "sys_user")
 public class SysUser implements Serializable {
@@ -54,7 +56,7 @@ public class SysUser implements Serializable {
      * 性别
      */
     @Column(name = "gender")
-    private byte[] gender;
+    private Boolean gender;
 
     /**
      * 头像
@@ -254,11 +256,11 @@ public class SysUser implements Serializable {
      *
      * @return gender - 性别
      */
-    public byte[] getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public SysUser withGender(byte[] gender) {
+    public SysUser withGender(Boolean gender) {
         this.setGender(gender);
         return this;
     }
@@ -268,7 +270,7 @@ public class SysUser implements Serializable {
      *
      * @param gender 性别
      */
-    public void setGender(byte[] gender) {
+    public void setGender(Boolean gender) {
         this.gender = gender;
     }
 
@@ -430,7 +432,7 @@ public class SysUser implements Serializable {
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getSalt() == null ? other.getSalt() == null : this.getSalt().equals(other.getSalt()))
             && (this.getBirthday() == null ? other.getBirthday() == null : this.getBirthday().equals(other.getBirthday()))
-            && (Arrays.equals(this.getGender(), other.getGender()))
+            && (this.getGender() == null ? other.getGender() == null : this.getGender().equals(other.getGender()))
             && (this.getPortrait() == null ? other.getPortrait() == null : this.getPortrait().equals(other.getPortrait()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getAdmin() == null ? other.getAdmin() == null : this.getAdmin().equals(other.getAdmin()))
@@ -449,7 +451,7 @@ public class SysUser implements Serializable {
         result = prime * result + ((getPassword() == null) ? 0 : getPassword().hashCode());
         result = prime * result + ((getSalt() == null) ? 0 : getSalt().hashCode());
         result = prime * result + ((getBirthday() == null) ? 0 : getBirthday().hashCode());
-        result = prime * result + (Arrays.hashCode(getGender()));
+        result = prime * result + ((getGender() == null) ? 0 : getGender().hashCode());
         result = prime * result + ((getPortrait() == null) ? 0 : getPortrait().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getAdmin() == null) ? 0 : getAdmin().hashCode());

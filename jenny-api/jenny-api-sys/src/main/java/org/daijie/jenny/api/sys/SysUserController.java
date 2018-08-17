@@ -85,6 +85,10 @@ public class SysUserController {
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ModelResult<SysUserResponse> updateUser(@RequestBody SysUserUpdateInfoRequest sysUserUpdateInfoRequest) {
 		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();
+		SysUserCacheResponse sysUserResponse = Auth.getAuthc(SysUserCacheResponse.class);
+		if (sysUserUpdateInfoRequest.getUserId() == null) {
+			sysUserUpdateInfoRequest.setUserId(sysUserResponse.getUserId());
+		}
 		BeanUtil.copyProperties(sysUserUpdateInfoRequest, sysUserRequest);
 		return sysUserFeign.updateUser(sysUserRequest);
 	}

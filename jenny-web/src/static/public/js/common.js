@@ -6,6 +6,7 @@ var local = window.location.href.substring(0, window.location.href.indexOf('stat
  */
 var serverMap = new Map();
 serverMap.set('SYS', 'http://daijie.org:12801/')
+serverMap.set('DOC', 'http://daijie.org:12802/')
 
 /**
  * 存储请求地址缓存，请求完成后清除，防止重复请求

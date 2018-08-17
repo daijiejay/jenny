@@ -1,7 +1,7 @@
 #服务名称
-spring.application.name: api-sys
+spring.application.name: api-doc
 #服务端口号
-server.port: 12801
+server.port: 12802
 
 #eureka注册中心地址
 eureka.client.serviceUrl.defaultZone: http://127.0.0.1:8761/eureka/
@@ -68,12 +68,6 @@ http.accessControlAllowHeaders: Content-Type,Access-Control-Allow-Headers,Access
 http.remoteAjaxEanble: true
 #开启请求参数body转param，提供者用实体接收参数时省去了@RequestBody注解
 http.bodyByParamEanble: true
-
-#hdfs服务配置
-hadoop.dfs.serverUrl: 127.0.0.1:9000
-hadoop.dfs.downloadUrl: hdfs/download/
-hadoop.dfs.dirPath: folder
-hadoop.dfs.filePath: file
 
 logging.level.org.daijie: DEBUG
 
