@@ -378,9 +378,9 @@ function countDown(times) {
 				}
 				queryParams = form.serializeJson();
 			}
-			if (params.limit && params.offset) {
+			if (params.limit) {
 				queryParams.pageSize = params.limit;
-				queryParams.pageNumber = params.offset + 1;
+				queryParams.pageNumber = params.offset / params.limit + 1;
 			}
 			queryParams.order = params.order;
 			queryParams.sort = params.sort;

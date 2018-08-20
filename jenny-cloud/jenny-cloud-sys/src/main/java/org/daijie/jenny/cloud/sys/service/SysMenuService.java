@@ -13,8 +13,8 @@ import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
 import org.daijie.jdbc.mybatis.example.ExampleBuilder;
 import org.daijie.jenny.common.feign.sys.SysMenuFeign;
 import org.daijie.jenny.common.feign.sys.enumtype.MoveType;
-import org.daijie.jenny.common.feign.sys.request.SysMenuMoveRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuAddRequest;
+import org.daijie.jenny.common.feign.sys.request.SysMenuMoveRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysMenuUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
@@ -24,9 +24,6 @@ import org.daijie.jenny.common.model.sys.SysMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 import cn.hutool.core.bean.BeanUtil;
 
@@ -38,12 +35,7 @@ public class SysMenuService implements SysMenuFeign {
 
 	@Override
 	public ModelResult<PageResult<SysMenuResponse>> getMenuAll(SysMenuPageRequest sysMenuPageRequest) {
-		PageHelper.startPage(sysMenuPageRequest.getPageNumber(), sysMenuPageRequest.getPageSize());
-		SysMenu sysMenu = new SysMenu();
-		BeanUtil.copyProperties(sysMenuPageRequest, sysMenu);
-		List<SysMenu> menus = sysMenuMapper.select(sysMenu);
-        PageInfo<SysMenu> pageInfo = new PageInfo<>(menus);
-		return Result.build(new PageResult<SysMenuResponse>(pageInfo.getList(), pageInfo.getTotal(), SysMenuResponse.class));
+		return Result.build(sysMenuPageRequest.executePage(sysMenuMapper));
 	}
 
 	@Override

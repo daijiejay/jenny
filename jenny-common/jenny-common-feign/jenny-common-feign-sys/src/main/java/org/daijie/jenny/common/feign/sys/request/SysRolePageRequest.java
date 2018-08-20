@@ -1,12 +1,13 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import org.daijie.core.result.Page;
-import org.daijie.jdbc.mybatis.example.ExampleConditions;
+import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
+import org.daijie.jenny.common.feign.sys.response.SysRoleResponse;
+import org.daijie.jenny.common.model.sys.SysRole;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
-public class SysRolePageRequest extends Page implements ExampleConditions {
+public class SysRolePageRequest extends ExampleExecutePage<SysRole, SysRoleResponse> {
     /**
      * 角色编号
      */

@@ -31,9 +31,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
 import cn.hutool.core.bean.BeanUtil;
 
 @RestController
@@ -53,10 +50,7 @@ public class SysRoleService implements SysRoleFeign {
 
 	@Override
 	public ModelResult<PageResult<SysRoleResponse>> getRoleAll(SysRolePageRequest sysRolePageRequest) {
-		PageHelper.startPage(sysRolePageRequest.getPageNumber(), sysRolePageRequest.getPageSize());
-		List<SysRole> users = sysRoleMapper.selectByExample(sysRolePageRequest.exampleBuild(SysRole.class));
-        PageInfo<SysRole> pageInfo = new PageInfo<>(users);
-		return Result.build(new PageResult<SysRoleResponse>(pageInfo.getList(), pageInfo.getTotal(), SysRoleResponse.class));
+		return Result.build(sysRolePageRequest.executePage(sysRoleMapper));
 	}
 
 	@Override

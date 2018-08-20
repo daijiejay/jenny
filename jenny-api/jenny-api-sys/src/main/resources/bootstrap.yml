@@ -2,6 +2,8 @@
 spring.application.name: api-sys
 #服务端口号
 server.port: 12801
+#header头允许存放的最大值
+server.maxHttpHeaderSize: 100000
 
 #eureka注册中心地址
 eureka.client.serviceUrl.defaultZone: http://127.0.0.1:8761/eureka/

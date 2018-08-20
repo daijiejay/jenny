@@ -51,10 +51,7 @@ public class SysTableService implements SysTableFeign {
 
 	@Override
 	public ModelResult<PageResult<SysTableResponse>> getTableByPage(SysTablePageRequest sysTableRequest) {
-		PageHelper.startPage(sysTableRequest.getPageNumber(), sysTableRequest.getPageSize());
-		List<SysTable> tables = sysTableMapper.selectByExample(sysTableRequest.exampleBuild(SysTable.class));
-        PageInfo<SysTable> pageInfo = new PageInfo<>(tables);
-		return Result.build(new PageResult<SysTableResponse>(pageInfo.getList(), pageInfo.getTotal(), SysTableResponse.class));
+		return Result.build(sysTableRequest.executePage(sysTableMapper));
 	}
 
 	@Override

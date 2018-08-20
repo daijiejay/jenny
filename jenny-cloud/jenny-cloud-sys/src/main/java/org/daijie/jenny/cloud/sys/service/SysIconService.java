@@ -21,7 +21,6 @@ import org.daijie.jenny.common.model.sys.SysIcon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.hutool.core.bean.BeanUtil;
@@ -34,10 +33,7 @@ public class SysIconService implements SysIconFeign {
 
 	@Override
 	public ModelResult<PageResult<SysIconResponse>> getIcon(SysIconPageRequest sysIconPageRequest) {
-		PageHelper.startPage(sysIconPageRequest.getPageNumber(), sysIconPageRequest.getPageSize());
-		List<SysIcon> icons = sysIconMapper.selectByExample(sysIconPageRequest.exampleBuild(SysIcon.class));
-        PageInfo<SysIcon> pageInfo = new PageInfo<>(icons);
-		return Result.build(new PageResult<SysIconResponse>(pageInfo.getList(), pageInfo.getTotal(), SysIconResponse.class));
+		return Result.build(sysIconPageRequest.executePage(sysIconMapper));
 	}
 	
 	@Override
