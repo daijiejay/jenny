@@ -1,14 +1,15 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import org.daijie.core.result.Page;
-import org.daijie.jdbc.mybatis.example.ExampleConditions;
+import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
 import org.daijie.jenny.common.feign.sys.enumtype.ActionType;
 import org.daijie.jenny.common.feign.sys.enumtype.MutualType;
+import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
+import org.daijie.jenny.common.model.sys.SysTableAction;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
-public class SysTableActionPageRequest extends Page implements ExampleConditions {
+public class SysTableActionPageRequest extends ExampleExecutePage<SysTableAction, SysTableActionResponse> {
 
 	/**
      * 功能编号

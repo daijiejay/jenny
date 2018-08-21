@@ -45,12 +45,12 @@
             <property name="trimStrings" value="true"/>  
         </javaModelGenerator> 
         
-        <!-- <sqlMapGenerator targetPackage="mybatis-mapper" targetProject="src/main/resources">
-        </sqlMapGenerator>   --> 
+        <sqlMapGenerator targetPackage="mybatis-mapper" targetProject="src/main/resources">
+        </sqlMapGenerator>   
         
-        <!-- <javaClientGenerator type="XMLMAPPER" targetPackage="org.daijie.jenny.common.mapper.sys" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="org.daijie.jenny.common.mapper.sys" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>  
-        </javaClientGenerator> -->
+        </javaClientGenerator>
         
         <table tableName="sys_menu" domainObjectName="SysMenu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_role" domainObjectName="SysRole" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
@@ -62,6 +62,7 @@
         <table tableName="sys_table_column" domainObjectName="SysTableColumn" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_table_action" domainObjectName="SysTableAction" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_icon" domainObjectName="SysIcon" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="sys_server" domainObjectName="SysServer" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>  
       
     <!-- mvn mybatis-generator:generate -->

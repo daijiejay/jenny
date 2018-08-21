@@ -28,31 +28,31 @@ public class SysRoleController {
 	@Autowired
 	private SysRoleFeign sysRoleFeign;
 	
-	@ApiOperation(notes = "获取全部角色", value = "获取全部角色")
+	@ApiOperation(value = "获取全部角色")
 	@RequestMapping(value = "/query", method = RequestMethod.GET)
 	public ModelResult<PageResult<SysRoleResponse>> getRoleAll(SysRolePageRequest sysRoleRequest) {
 		return sysRoleFeign.getRoleAll(sysRoleRequest);
 	}
 	
-	@ApiOperation(notes = "添加角色", value = "添加角色")
+	@ApiOperation(value = "添加角色")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelResult<SysRoleResponse> addRole(SysRoleAddRequest sysRoleRequest) {
 		return sysRoleFeign.addRole(sysRoleRequest);
 	}
 	
-	@ApiOperation(notes = "更新角色", value = "更新角色")
+	@ApiOperation(value = "更新角色")
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ModelResult<SysRoleResponse> updateRole(SysRoleUpdateRequest sysRoleRequest) {
 		return sysRoleFeign.updateRole(sysRoleRequest);
 	}
 
-	@ApiOperation(notes = "删除角色", value = "删除角色")
+	@ApiOperation(value = "删除角色")
 	@RequestMapping(value = "/delete/{roleId}", method = RequestMethod.DELETE)
 	public ModelResult<SysRoleResponse> deleteRole(Integer roleId) {
 		return sysRoleFeign.deleteRole(roleId);
 	}
 	
-	@ApiOperation(notes = "禁用角色", value = "禁用角色")
+	@ApiOperation(value = "禁用角色")
 	@RequestMapping(value = "/enable/{roleId}", method = RequestMethod.PUT)
 	public ModelResult<SysRoleResponse> enableRole(Integer roleId) {
 		SysRoleUpdateRequest sysRoleRequest = new SysRoleUpdateRequest();
@@ -61,7 +61,7 @@ public class SysRoleController {
 		return sysRoleFeign.updateRole(sysRoleRequest);
 	}
 	
-	@ApiOperation(notes = "启用角色", value = "启用角色")
+	@ApiOperation(value = "启用角色")
 	@RequestMapping(value = "/notenable/{roleId}", method = RequestMethod.PUT)
 	public ModelResult<SysRoleResponse> notenableRole(Integer roleId) {
 		SysRoleUpdateRequest sysRoleRequest = new SysRoleUpdateRequest();

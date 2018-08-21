@@ -21,6 +21,7 @@ import org.daijie.jenny.common.feign.sys.request.SysTablePageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTableUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysMenuTreeResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
+import org.daijie.jenny.common.feign.sys.response.SysTableColumnResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableResponse;
 import org.daijie.jenny.common.mapper.sys.SysTableActionMapper;
 import org.daijie.jenny.common.mapper.sys.SysTableColumnMapper;
@@ -30,9 +31,6 @@ import org.daijie.jenny.common.model.sys.SysTableAction;
 import org.daijie.jenny.common.model.sys.SysTableColumn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -91,10 +89,7 @@ public class SysTableService implements SysTableFeign {
 
 	@Override
 	public ModelResult<PageResult<SysTableActionResponse>> getActionByPage(SysTableActionPageRequest sysActionRequest) {
-		PageHelper.startPage(sysActionRequest.getPageNumber(), sysActionRequest.getPageSize());
-		List<SysTableAction> actions = sysTableActionMapper.selectByExample(sysActionRequest.exampleBuild(SysTableAction.class));
-        PageInfo<SysTableAction> pageInfo = new PageInfo<>(actions);
-		return Result.build(new PageResult<SysTableActionResponse>(pageInfo.getList(), pageInfo.getTotal(), SysTableActionResponse.class));
+		return Result.build(sysActionRequest.executePage(sysTableActionMapper));
 	}
 	
 	@Override
@@ -139,42 +134,39 @@ public class SysTableService implements SysTableFeign {
 	}
 
 	@Override
-	public ModelResult<PageResult<SysTableColumnPageRequest>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
-		PageHelper.startPage(sysColumnRequest.getPageNumber(), sysColumnRequest.getPageSize());
-		List<SysTableColumn> columns = sysTableColumnMapper.selectByExample(sysColumnRequest.exampleBuild(SysTableColumn.class));
-        PageInfo<SysTableColumn> pageInfo = new PageInfo<>(columns);
-		return Result.build(new PageResult<SysTableColumnPageRequest>(pageInfo.getList(), pageInfo.getTotal(), SysTableColumnPageRequest.class));
+	public ModelResult<PageResult<SysTableColumnResponse>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
+		return Result.build(sysColumnRequest.executePage(sysTableColumnMapper));
 	}
 
 	@Override
 	@Transactional
-	public ModelResult<SysTableColumnPageRequest> addColumn(SysTableColumnAddRequest sysColumnRequest) {
+	public ModelResult<SysTableColumnResponse> addColumn(SysTableColumnAddRequest sysColumnRequest) {
 		SysTableColumn sysTableColumn = new SysTableColumn();
 		BeanUtil.copyProperties(sysColumnRequest, sysTableColumn, CopyOptions.create().setIgnoreError(true));
 		sysTableColumnMapper.insertSelective(sysTableColumn);
-		SysTableColumnPageRequest sysTableColumnResponse = new SysTableColumnPageRequest();
+		SysTableColumnResponse sysTableColumnResponse = new SysTableColumnResponse();
 		BeanUtil.copyProperties(sysTableColumn, sysTableColumnResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableColumnResponse);
 	}
 
 	@Override
 	@Transactional
-	public ModelResult<SysTableColumnPageRequest> updateColumn(SysTableColumnUpdateRequest sysColumnRequest) {
+	public ModelResult<SysTableColumnResponse> updateColumn(SysTableColumnUpdateRequest sysColumnRequest) {
 		SysTableColumn sysTableColumn = new SysTableColumn();
 		BeanUtil.copyProperties(sysColumnRequest, sysTableColumn, CopyOptions.create().setIgnoreError(true));
 		sysTableColumnMapper.updateByPrimaryKeySelective(sysTableColumn);
 		sysTableColumn = sysTableColumnMapper.selectByPrimaryKey(sysTableColumn.getTableId());
-		SysTableColumnPageRequest sysTableColumnResponse = new SysTableColumnPageRequest();
+		SysTableColumnResponse sysTableColumnResponse = new SysTableColumnResponse();
 		BeanUtil.copyProperties(sysTableColumn, sysTableColumnResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableColumnResponse);
 	}
 
 	@Override
 	@Transactional
-	public ModelResult<SysTableColumnPageRequest> deleteColumn(Integer columnId) {
+	public ModelResult<SysTableColumnResponse> deleteColumn(Integer columnId) {
 		SysTableColumn sysTableColumn = sysTableColumnMapper.selectByPrimaryKey(columnId);
 		sysTableColumnMapper.deleteByPrimaryKey(columnId);
-		SysTableColumnPageRequest sysTableColumnResponse = new SysTableColumnPageRequest();
+		SysTableColumnResponse sysTableColumnResponse = new SysTableColumnResponse();
 		BeanUtil.copyProperties(sysTableColumn, sysTableColumnResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableColumnResponse);
 	}

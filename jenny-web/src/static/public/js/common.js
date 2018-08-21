@@ -1,6 +1,3 @@
-var local = window.location.href.substring(0, window.location.href.indexOf('static') + 6);
-//document.write("<script type='text/javascript' src='" + local + "/public/jquery/js/jquery-1.11.1.min.js'></script>");
-
 /**
  * 存储服务名地址
  */

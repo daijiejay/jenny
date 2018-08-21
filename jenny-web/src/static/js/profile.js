@@ -185,5 +185,5 @@ function cropper() {
 }
 
 function saveProfile(formData) {
-	request('put', formData, '/sysuser/update', 'SYS');
+	request('put', formData, '/sysuser/update/profile', 'SYS');
 }

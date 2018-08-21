@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>系统菜单管理</title>
+		<link href="../../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../../assets/css/styles.css" type="text/css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-tasks"></i><span> 查询条件</span>
+						</div>
+						<div class="panel-body">
+							<div class="table-search froms">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="userName">服务名称：</label>
+										<input type="text" class="form-control" name="serverId" placeholder="服务名称">
+									</div>
+									<button type="button" class="btn btn-default query">查询</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-hover" id="sysServerTable">
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="fakeloader"></div>
+		<script src="../../../public/jquery/js/jquery-1.11.1.min.js"></script>
+		<script src="../../../public/jquery/js/jquery-ui.js"></script>
+		<script src="../../../public/jquery/js/jquery.validate.min.js"></script>
+		<script src="../../../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../../../public/fontIconPicker/js/jquery.fonticonpicker.js"></script>
+		<script src="../../../public/fakeLoader/js/fakeLoader.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap-table.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../../public/layer/js/layer.js"></script>
+		<script src="../../../public/js/custom.validate.js"></script>
+		<script src="../../../public/js/common.js"></script>
+		<script src="../../../js/systemManage/developManage/sysServerManage.js"></script>
+	</body>
+
+</html>
+
+<div class="modal fade" id="saveSysServer" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 60%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<div class="form-three widget-shadow">
+					<form class="form-horizontal" id="iconForm">
+						<input type="hidden" id="iconId" name="iconId" />
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">服务名称</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" maxlength="50" name="serverId" id="serverId" onchange="javascript:$('#iconShow').removeAttr('class').addClass(this.value)">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">服务地址</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" maxlength="255" name="serverAddr" id="serverAddr">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+

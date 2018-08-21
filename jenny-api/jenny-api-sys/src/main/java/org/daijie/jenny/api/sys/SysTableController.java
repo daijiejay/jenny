@@ -13,6 +13,7 @@ import org.daijie.jenny.common.feign.sys.request.SysTableColumnUpdateRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTablePageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysTableUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
+import org.daijie.jenny.common.feign.sys.response.SysTableColumnResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -81,25 +82,25 @@ public class SysTableController {
 	
 	@ApiOperation(value = "条件查询表格列字段")
 	@RequestMapping(value = "/column/query", method = RequestMethod.GET)
-	public ModelResult<PageResult<SysTableColumnPageRequest>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
+	public ModelResult<PageResult<SysTableColumnResponse>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
 		return sysTableFeign.getColumnByPage(sysColumnRequest);
 	}
 	
 	@ApiOperation(value = "添加表格列字段")
 	@RequestMapping(value = "/column/add", method = RequestMethod.POST)
-	public ModelResult<SysTableColumnPageRequest> addColumn(SysTableColumnAddRequest sysColumnRequest) {
+	public ModelResult<SysTableColumnResponse> addColumn(SysTableColumnAddRequest sysColumnRequest) {
 		return sysTableFeign.addColumn(sysColumnRequest);
 	}
 	
 	@ApiOperation(value = "更新表格列字段")
 	@RequestMapping(value = "/column/update", method = RequestMethod.PUT)
-	public ModelResult<SysTableColumnPageRequest> updateColumn(SysTableColumnUpdateRequest sysColumnRequest) {
+	public ModelResult<SysTableColumnResponse> updateColumn(SysTableColumnUpdateRequest sysColumnRequest) {
 		return sysTableFeign.updateColumn(sysColumnRequest);
 	}
 	
 	@ApiOperation(value = "删除表格列字段")
 	@RequestMapping(value = "/column/delete/{columnId}", method = RequestMethod.DELETE)
-	public ModelResult<SysTableColumnPageRequest> deleteColumn(@PathVariable(name = "columnId") Integer columnId) {
+	public ModelResult<SysTableColumnResponse> deleteColumn(@PathVariable(name = "columnId") Integer columnId) {
 		return sysTableFeign.deleteColumn(columnId);
 	}
 }

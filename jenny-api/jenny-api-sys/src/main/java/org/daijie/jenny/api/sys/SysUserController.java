@@ -20,6 +20,7 @@ import org.daijie.jenny.common.feign.sys.request.SysUserPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserSetRolesRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserUpdateInfoRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserUpdatePasswordRequest;
+import org.daijie.jenny.common.feign.sys.request.SysUserUpdateProfileRequest;
 import org.daijie.jenny.common.feign.sys.request.SysUserUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysRoleResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleSelectedResponse;
@@ -85,12 +86,21 @@ public class SysUserController {
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ModelResult<SysUserResponse> updateUser(@RequestBody SysUserUpdateInfoRequest sysUserUpdateInfoRequest) {
 		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();
-		SysUserCacheResponse sysUserResponse = Auth.getAuthc(SysUserCacheResponse.class);
-		if (sysUserUpdateInfoRequest.getUserId() == null) {
-			sysUserUpdateInfoRequest.setUserId(sysUserResponse.getUserId());
-		}
 		BeanUtil.copyProperties(sysUserUpdateInfoRequest, sysUserRequest);
 		return sysUserFeign.updateUser(sysUserRequest);
+	}
+	
+	@ApiOperation(value = "更新登录用户信息")
+	@RequestMapping(value = "/update/profile", method = RequestMethod.PUT)
+	public ModelResult<SysUserResponse> updateProfile(@RequestBody SysUserUpdateProfileRequest sysUserUpdateProfileRequest) {
+		SysUserUpdateRequest sysUserRequest = new SysUserUpdateRequest();
+		SysUserCacheResponse sysUserResponse = Auth.getAuthc(SysUserCacheResponse.class);
+		BeanUtil.copyProperties(sysUserUpdateProfileRequest, sysUserRequest);
+		sysUserRequest.setUserId(sysUserResponse.getUserId());
+		ModelResult<SysUserResponse> result = sysUserFeign.updateUser(sysUserRequest);
+		BeanUtil.copyProperties(result.getData(), sysUserResponse);
+		Auth.refreshAuthc(sysUserResponse);
+		return result;
 	}
 
 	@ApiOperation(value = "删除用户")

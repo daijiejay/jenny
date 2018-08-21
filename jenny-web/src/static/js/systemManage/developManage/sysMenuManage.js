@@ -339,6 +339,12 @@ function loadColumn(tableId) {
 			return form.valid();
 		},
 		columnFormatter: function(value, row, index, field) {
+			if (field == 'sortable') {
+				if(value) {
+					return '是';
+				}
+				return '否';
+			}
 			return value;
 		},
 		operateFormatter: function(action, row) {

@@ -1,12 +1,13 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import org.daijie.core.result.Page;
-import org.daijie.jdbc.mybatis.example.ExampleConditions;
+import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
+import org.daijie.jenny.common.feign.sys.response.SysTableColumnResponse;
+import org.daijie.jenny.common.model.sys.SysTableColumn;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
-public class SysTableColumnPageRequest extends Page implements ExampleConditions {
+public class SysTableColumnPageRequest extends ExampleExecutePage<SysTableColumn, SysTableColumnResponse> {
 
 	/**
      * 行编号

@@ -84,7 +84,7 @@ public class SysIconService implements SysIconFeign {
 		SysIcon sysIcon = sysIconMapper.selectByPrimaryKey(IconId);
 		if (sysIcon != null) {
 			sysIcon.setIconId(IconId);
-			sysIconMapper.updateByPrimaryKey(sysIcon);
+			sysIconMapper.deleteByPrimaryKey(sysIcon);
 			SysIconResponse sysIconResponse = new SysIconResponse();
 			BeanUtil.copyProperties(sysIcon, sysIconResponse);
 			return Result.build(sysIconResponse);
