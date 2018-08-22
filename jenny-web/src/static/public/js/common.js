@@ -1,8 +1,9 @@
 /**
  * 存储服务名地址
  */
+var api_url = 'http://daijie.org:12000/';
 var serverMap = new Map();
-serverMap.set('SYS', 'http://daijie.org:12801/')
+serverMap.set('SYS', 'http://daijie.org:12000/sys')
 serverMap.set('DOC', 'http://daijie.org:12802/')
 
 /**
@@ -31,7 +32,7 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 	if(method.toUpperCase() == 'GET') {
 		jQuery.ajax({
 			type: method,
-			url: serverMap.get(serverId) + url,
+			url: api_url + serverId + url,
 			data: data,
 			async: synType,
 			xhrFields: {
@@ -61,7 +62,7 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 	} else {
 		jQuery.ajax({
 			type: method,
-			url: serverMap.get(serverId) + url,
+			url: api_url + serverId + url,
 			data: JSON.stringify(data),
 			dataType: 'json',
 			contentType: 'application/json',
@@ -337,7 +338,7 @@ function countDown(times) {
 			var defaultSettings = new _table().settings;
 			tab.that.bootstrapTable({
 				method: table.interfaceMethod,
-				url: serverMap.get(table.interfaceServerId) + table.interfaceUrl,
+				url: api_url + table.interfaceServerId + table.interfaceUrl,
 				dataField: tab.settings.dataField ? tab.settings.dataField : defaultSettings.dataField,
 				cache: tab.settings.cache ? tab.settings.cache : defaultSettings.cache,
 				striped: tab.settings.striped ? tab.settings.striped : defaultSettings.striped,

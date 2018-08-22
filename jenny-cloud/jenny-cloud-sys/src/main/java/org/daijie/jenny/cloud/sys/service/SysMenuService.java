@@ -85,7 +85,7 @@ public class SysMenuService implements SysMenuFeign {
 			sysMenu.setSort(menus.size()+1);
 		} else {
 			SysMenu parentMenu = sysMenuMapper.selectByPrimaryKey(sysMenu.getParentId());
-			if (parentMenu.getSort() == 2) {
+			if (parentMenu.getLevel() >= 3) {
 				throw new ApiException(ResultCode.CODE_100, "不能创建3级及以上菜单");
 			}
 			List<SysMenu> menus = sysMenuMapper.selectByExample(
@@ -319,7 +319,7 @@ public class SysMenuService implements SysMenuFeign {
 		int menuCode = menus.size() > 0 ? menus.get(0).getMenuCode() : parentMenu.getMenuCode();
 		int sort = menus.size();
 		for (int menuId: menuIds) {
-			if (parentMenu.getLevel() == 3) {
+			if (parentMenu.getLevel() >= 3) {
 				throw new ApiException("不能创建3级及以上菜单");
 			}
 			menuCode = generatorMenuId(menuCode, parentMenu.getLevel()+1, 1);
@@ -346,7 +346,7 @@ public class SysMenuService implements SysMenuFeign {
 		int menuCode = parentMenu.getMenuCode();
 		int sort = 0;
 		for (SysMenu sysMenu : menus) {
-			if (parentMenu.getLevel() == 3) {
+			if (parentMenu.getLevel() >= 3) {
 				throw new ApiException("不能创建3级及以上菜单");
 			}
 			menuCode = generatorMenuId(menuCode, parentMenu.getLevel()+1, 1); 
@@ -389,7 +389,7 @@ public class SysMenuService implements SysMenuFeign {
 				int menuCode = parentMenu.getMenuCode();
 				int sort = 0;
 				for (SysMenu sysMenu : menus) {
-					if (parentMenu.getLevel() == 3) {
+					if (parentMenu.getLevel() >= 3) {
 						throw new ApiException("不能创建3级及以上菜单");
 					}
 					menuCode = generatorMenuId(menuCode, parentMenu.getLevel()+1, 1); 

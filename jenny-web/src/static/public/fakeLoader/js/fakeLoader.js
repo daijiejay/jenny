@@ -5,129 +5,124 @@
  *website:    http://www.joaopereira.pt
  *Licensed MIT 
 -----------------------------------------------------------------------*/
-(function ($) {
- 
-    $.fn.fakeLoader = function(options) {
+(function($) {
 
-        //Defaults
-        var settings = $.extend({
-            timeToHide:1200, // Default Time to hide fakeLoader
-            pos:'fixed',// Default Position
-            top:'0px',  // Default Top value
-            left:'0px', // Default Left value
-            width:'100%', // Default width 
-            height:'100%', // Default Height
-            zIndex: '999',  // Default zIndex 
-            bgColor: '#2ecc71', // Default background color
-            spinner:'spinner7', // Default Spinner
-            imagePath:'' // Default Path custom image
-        }, options);
+	$.fn.fakeLoader = function(options) {
 
-        //Customized Spinners
-        var spinner01 = '<div class="fl spinner1"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>';
-        var spinner02 = '<div class="fl spinner2"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
-        var spinner03 = '<div class="fl spinner3"><div class="dot1"></div><div class="dot2"></div></div>';
-        var spinner04 = '<div class="fl spinner4"></div>'; 
-        var spinner05 = '<div class="fl spinner5"><div class="cube1"></div><div class="cube2"></div></div>'; 
-        var spinner06 = '<div class="fl spinner6"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>'; 
-        var spinner07 = '<div class="fl spinner7"><div class="circ1"></div><div class="circ2"></div><div class="circ3"></div><div class="circ4"></div></div>'; 
+		//Defaults
+		var settings = $.extend({
+			timeToHide: 1200, // Default Time to hide fakeLoader
+			pos: 'fixed', // Default Position
+			top: '0px', // Default Top value
+			left: '0px', // Default Left value
+			width: '100%', // Default width 
+			height: '100%', // Default Height
+			zIndex: '999', // Default zIndex 
+			bgColor: '#2ecc71', // Default background color
+			spinner: 'spinner7', // Default Spinner
+			imagePath: '' // Default Path custom image
+		}, options);
 
-        //The target
-        var el = $(this);
+		//Customized Spinners
+		var spinner01 = '<div class="fl spinner1"><div class="double-bounce1"></div><div class="double-bounce2"></div></div>';
+		var spinner02 = '<div class="fl spinner2"><div class="spinner-container container1"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container2"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div><div class="spinner-container container3"><div class="circle1"></div><div class="circle2"></div><div class="circle3"></div><div class="circle4"></div></div></div>';
+		var spinner03 = '<div class="fl spinner3"><div class="dot1"></div><div class="dot2"></div></div>';
+		var spinner04 = '<div class="fl spinner4"></div>';
+		var spinner05 = '<div class="fl spinner5"><div class="cube1"></div><div class="cube2"></div></div>';
+		var spinner06 = '<div class="fl spinner6"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
+		var spinner07 = '<div class="fl spinner7"><div class="circ1"></div><div class="circ2"></div><div class="circ3"></div><div class="circ4"></div></div>';
 
-        //Init styles
-        var initStyles = {
-            'position':settings.pos,
-            'width':settings.width,
-            'height':settings.height,
-            'top':settings.top,
-            'left':settings.left
-        };
+		//The target
+		var el = $(this);
 
-        //Apply styles
-        el.css(initStyles);
+		//Init styles
+		var initStyles = {
+			'position': settings.pos,
+			'width': settings.width,
+			'height': settings.height,
+			'top': settings.top,
+			'left': settings.left
+		};
 
-        //Each 
-        el.each(function() {
-            var a = settings.spinner;
-            //console.log(a)
-                switch (a) {
-                    case 'spinner1':
-                            el.html(spinner01);
-                        break;
-                    case 'spinner2':
-                            el.html(spinner02);
-                        break;
-                    case 'spinner3':
-                            el.html(spinner03);
-                        break;
-                    case 'spinner4':
-                            el.html(spinner04);
-                        break;
-                    case 'spinner5':
-                            el.html(spinner05);
-                        break;
-                    case 'spinner6':
-                            el.html(spinner06);
-                        break;
-                    case 'spinner7':
-                            el.html(spinner07);
-                        break;
-                    default:
-                        el.html(spinner01);
-                    }
+		//Apply styles
+		el.css(initStyles);
 
-                //Add customized loader image
+		//Each 
+		el.each(function() {
+			var a = settings.spinner;
+			//console.log(a)
+			switch(a) {
+				case 'spinner1':
+					el.html(spinner01);
+					break;
+				case 'spinner2':
+					el.html(spinner02);
+					break;
+				case 'spinner3':
+					el.html(spinner03);
+					break;
+				case 'spinner4':
+					el.html(spinner04);
+					break;
+				case 'spinner5':
+					el.html(spinner05);
+					break;
+				case 'spinner6':
+					el.html(spinner06);
+					break;
+				case 'spinner7':
+					el.html(spinner07);
+					break;
+				default:
+					el.html(spinner01);
+			}
 
-                if (settings.imagePath !='') {
-                    el.html('<div class="fl"><img src="'+settings.imagePath+'"></div>');
-                    centerLoader();
-                }
-        });
+			//Add customized loader image
 
-        //Time to hide fakeLoader
-        setTimeout(function(){
-            $(el).fadeOut();
-        }, settings.timeToHide);
+			if(settings.imagePath != '') {
+				el.html('<div class="fl"><img src="' + settings.imagePath + '"></div>');
+				centerLoader();
+			}
+		});
 
-        //Return Styles 
-        return this.css({
-            'backgroundColor':'rgba(209, 191, 191, 0.3)',
-//          'opacity':'0.1',
-            'zIndex':settings.zIndex
-        });
+		//Time to hide fakeLoader
+		setTimeout(function() {
+			$(el).fadeOut();
+		}, settings.timeToHide);
 
- 
-    }; // End Fake Loader
- 
+		//Return Styles 
+		return this.css({
+			'backgroundColor': 'rgba(209, 191, 191, 0.3)',
+			//          'opacity':'0.1',
+			'zIndex': settings.zIndex
+		});
 
-        //Center Spinner
-        function centerLoader() {
+	}; // End Fake Loader
 
-            var winW = $(window).width();
-            var winH = $(window).height();
+	//Center Spinner
+	function centerLoader() {
 
-            var spinnerW = $('.fl').outerWidth();
-            var spinnerH = $('.fl').outerHeight();
+		var winW = $(window).width();
+		var winH = $(window).height();
 
-            $('.fl').css({
-                'position':'absolute',
-                'left':(winW/2)-(spinnerW/2),
-                'top':(winH/2)-(spinnerH/2)
-            });
+		$('.fl img')[0].onload = function() {
+			var spinnerW = $('.fl img').outerWidth();
+			var spinnerH = $('.fl img').outerHeight();
 
-        }
+			$('.fl').css({
+				'position': 'absolute',
+				'left': (winW / 2) - (spinnerW / 2),
+				'top': (winH / 2) - (spinnerH / 2)
+			});
+		}
 
-        $(window).load(function(){
-                centerLoader();
-              $(window).resize(function(){
-                centerLoader();
-              });
-        });
+	}
 
+	$(window).load(function() {
+		centerLoader();
+		$(window).resize(function() {
+			centerLoader();
+		});
+	});
 
 }(jQuery));
-
-
-
-

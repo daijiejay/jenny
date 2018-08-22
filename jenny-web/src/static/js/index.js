@@ -22,10 +22,11 @@ function loadMenu() {
 		for (var i = 0; i < result.data.length; i++) {
 			var str = '';
 			if (result.data[i].level == 1) {
+				var taskNumber = result.data[i].taskNumber?result.data[i].taskNumber:"";
 				str += '<li code="'+result.data[i].menuId+'" level="'+result.data[i].level
 				+'"><a href="#"><i class="'+result.data[i].icon+'"></i><span>'
 				+result.data[i].menuName+'</span>'
-				+'<span class="badge badge-dark">1</span>'
+				+'<span class="badge badge-dark">'+taskNumber+'</span>'
 				+'</a></li>';
 				$('#side-menu').append(str);
 			} else {

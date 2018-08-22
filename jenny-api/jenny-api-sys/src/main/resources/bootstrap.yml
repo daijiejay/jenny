@@ -66,8 +66,6 @@ http.accessControlAllowOrigin: http://127.0.0.1,http://daijie.org
 #允许设置headers的字段名
 http.accessControlAllowHeaders: Content-Type,Access-Control-Allow-Headers,Access-Control-Allow-Origin,Authorization,X-Requested-With
 
-#开启ajax远程调用
-http.remoteAjaxEanble: true
 #开启请求参数body转param，提供者用实体接收参数时省去了@RequestBody注解
 http.bodyByParamEanble: true
 
@@ -80,3 +78,5 @@ hadoop.dfs.filePath: file
 logging.level.org.daijie: DEBUG
 
 feign.sys: cloud-sys
+
+swagger.api.basePackage: org.daijie.jenny.api

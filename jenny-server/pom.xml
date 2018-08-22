@@ -11,5 +11,6 @@
 	<build />
 	<modules>
 		<module>jenny-server-eureka</module>
+		<module>jenny-server-shiro</module>
 	</modules>
 </project>
