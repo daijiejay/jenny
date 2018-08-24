@@ -79,4 +79,4 @@ logging.level.org.daijie: DEBUG
 
 feign.sys: cloud-sys
 
-swagger.api.basePackage: org.daijie.jenny.api
+swagger.basePackage: org.daijie.jenny.api

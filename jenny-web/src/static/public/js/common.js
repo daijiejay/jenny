@@ -2,9 +2,19 @@
  * 存储服务名地址
  */
 var api_url = 'http://daijie.org:12000/';
-var serverMap = new Map();
-serverMap.set('SYS', 'http://daijie.org:12000/sys')
-serverMap.set('DOC', 'http://daijie.org:12802/')
+
+/**
+ * 获取当前访问静态资源地址
+ */
+var local = window.location.href.substring(0, window.location.href.indexOf('/static/html') + '/static/html'.length);
+/**
+ * 获取父级窗口
+ */
+var widget = window.location;
+var ifm = window.parent.$('#page-wrapper .tab-content div.active iframe');
+if (ifm.length > 0) {
+	widget = window.parent.location;
+}
 
 /**
  * 存储请求地址缓存，请求完成后清除，防止重复请求
@@ -47,7 +57,7 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 						return callback(result);
 					}
 				} else if(result.code == '300') {
-					location.href = '../html/login.html';
+					widget.href = local + '/login.html';
 				} else {
 					layer.alert(result.msg);
 					return callback(result);
@@ -79,7 +89,7 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 						return callback(result);
 					}
 				} else if(result.code == '300') {
-					location.href = '../html/login.html';
+					widget.href = local + '/login.html';
 				} else {
 					layer.alert(result.msg);
 					return callback(result);

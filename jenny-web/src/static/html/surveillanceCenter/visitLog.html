@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>系统菜单管理</title>
+		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../assets/css/styles.css" type="text/css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="input-group well w100">
+						<select class="form-control" id="documentationName">
+						</select>
+					</div>
+					<div class="inbox-menu">
+					</div>
+				</div>
+
+				<div class="col-md-9">
+					<div class="">
+						<ul class="nav nav-tabs">
+							<li class="active">
+								<a href="#info" id="info-tab" role="tab" data-toggle="tab" aria-controls="info" aria-expanded="false">请求信息</a>
+							</li>
+							<li>
+								<a href="#table" role="tab" id="table-tab" data-toggle="tab" aria-controls="table" aria-expanded="true">请求日志</a>
+							</li>
+						</ul>
+					</div>
+					<div class="tab-content">
+						<div class="tab-pane active" id="info">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel panel-default" data-widget-editbutton="false" id="p1">
+										<div class="panel-body">
+											<div id="documentation">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane" id="table">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel panel-default" data-widget-editbutton="false" id="p1">
+										<div class="panel-body">
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fakeloader"></div>
+		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
+		<script src="../../public/jquery/js/jquery-ui.js"></script>
+		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
+		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../../public/fakeLoader/js/fakeLoader.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../public/layer/js/layer.js"></script>
+		<script src="../../public/js/custom.validate.js"></script>
+		<script src="../../public/js/common.js"></script>
+		<script src="../../js/surveillanceCenter/visitLog.js"></script>
+	</body>
+
+</html>
+
+<div class="modal fade" id="saveSysTable" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 80%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<div class="form-three widget-shadow">
+					<form class="form-horizontal" id="tableForm">
+						<input type="hidden" id="tableId" name="tableId" />
+						<input type="hidden" id="menuId" name="menuId" />
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">菜单名称</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" maxlength="20" name="menuName" id="menuName" readonly>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">表格名称</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" maxlength="20" name="tableName" id="tableName">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口服务名</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" name="interfaceServerId" id="interfaceServerId">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口地址</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" name="interfaceUrl" id="interfaceUrl">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口方式</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" name="interfaceMethod" id="interfaceMethod">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">表格目标元素</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" name="tableTarget" id="tableTarget">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">表格行主键名</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" name="uniqueId" id="uniqueId">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="setAction" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 80%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<table class="table table-hover" id="sysActionTable">
+				</table>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="setColumn" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 80%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<table class="table table-hover" id="sysColumnTable">
+				</table>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="saveSysAction" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 60%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<div class="form-three widget-shadow">
+					<form class="form-horizontal" id="actionForm">
+						<input type="hidden" id="actionId" name="actionId" />
+						<input type="hidden" id="tableId" name="tableId" />
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">功能名称</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" maxlength="20" name="actionName" id="actionName">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">功能类型</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-list"></i>
+									</span>
+									<select class="form-control" name="actionType" id="actionType">
+										<option value="OPERATE">列表单行操作</option>
+										<option value="TOOLBAR">列表工具栏</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">交互类型</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-list"></i>
+									</span>
+									<select class="form-control" name="mutualType" id="mutualType">
+										<option value="CONFIRM">确认</option>
+										<option value="FORM">表单</option>
+										<option value="EXTEND">扩展</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口服务名</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" name="interfaceServerId" id="interfaceServerId">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口地址</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" name="interfaceUrl" id="interfaceUrl">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">接口方式</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-list"></i>
+									</span>
+									<select class="form-control" name="interfaceMethod" id="interfaceMethod">
+										<option value="GET">GET</option>
+										<option value="POST">POST</option>
+										<option value="PUT">PUT</option>
+										<option value="DELETE">DELETE</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">表单目标元素</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" name="formTarget" id="formTarget">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">排序</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-sort-numeric-down"></i>
+									</span>
+									<input type="number" class="form-control" name="showSort" id="showSort">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">图标</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="text" class="form-control" name="icon">
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<p class="help-block"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="saveSysColumn" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" style="width: 60%;">
+		<div class="modal-content">
+			<!-- 模态框头部 -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">添加</h4>
+			</div>
+			<!-- 模态框主体 -->
+			<div class="modal-body">
+				<div class="form-three widget-shadow">
+					<form class="form-horizontal" id="columnForm">
+						<input type="hidden" id="columnId" name="columnId" />
+						<input type="hidden" id="tableId" name="tableId" />
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">列标题名</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" maxlength="20" name="title" id="title">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">列字段名</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-font"></i>
+									</span>
+									<input type="text" class="form-control" maxlength="20" name="field" id="field">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">显示排序按扭</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-list"></i>
+									</span>
+									<select class="form-control" name="sortable" id="sortable">
+										<option value="1">是</option>
+										<option value="0">否</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="focusedinput" class="col-sm-2 control-label">排序</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<span class="input-group-addon">
+										<i class="fa fa-sort-numeric-down"></i>
+									</span>
+									<input type="number" class="form-control" name="showSort" id="showSort">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<p class="help-block"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 模态框底部 -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary save">保存</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
