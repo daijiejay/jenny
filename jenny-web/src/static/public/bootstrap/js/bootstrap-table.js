@@ -2135,6 +2135,10 @@
             cache: this.options.cache,
             contentType: this.options.contentType,
             dataType: this.options.dataType,
+			xhrFields: {
+				withCredentials: true
+			},
+			crossDomain: true,
             success: function (res) {
             	if (!res.success) {
             		that.trigger('load-error', res.status, res.msg);

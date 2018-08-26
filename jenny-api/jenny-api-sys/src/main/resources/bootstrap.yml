@@ -80,3 +80,8 @@ logging.level.org.daijie: DEBUG
 feign.sys: cloud-sys
 
 swagger.basePackage: org.daijie.jenny.api
+swagger.groupName: 系统管理相关接口
+swagger.title: 系统管理
+swagger.description: 接口
+swagger.contact: daijie.org
+swagger.version: 1.0

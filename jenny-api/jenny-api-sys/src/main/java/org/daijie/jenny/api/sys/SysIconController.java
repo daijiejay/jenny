@@ -28,13 +28,13 @@ public class SysIconController {
 	@Autowired
 	private SysIconFeign sysIconFeign;
 
-	@ApiOperation(value = "条件查询用户")
+	@ApiOperation(value = "条件查询图标")
 	@RequestMapping(value = "/query", method = RequestMethod.GET)
 	public ModelResult<PageResult<SysIconResponse>> getIcon(SysIconPageRequest sysIconRequest) {
 		return sysIconFeign.getIcon(sysIconRequest);
 	}
 	
-	@ApiOperation(value = "条件查询用户")
+	@ApiOperation(value = "查询所有图标，用于fontIconPicker插件加载")
 	@RequestMapping(value = "/query/fontIconPicker", method = RequestMethod.GET)
 	public ModelResult<SysIconPickerResponse> fontIconPicker() {
 		List<SysIconResponse> icons = sysIconFeign.getIconAll().getData();
@@ -46,19 +46,19 @@ public class SysIconController {
 		return Result.build(sysIconPickerResponse);
 	}
 	
-	@ApiOperation(value = "添加用户")
+	@ApiOperation(value = "添加图标")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelResult<SysIconResponse> addIcon(SysIconAddRequest sysIconRequest) {
 		return sysIconFeign.addIcon(sysIconRequest);
 	}
 
-	@ApiOperation(value = "更新用户")
+	@ApiOperation(value = "更新图标")
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ModelResult<SysIconResponse> updateIcon(SysIconUpdateRequest sysIconRequest) {
 		return sysIconFeign.updateIcon(sysIconRequest);
 	}
 
-	@ApiOperation(value = "删除用户")
+	@ApiOperation(value = "删除图标")
 	@RequestMapping(value = "/delete/{iconId}", method = RequestMethod.DELETE)
 	public ModelResult<SysIconResponse> deleteIcon(@PathVariable(name = "iconId") Integer iconId) {
 		return sysIconFeign.deleteIcon(iconId);

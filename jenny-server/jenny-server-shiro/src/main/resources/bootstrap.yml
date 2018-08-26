@@ -81,12 +81,14 @@ zuul.ignored-services: /*
 zuul.sensitive-headers: 
 zuul.routes.sys.path: /SYS/**
 zuul.routes.sys.serviceId: api-sys
+zuul.routes.sys.serviceName: 系统管理
 zuul.routes.sys.sensitive-headers: 
 zuul.routes.sys.custom-sensitive-headers: true
 zuul.routes.sys.stripPrefix: true
 
 zuul.routes.doc.path: /DOC/**
 zuul.routes.doc.serviceId: api-doc
+zuul.routes.doc.serviceName: 文件管理
 zuul.routes.doc.sensitive-headers: 
 zuul.routes.doc.custom-sensitive-headers: true
 zuul.routes.doc.stripPrefix: true
