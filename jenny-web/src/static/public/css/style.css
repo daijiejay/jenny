@@ -17,18 +17,15 @@ table a.btn {
 .static-content-tab {
 	padding: 0;
 }
-
 .tab-title {
 	width: 100%;
 	position: fixed;
 	border-bottom: 1px solid #dadfe3;
 	background-color: #bab3c1;
 }
-
 .static-content-tab .tab-content {
 	padding-top: 35px;
 }
-
 .table>tbody>tr>td>a {
 	padding: 0 5px;
 }
@@ -37,7 +34,6 @@ table a.btn {
 .table>tbody>tr>td>a:hover {
 	text-decoration: none;
 }
-
 .table {
 	font-size: 0.9em;
 	/*table-layout: fixed;*/
@@ -59,11 +55,19 @@ table a.btn {
 .fixed-table-toolbar .btn-group .btn {
 	font-weight: 900;
 }
-
 .margin0 {
 	margin: 0;
 }
-
 .font-color-green {
 	color: #48d09b;
+}
+.menu-title {
+    text-transform: uppercase;
+    color: #93a8a8 !important;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+}
+.menu-title > .badge {
+	float: right;
+    margin-right: 10px;
 }
