@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.daijie</groupId>
-		<artifactId>jenny-api</artifactId>
+		<artifactId>jenny-common-feign</artifactId>
 		<version>1.0.0-RELEASE</version>
 	</parent>
-	<artifactId>jenny-api-doc</artifactId>
-	<name>jenny-api-doc</name>
+	<artifactId>jenny-common-feign-health</artifactId>
+	<name>jenny-common-feign-health</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,18 +20,28 @@
 			<artifactId>daijie-core-spring-boot-starter</artifactId>
 			<version>${daijie.version}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.daijie</groupId>
-			<artifactId>daijie-hadoop-spring-boot-starter</artifactId>
-			<version>${daijie.version}</version>
-		</dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+			<artifactId>jenny-common-model-sys</artifactId>
+			<version>${daijie.jenny.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-jdbc</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-data-jpa</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>tk.mybatis</groupId>
+					<artifactId>mapper-spring-boot-starter</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 	</dependencies>
 </project>

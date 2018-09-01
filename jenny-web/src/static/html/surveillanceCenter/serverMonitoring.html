@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>访问日志</title>
+		<link href="../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../assets/css/styles.css" type="text/css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="fa fa-tasks"></i><span> 查询条件</span>
+						</div>
+						<div class="panel-body">
+							<div class="table-search froms">
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="userName">服务名称：</label>
+										<input type="text" class="form-control" name="name" placeholder="用户名称">
+									</div>
+									<button type="reset" class="btn btn-default">重置</button>
+									<button type="button" class="btn btn-default query">查询</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-bordered" id="serverMonitoringTable">
+					</table>
+				</div>
+			</div>
+		</div>
+		<script src="../../public/jquery/js/jquery-1.11.1.min.js"></script>
+		<script src="../../public/jquery/js/jquery-ui.js"></script>
+		<script src="../../public/jquery/js/jquery.validate.min.js"></script>
+		<script src="../../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../../public/fakeLoader/js/fakeLoader.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table.js"></script>
+		<script src="../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../public/layer/js/layer.js"></script>
+		<script src="../../public/js/custom.validate.js"></script>
+		<script src="../../public/js/common.js"></script>
+		<script src="../../js/surveillanceCenter/serverMonitoring.js"></script>
+	</body>
+
+</html>

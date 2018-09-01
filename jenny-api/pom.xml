@@ -12,5 +12,6 @@
 	<modules>
 		<module>jenny-api-sys</module>
 		<module>jenny-api-doc</module>
+		<module>jenny-api-health</module>
 	</modules>
 </project>

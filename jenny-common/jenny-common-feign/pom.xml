@@ -11,5 +11,6 @@
 	<build />
 	<modules>
 		<module>jenny-common-feign-sys</module>
+		<module>jenny-common-feign-health</module>
 	</modules>
 </project>

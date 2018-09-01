@@ -1,0 +1,22 @@
+#服务名称
+spring.application.name: server-admin
+#服务端口号
+server.port: 12001
+
+#eureka注册中心地址
+eureka.client.serviceUrl.defaultZone: http://127.0.0.1:8761/eureka/
+#是否设置注册优些IP地址
+eureka.instance.preferIpAddress: true
+
+eureka.instance.leaseRenewalIntervalInSeconds: 10
+eureka.instance.health-check-url-path: /actuator/health
+eureka.client.registryFetchIntervalSeconds: 5
+
+#关闭安全访问
+management.security.enabled: true
+security.basic.enabled: true
+management.endpoints.web.exposure.include: "*"
+management.endpoint.health.show-details: ALWAYS
+    
+spring.security.user.name: jenny
+spring.security.user.password: daijie.org

@@ -1,9 +1,7 @@
 #服务名称
-spring.application.name: api-sys
+spring.application.name: api-health
 #服务端口号
-server.port: 12501
-#header头允许存放的最大值
-server.maxHttpHeaderSize: 100000
+server.port: 12503
 
 #eureka注册中心地址
 eureka.client.serviceUrl.defaultZone: http://127.0.0.1:8761/eureka/
@@ -69,38 +67,18 @@ http.accessControlAllowHeaders: Content-Type,Access-Control-Allow-Headers,Access
 #开启请求参数body转param，提供者用实体接收参数时省去了@RequestBody注解
 http.bodyByParamEanble: true
 
-#hdfs服务配置
-hadoop.dfs.serverUrl: 127.0.0.1:9000
-hadoop.dfs.downloadUrl: hdfs/download/
-hadoop.dfs.dirPath: folder
-hadoop.dfs.filePath: file
-
 logging.level.org.daijie: DEBUG
 
 feign.sys: cloud-sys
 
 #swagger文档配置
 swagger.basePackage: org.daijie.jenny.api
-swagger.groupName: 系统管理相关接口
-swagger.title: 系统管理
+swagger.groupName: 系统监控中心相关接口
+swagger.title: 系统监控中心
 swagger.description: 接口
 swagger.contact: daijie.org
 swagger.version: 1.0
 
-#启用Spring Boot Admin Client
-spring.boot.admin.client.enabled: true
-#这是一个必填的属性，将当前程序的信息注册到Admin Server中，你需要给出Server URL地址，如果需要注册到多个Admin Server，可以用逗号分隔开来
-spring.boot.admin.url: http\://localhost\:12503
-#当客户端程序发起注册的时候，需要一个请求地址。
-spring.boot.admin.api-path: api/application
-#如果Admin端设置了用户名密码访问，你也需要在客户端配置它们。
-spring.boot.admin.username: admin
-spring.boot.admin.password: admin
-#注册间隔（程序启动后多久发出注册请求
-spring.boot.admin.period: 10000
-#如果设置成true，那么上面那个属性就不需要设置了，程序会自动在启动成功后立刻发出注册申请。
-spring.boot.admin.auto-registration: true
-#当Admin server关闭的时候，自动注销。
-spring.boot.admin.auto-deregistration: true
-#如果你注册到了多个Admin Server，当他为true的时候，则只会向一个admin server进行注册，否则会同时向所有的admin server进行注册
-spring.boot.admin.register-once: true
+#关闭安全访问
+management.security.enabled: false
+security.basic.enabled: false

@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.daijie</groupId>
-		<artifactId>jenny-api</artifactId>
+		<artifactId>jenny-server</artifactId>
 		<version>1.0.0-RELEASE</version>
 	</parent>
-	<artifactId>jenny-api-doc</artifactId>
-	<name>jenny-api-doc</name>
+	<artifactId>jenny-server-admin</artifactId>
+	<name>jenny-server-admin</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,11 +20,15 @@
 			<artifactId>daijie-core-spring-boot-starter</artifactId>
 			<version>${daijie.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.daijie</groupId>
-			<artifactId>daijie-hadoop-spring-boot-starter</artifactId>
-			<version>${daijie.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -33,5 +37,13 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
-	</dependencies>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

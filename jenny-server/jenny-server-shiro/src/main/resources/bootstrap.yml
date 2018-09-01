@@ -93,6 +93,13 @@ zuul.routes.doc.sensitive-headers:
 zuul.routes.doc.custom-sensitive-headers: true
 zuul.routes.doc.stripPrefix: true
 
+zuul.routes.health.path: /HEALTH/**
+zuul.routes.health.serviceId: api-health
+zuul.routes.health.serviceName: 系统监控中心
+zuul.routes.health.sensitive-headers: 
+zuul.routes.health.custom-sensitive-headers: true
+zuul.routes.health.stripPrefix: true
+
 #指定Log4j打印日志包路径的日志级别
 logging.level.org.daijie: DEBUG
 

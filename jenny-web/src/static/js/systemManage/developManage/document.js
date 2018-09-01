@@ -108,7 +108,7 @@ $(function() {
 					methodResponseInfoStr += '				<th></th>';
 					methodResponseInfoStr += '				<th>参数名称</th>';
 					methodResponseInfoStr += '				<th>说明</th>';
-					methodResponseInfoStr += '				<th>是否必须</th>';
+					methodResponseInfoStr += '				<th>是否允许空值</th>';
 					methodResponseInfoStr += '				<th>类型</th>';
 					methodResponseInfoStr += '			</tr></thead>';
 					methodResponseInfoStr += '			<tbody class="methodResponseInfo"></tbody>';

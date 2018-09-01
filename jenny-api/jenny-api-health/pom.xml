@@ -8,8 +8,8 @@
 		<artifactId>jenny-api</artifactId>
 		<version>1.0.0-RELEASE</version>
 	</parent>
-	<artifactId>jenny-api-doc</artifactId>
-	<name>jenny-api-doc</name>
+	<artifactId>jenny-api-health</artifactId>
+	<name>jenny-api-health</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,8 +22,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.daijie</groupId>
-			<artifactId>daijie-hadoop-spring-boot-starter</artifactId>
+			<artifactId>daijie-shiro-spring-boot-starter</artifactId>
 			<version>${daijie.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.daijie</groupId>
+			<artifactId>jenny-common-feign-health</artifactId>
+			<version>${daijie.jenny.version}</version>
 		</dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -1,16 +1,18 @@
 package org.daijie.jenny;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
+@EnableAutoConfiguration
 @SpringBootApplication
-@EnableEurekaServer
-public class ServerEurekaStartUp {
+@EnableAdminServer
+public class ServerAdminStartUp {
 
     public static void main(String[] args) {
 		try {
-			SpringApplication.run(ServerEurekaStartUp.class, args);
+			SpringApplication.run(ServerAdminStartUp.class, args);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

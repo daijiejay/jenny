@@ -12,5 +12,6 @@
 	<modules>
 		<module>jenny-server-eureka</module>
 		<module>jenny-server-shiro</module>
+		<module>jenny-server-admin</module>
 	</modules>
 </project>
