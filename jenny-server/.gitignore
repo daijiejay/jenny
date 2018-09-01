@@ -9,3 +9,4 @@
 /.apt_generated/
 /target/
 /transaction-logs/
+/jenny-server.iml
