@@ -71,3 +71,15 @@ table a.btn {
 	float: right;
     margin-right: 10px;
 }
+.menu-title:focus {
+	text-decoration: none;
+}
+.menu-title:hover {
+	text-decoration: none;
+}
+.menu-title:visited {
+	text-decoration: none;
+}
+.menu-title:active {
+	text-decoration: none;
+}

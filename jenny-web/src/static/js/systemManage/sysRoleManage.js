@@ -96,7 +96,7 @@ function loadMenuTree(row) {
 			}
 		}
 	};
-	request('get', '', '/sysrole/query/selectedMenus/'+row.roleId, 'SYS', function(result) {
+	request('get', '', '/sysrole/query/selectedMenus/'+row.roleId, 'sys', function(result) {
 		$.fn.zTree.init($("#selectedMenu"), setting, result.data);
 	});
 }
@@ -128,7 +128,7 @@ function saveSetMenu() {
 	data.sysOperateAuthorizedRequests = sysOperateAuthorizedRequests;
 	data.sysMenuAuthorizedRequests = sysMenuAuthorizedRequests;
 	var res = false;
-	requestSynchronized('PUT', data, '/sysrole/update/selectedMenus', 'SYS', false, function(result) {
+	requestSynchronized('PUT', data, '/sysrole/update/selectedMenus', 'sys', false, function(result) {
 		res = result.data;
 		ztree.destroy();
 	});

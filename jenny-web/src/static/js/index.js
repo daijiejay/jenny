@@ -5,7 +5,7 @@ $(function() {
 	closableTab.addTab(item);
 	sys_index_link($(document).find('.userinfo'));
 	
-	request('get', '', '/sysuser/userCache', 'SYS', function(result) {
+	request('get', '', '/sysuser/userCache', 'sys', function(result) {
 		if (!result.data.portrait) {
 			result.data.portrait = '../assets/demo/avatar/profile.png';
 		}
@@ -18,7 +18,7 @@ $(function() {
 
 //加载菜单
 function loadMenu() {
-	request('get', '', '/sysindex/menu/authorized', 'SYS', function(result) {
+	request('get', '', '/sysindex/menu/authorized', 'sys', function(result) {
 		for (var i = 0; i < result.data.length; i++) {
 			var str = '';
 			if (result.data[i].level == 1) {
@@ -71,7 +71,7 @@ function sys_index_link(doc) {
 
 //退出登录
 function logout() {
-	request('post', '', '/syslogout', 'SYS', function(result) {
+	request('post', '', '/syslogout', 'sys', function(result) {
 		location.href = 'login.html';
 	});
 }

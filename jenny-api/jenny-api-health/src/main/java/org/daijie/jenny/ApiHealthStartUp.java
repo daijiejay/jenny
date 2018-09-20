@@ -1,18 +1,21 @@
 package org.daijie.jenny;
 
 import org.daijie.core.controller.EnableExceptionHandler;
+import org.daijie.core.feign.RestTemplateConfigure;
 import org.daijie.shiro.annotation.EnableShiro;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Import;
 
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableExceptionHandler
 @RefreshScope
 @EnableShiro
+@Import(RestTemplateConfigure.class)
 @SpringBootApplication
 public class ApiHealthStartUp {
 

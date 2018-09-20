@@ -34,7 +34,7 @@ $(function() {
 			var formData = form.serializeJson();
 			formData.oldPassword = encrypt.encrypt(formData.oldPassword);
 			formData.newPassword = encrypt.encrypt(formData.newPassword);
-			request('put', formData, '/sysuser/update/password', 'SYS', function(result) {
+			request('put', formData, '/sysuser/update/password', 'sys', function(result) {
 				if(result.code == '200') {
 					layer.alert("修改成功");
 					$('#setPassword').modal('hide');
@@ -49,7 +49,7 @@ loadPublicKey();
 var encrypt = new JSEncrypt();
 
 function loadPublicKey() {
-	request('get', '', '/publicKey', 'SYS', function(result) {
+	request('get', '', '/publicKey', 'sys', function(result) {
 		encrypt.setPublicKey(result.data);
 	});
 }

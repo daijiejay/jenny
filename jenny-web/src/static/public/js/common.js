@@ -28,17 +28,20 @@ var requestMap = new Map();
  * @param {Object} url 请求地址
  * @param {Object} serverId 请求服务名
  * @param {Object} synType 是否异步请求
+ * @param {Object} isloader 是否显示加载效果
  * @param {Object} callback 请求回调
  */
-function requestSynchronized(method, data, url, serverId, synType, callback) {
+function requestSynchronizedNonloader(method, data, url, serverId, synType, isloader, callback) {
 	if(requestMap.get(url)) {
 		return;
 	}
 	requestMap.set(url, true);
-	if (!loader) {
-		initFakeloader();
+	if (isloader) {
+		if (!loader) {
+			initFakeloader();
+		}
+	    loader.fadeIn();
 	}
-    loader.fadeIn();
 	if(method.toUpperCase() == 'GET') {
 		jQuery.ajax({
 			type: method,
@@ -51,7 +54,9 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 			crossDomain: true,
 			success: function(result, textStatus, request) {
 				requestMap.delete(url);
-				loader.fadeOut();
+				if (isloader) {
+					loader.fadeOut();
+				}
 				if(result.code == '200') {
 					if(typeof callback == 'function') {
 						return callback(result);
@@ -66,10 +71,15 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 			error: function(e) {
 				layer.alert('访问服务器异常！');
 				requestMap.delete(url);
-				loader.fadeOut();
+				if (isloader) {
+					loader.fadeOut();
+				}
 			}
 		});
 	} else {
+		if (data == '') {
+			data = {};
+		}
 		jQuery.ajax({
 			type: method,
 			url: api_url + serverId + url,
@@ -83,7 +93,9 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 			crossDomain: true,
 			success: function(result, textStatus, request) {
 				requestMap.delete(url);
-				loader.fadeOut();
+				if (isloader) {
+					loader.fadeOut();
+				}
 				if(result.code == '200') {
 					if(typeof callback == 'function') {
 						return callback(result);
@@ -98,10 +110,29 @@ function requestSynchronized(method, data, url, serverId, synType, callback) {
 			error: function(e) {
 				layer.alert('访问服务器异常！');
 				requestMap.delete(url);
-				loader.fadeOut();
+				if (isloader) {
+					loader.fadeOut();
+				}
 			}
 		});
 	}
+}
+/**
+ * 可同步请求
+ * 请求封装，处理请求重复提交，加载效果展示，自动拦截用户过期跳转登录，请求错误提示
+ * @param {Object} method 请求方式
+ * @param {Object} data 请求数据
+ * @param {Object} url 请求地址
+ * @param {Object} serverId 请求服务名
+ * @param {Object} synType 是否异步请求
+ * @param {Object} callback 请求回调
+ */
+function requestSynchronized(method, data, url, serverId, synType, callback) {
+	requestSynchronizedNonloader(method, data, url, serverId, true, true, function(result) {
+		if (typeof callback === 'function') {
+			return callback(result);
+		}
+	});
 }
 /**
  * 异步请求
@@ -125,7 +156,7 @@ function request(method, data, url, serverId, callback) {
  * @param {Object} defaultIcon 默认图标
  */
 function initFontIconPicker(ele, defaultIcon){
-	request('get', '', '/sysicon/query/fontIconPicker', 'SYS', function(result){
+	request('get', '', '/sysicon/query/fontIconPicker', 'sys', function(result){
 		if (result.code == '200') {
 			dynamicIconsElement = $(ele).fontIconPicker({
 				source: result.data.iconCodes,
@@ -327,7 +358,7 @@ function countDown(times) {
 			if (menuId <= 0) {
 				menuId = window.parent.$('#page-wrapper .tab-content div.active iframe').attr('menuId');
 			}
-			request('get', '', '/sysindex/menu/authorized/table/' + menuId, 'SYS', function(result) {
+			request('get', '', '/sysindex/menu/authorized/table/' + menuId, 'sys', function(result) {
 				result.data.tables.forEach(function(value, index) {
 					if (value.tableTarget == _this.selector) {
 						tab.table = value;

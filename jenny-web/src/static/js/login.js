@@ -40,7 +40,7 @@ function login(form) {
 	effect();
 	var formData = form.serializeJson();
 	formData.password = encrypt.encrypt(formData.password);
-	request('post', formData, '/syslogin', 'SYS', function(result) {
+	request('post', formData, '/syslogin', 'sys', function(result) {
 		success = true;
 		code = result.code;
 	});
@@ -110,7 +110,7 @@ loadPublicKey();
 var encrypt = new JSEncrypt();
 
 function loadPublicKey() {
-	request('get', '', '/publicKey', 'SYS', function(result) {
+	request('get', '', '/publicKey', 'sys', function(result) {
 		encrypt.setPublicKey(result.data);
 	});
 }

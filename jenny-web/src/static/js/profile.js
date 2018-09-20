@@ -1,5 +1,5 @@
 $(function() {
-	request('get', '', '/sysuser/userCache', 'SYS', function(result) {
+	request('get', '', '/sysuser/userCache', 'sys', function(result) {
 		if (!result.data.portrait) {
 			result.data.portrait = '../assets/demo/avatar/profile.png';
 		}
@@ -185,5 +185,5 @@ function cropper() {
 }
 
 function saveProfile(formData) {
-	request('put', formData, '/sysuser/update/profile', 'SYS');
+	request('put', formData, '/sysuser/update/profile', 'sys');
 }

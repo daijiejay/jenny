@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>访问日志</title>
+		<link href="../../../public/css/style.css" rel='stylesheet' type='text/css' />
+		<link href="../../../assets/css/styles.css" type="text/css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="inbox-menu" id="applicationMenu">
+					</div>
+				</div>
+				<div class="col-md-9">
+			        <div class="panel panel-default">
+			            <div class="panel-heading">
+			                <h2>CPU使用情况</h2>
+			            </div>
+			            <div class="panel-body">
+			                <div id="plotCpu" style="height: 200px" class="centered"></div>
+			            </div>
+			        </div>
+			        <div class="panel panel-default mt10">
+			            <div class="panel-heading">
+			                <h2>JVM堆内存使用情况</h2>
+			            </div>
+			            <div class="panel-body">
+			                <div id="plotHeap" style="height: 200px" class="centered"></div>
+			            </div>
+			        </div>
+			        <div class="panel panel-default mt10">
+			            <div class="panel-heading">
+			                <h2>JVM非堆内存使用情况</h2>
+			            </div>
+			            <div class="panel-body">
+			                <div id="plotNonheap" style="height: 200px" class="centered"></div>
+			            </div>
+			        </div>
+			        <div class="panel panel-default mt10">
+			            <div class="panel-heading">
+			                <h2>JVM线程数</h2>
+			            </div>
+			            <div class="panel-body">
+			                <div id="plotThreads" style="height: 200px" class="centered"></div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<script src="../../../assets/js/jquery-1.10.2.min.js"></script>
+		<script src="../../../assets/js/jqueryui-1.9.2.min.js"></script>
+		<script src="../../../assets/plugins/charts-flot/jquery.flot.js"></script> 
+		<script src="../../../assets/plugins/charts-flot/jquery.flot.stack.min.js"></script>
+		<script src="../../../assets/plugins/charts-flot/jquery.flot.pie.min.js"></script>
+		<script src="../../../assets/plugins/charts-flot/jquery.flot.orderBars.min.js"></script>
+		<script src="../../../assets/plugins/charts-flot/jquery.flot.resize.js"></script> 
+		<script src="../../../assets/plugins/charts-flot/jquery.flot.tooltip.min.js"></script>
+		<script src="../../../public/jquery/js/jquery.validate.min.js"></script>
+		<script src="../../../public/jquery/js/jquery.validate.messages_cn.js"></script>
+		<script src="../../../public/fakeLoader/js/fakeLoader.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap-table.js"></script>
+		<script src="../../../public/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+		<script src="../../../public/layer/js/layer.js"></script>
+		<script src="../../../public/js/custom.validate.js"></script>
+		<script src="../../../public/js/common.js"></script>
+		<script src="../../../js/surveillanceCenter/serverManage/serverMonitoring.js"></script>
+	</body>
+
+</html>

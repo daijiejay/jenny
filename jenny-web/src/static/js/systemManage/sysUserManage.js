@@ -134,7 +134,7 @@ function loadRole(userId) {
 				requestData.roleIds.push(role.roleId);
 			});
 			var res = false;
-			requestSynchronized('put', requestData, '/sysuser/setRoles', 'SYS', false, function(result) {
+			requestSynchronized('put', requestData, '/sysuser/setRoles', 'sys', false, function(result) {
 				res = result.data;
 			});
 			return res;

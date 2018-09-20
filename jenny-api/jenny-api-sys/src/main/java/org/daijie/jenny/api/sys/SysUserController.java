@@ -197,7 +197,11 @@ public class SysUserController {
 	@ApiOperation(value = "获取登录用户")
 	@RequestMapping(value = "/userCache", method = RequestMethod.GET)
 	public ModelResult<SysUserCacheResponse> loginUserCache() {
-		return Result.build(Auth.getAuthc(SysUserCacheResponse.class));
+		SysUserCacheResponse authc = Auth.getAuthc(SysUserCacheResponse.class);
+		if (authc == null) {
+			Result.build(ResultCode.CODE_300.getDescription(), ApiResult.ERROR, ResultCode.CODE_300);
+		}
+		return Result.build(authc);
 	}
 	
 	/**

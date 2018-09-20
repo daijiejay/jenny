@@ -22,17 +22,17 @@ $(function() {
 				var controllerStr = '';
 				controllerStr += '<div class="collapsible-menu">';
 				controllerStr += '	<div class="inbox-leftbar-category clearfix gallery">';
-				controllerStr += '		<a href="javascript:;" data-toggle="collapse" data-target="#folders" class="menu-title">'+controller.description+'<span class="badge badge-warning"></span></a>';
+				controllerStr += '		<a href="javascript:;" data-toggle="collapse" data-target="#'+controller.name+'" class="menu-title">'+controller.description+'<span class="badge badge-warning"></span></a>';
 				controllerStr += '	</div>';
-				controllerStr += '	<div class="collapse in" name="'+controller.name+'"></div>';
+				controllerStr += '	<div class="collapse" id="'+controller.name+'"></div>';
 				controllerStr += '</div>';
 				$('.inbox-menu').append(controllerStr);
 				
 				jQuery.each(documentation.paths, function(apiKey, api) {
 					jQuery.each(api, function(methodKey, method) {
 						if (method.tags && method.tags[0] == controller.name) {
-							var methodStr = '<a href="#" class="inbox-menu-item hide" tag="'+apiKey+'">'+method.summary+'</a>';
-							var $this = $('.collapsible-menu .collapse[name="'+controller.name+'"]');
+							var methodStr = '<a href="#" class="inbox-menu-item" tag="'+apiKey+'">'+method.summary+'</a>';
+							var $this = $('.collapsible-menu .collapse[id="'+controller.name+'"]');
 							$this.append(methodStr);
 							var count = $this.prev().find('.badge').html();
 							count = count ? ++count : 1;
@@ -123,14 +123,7 @@ $(function() {
 				});
 			});
 			
-			$('.collapsible-menu').eq('0').find('a').removeClass('hide');
-			$('.collapsible-menu').click(function (){
-				$('.inbox-menu-item').addClass('hide');
-				$(this).find('a').removeClass('hide');
-			});
 			$('.inbox-menu-item').click(function (){
-				$('.collapsible-menu').find('a').removeClass('active');
-				$(this).addClass('active');
 				$('#documentation').find('.methodInfo').addClass('hide');
 				$('#documentation').find('div[tag="'+$(this).attr('tag')+'"]').removeClass('hide');
 			});

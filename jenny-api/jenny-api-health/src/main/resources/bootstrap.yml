@@ -70,6 +70,9 @@ http.bodyByParamEanble: true
 logging.level.org.daijie: DEBUG
 
 feign.sys: cloud-sys
+server.admin: server-admin
+
+health.application.url: http://server-eureka/applications
 
 #swagger文档配置
 swagger.basePackage: org.daijie.jenny.api
@@ -82,3 +85,5 @@ swagger.version: 1.0
 #关闭安全访问
 management.security.enabled: false
 security.basic.enabled: false
+management.endpoints.web.exposure.include: "*"
+management.endpoint.health.show-details: ALWAYS

@@ -9,7 +9,7 @@ $(function() {
 			layer.alert('请选中左侧菜单进行编辑保存！')
 			return;
 		}
-		request('put', formData, '/sysmenu/update', 'SYS');
+		request('put', formData, '/sysmenu/update', 'sys');
 	});
 });
 var dynamicIconsElement;
@@ -45,7 +45,7 @@ function initZTree() {
 			beforeDrop: zTreeBeforeDrop
 		}
 	};
-	request('get', '', '/sysmenu/query/tree', 'SYS', function(result) {
+	request('get', '', '/sysmenu/query/tree', 'sys', function(result) {
 		$.fn.zTree.init($("#tree"), setting, result.data);
 	});
 }
@@ -58,7 +58,7 @@ function initZTree() {
  */
 function zTreeBeforeClick(treeId, treeNode, clickFlag) {
 	var parentNode = treeNode.getParentNode();
-	request('get', '', '/sysmenu/query/'+treeNode.id, 'SYS', function(result) {
+	request('get', '', '/sysmenu/query/'+treeNode.id, 'sys', function(result) {
 		var data = result.data;
 		if (parentNode) {
 			data.parentName = parentNode.name;
@@ -107,7 +107,7 @@ function zTreeBeforeClick(treeId, treeNode, clickFlag) {
  * @param {Object} treeNode
  */
 function zTreeBeforeRemove(treeId, treeNode) {
-	request('delete', '', '/sysmenu/delete/'+treeNode.id, 'SYS');
+	request('delete', '', '/sysmenu/delete/'+treeNode.id, 'sys');
 }
 
 /**
@@ -122,7 +122,7 @@ function zTreeBeforeRename(treeId, treeNode, newName, isCancel) {
 		'menuId': treeNode.id,
 		'menuName': newName
 	};
-	request('put', formData, '/sysmenu/update', 'SYS');
+	request('put', formData, '/sysmenu/update', 'sys');
 }
 
 /**
@@ -152,7 +152,7 @@ function zTreeBeforeDrop(treeId, treeNodes, targetNode, moveType) {
 	}
 	formData.menuIds = ids;
 	formData.moveType = moveType.toUpperCase();
-	request('put', formData, '/sysmenu/move', 'SYS');
+	request('put', formData, '/sysmenu/move', 'sys');
 }
 
 /**
@@ -187,7 +187,7 @@ function zTreeBeforeAddNode(treeId, treeNode, callback) {
 		'menuName': treeNode.name,
 		'parentId': treeNode.pid
 	};
-	request('post', formData, '/sysmenu/add', 'SYS', function(result) {
+	request('post', formData, '/sysmenu/add', 'sys', function(result) {
 		callback(result.data);
 	});
 }
