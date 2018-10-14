@@ -62,7 +62,7 @@ kisso.config.cookieName: token
 #cookie的作用域，只支持域名，本地可以配置host
 kisso.config.cookieDomain: daijie.org
 #允许跨域请求的地址集
-http.accessControlAllowOrigin: http://127.0.0.1,http://daijie.org
+http.accessControlAllowOrigin: http://127.0.0.1,http://daijie.org,http://daijie.com,http://jenny.daijie.org
 #允许设置headers的字段名
 http.accessControlAllowHeaders: Content-Type,Access-Control-Allow-Headers,Access-Control-Allow-Origin,Authorization,X-Requested-With
 

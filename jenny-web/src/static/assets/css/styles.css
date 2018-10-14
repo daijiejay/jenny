@@ -16210,7 +16210,7 @@ body.layout-boxed .infobar-wrapper {
   margin-top: 0;
 }
 /* Logo */
-.navbar-brand {
+/*.navbar-brand {
   font: 0/0 a !important;
   color: transparent !important;
   text-shadow: none !important;
@@ -16219,8 +16219,8 @@ body.layout-boxed .infobar-wrapper {
   background: url("") no-repeat top left;
   height: 50px;
   width: 210px;
-}
-.navbar-brand {
+}*/
+/*.navbar-brand {
   background: url("../img/avalon-logo.png") no-repeat -35px top;
 }
 .navbar-default .navbar-brand {
@@ -16231,7 +16231,7 @@ body.topnav-collapsed .navbar-default .navbar-brand {
 }
 body.topnav-collapsed .navbar-brand {
   background: url("../img/avalon-logo.png") no-repeat 0px top;
-}
+}*/
 @media print {
   .static-sidebar-wrapper,
   .infobar-wrapper,
@@ -18311,7 +18311,7 @@ body.sidebar-collapsed .sidebar nav.widget-body > ul.acc-menu li.hasChild:hover 
 .navbar-brand {
   float: left;
   padding: 15px 15px;
-  font-size: 17px;
+  font-size: 20px;
   line-height: 20px;
   height: 50px;
 }

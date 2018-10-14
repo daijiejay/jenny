@@ -32,75 +32,11 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("serverMonitoring")
 public class ServerMonitoringController {
 	
-	@Value("${health.application.url}")
+	@Value("${server.admin:server-admin}")
 	private final String APPLICATION_URL = "";
 	
 	@Autowired
 	private RestTemplate restTemplate;
-
-//	@SuppressWarnings("unchecked")
-//	@ApiOperation(value = "查询服务信息")
-//	@RequestMapping(value = "/query", method = RequestMethod.GET)
-//	public ModelResult<PageResult<ServerMonitoringResponse>> getServerMonitorings(ServerMonitoringPageRequest pageRequest) {
-//		try {
-//			restTemplate.getForObject(APPLICATION_URL, List.class);
-//			String result = HttpUtil.requestURLGet("http://127.0.0.1:8761/applications");
-//			List<Application> sortedApplications = (List<Application>) restTemplate.getForObject(APPLICATION_URL, List.class);
-//			Map<InstanceInfo.InstanceStatus, List<Pair<String, String>>> instancesByStatus = new HashMap<>();
-//			List<ServerMonitoringResponse> data = new ArrayList<>();
-//			for (Application app : sortedApplications) {
-//				ServerMonitoringResponse serverMonitoringResponse = new ServerMonitoringResponse();
-//				data.add(serverMonitoringResponse);
-//				serverMonitoringResponse.setName(app.getName());
-//				Integer amiCount = 0, zoneCount = 0;
-//				for (InstanceInfo info : app.getInstances()) {
-//					String id = info.getId();
-//					String url = info.getStatusPageUrl();
-//					InstanceInfo.InstanceStatus status = info.getStatus();
-//					String ami = "n/a";
-//					String zone = "";
-//					if (info.getDataCenterInfo().getName() == DataCenterInfo.Name.Amazon) {
-//						AmazonInfo dcInfo = (AmazonInfo) info.getDataCenterInfo();
-//						ami = dcInfo.get(AmazonInfo.MetaDataKey.amiId);
-//						zone = dcInfo.get(AmazonInfo.MetaDataKey.availabilityZone);
-//					}
-//					serverMonitoringResponse.setAmiCounts(ami, ++amiCount);
-//					serverMonitoringResponse.setZoneCounts(zone, ++zoneCount);
-//					
-//					List<Pair<String, String>> list = instancesByStatus.get(status);
-//					if (list == null) {
-//						list = new ArrayList<>();
-//						instancesByStatus.put(status, list);
-//					}
-//					list.add(new Pair<>(id, url));
-//				}
-//				
-//				for (Iterator<Map.Entry<InstanceInfo.InstanceStatus, List<Pair<String, String>>>> iter = instancesByStatus
-//						.entrySet().iterator(); iter.hasNext();) {
-//					Map.Entry<InstanceInfo.InstanceStatus, List<Pair<String, String>>> entry = iter
-//							.next();
-//					List<Pair<String, String>> value = entry.getValue();
-//					InstanceInfo.InstanceStatus status = entry.getKey();
-//					int index = serverMonitoringResponse.setInstanceInfos(entry.getKey().name(), status != InstanceInfo.InstanceStatus.UP);
-//					
-//					for (Pair<String, String> p : value) {
-//						String url = p.second();
-//						boolean isHref = url != null && url.startsWith("http");
-//						serverMonitoringResponse.setInstances(index, p.first(), url, isHref);
-//					}
-//				}
-//			}
-//			long total = data.size();
-//			List<ServerMonitoringResponse> rows = data.stream()
-//					.limit(pageRequest.getPageSize() * pageRequest.getPageNumber())
-//					.skip((pageRequest.getPageNumber() - 1) * pageRequest.getPageSize())
-//					.collect(Collectors.toList());
-//			return Result.build(new PageResult<ServerMonitoringResponse>(rows, total));
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return Result.build();
-//	}
 
 	@SuppressWarnings("unchecked")
 	@ApiOperation(value = "查询服务信息")
@@ -215,6 +151,30 @@ public class ServerMonitoringController {
 		Map<String, Object> daemonThreads = restTemplate.getForObject("http://server-admin/instances/"+id+"/actuator/metrics/jvm.threads.daemon", Map.class);
 		BigDecimal daemonThreadsNum = new BigDecimal((double)((List<Map<String, Object>>) daemonThreads.get("measurements")).get(0).get("value"));
 		InstanceInfoResponse.setDaemonThreads(daemonThreadsNum);
+		
+		Map<String, Object> gcMemoryAllocated = restTemplate.getForObject("http://server-admin/instances/"+id+"/actuator/metrics/jvm.gc.memory.allocated", Map.class);
+		BigDecimal gcMemoryAllocatedNum = new BigDecimal((double)((List<Map<String, Object>>) gcMemoryAllocated.get("measurements")).get(0).get("value"));
+		gcMemoryAllocatedNum = gcMemoryAllocatedNum.divide(new BigDecimal(1024)).divide(new BigDecimal(1024));
+		InstanceInfoResponse.setGcMemoryAllocated(gcMemoryAllocatedNum);
+		
+		Map<String, Object> gcMemoryPromoted = restTemplate.getForObject("http://server-admin/instances/"+id+"/actuator/metrics/jvm.gc.memory.promoted", Map.class);
+		BigDecimal gcMemoryPromotedNum = new BigDecimal((double)((List<Map<String, Object>>) gcMemoryPromoted.get("measurements")).get(0).get("value"));
+		gcMemoryPromotedNum = gcMemoryPromotedNum.divide(new BigDecimal(1024)).divide(new BigDecimal(1024));
+		InstanceInfoResponse.setGcMemoryPromoted(gcMemoryPromotedNum);
+		
+		Map<String, Object> gcMaxDataSize = restTemplate.getForObject("http://server-admin/instances/"+id+"/actuator/metrics/jvm.gc.max.data.size", Map.class);
+		BigDecimal gcMaxDataSizeNum = new BigDecimal((double)((List<Map<String, Object>>) gcMaxDataSize.get("measurements")).get(0).get("value"));
+		gcMaxDataSizeNum = gcMaxDataSizeNum.divide(new BigDecimal(1024)).divide(new BigDecimal(1024));
+		InstanceInfoResponse.setGcMaxDataSize(gcMaxDataSizeNum);
+		
+		Map<String, Object> gcLiveDataSize = restTemplate.getForObject("http://server-admin/instances/"+id+"/actuator/metrics/jvm.gc.live.data.size", Map.class);
+		BigDecimal gcLiveDataSizeNum = new BigDecimal((double)((List<Map<String, Object>>) gcLiveDataSize.get("measurements")).get(0).get("value"));
+		gcLiveDataSizeNum = gcLiveDataSizeNum.divide(new BigDecimal(1024)).divide(new BigDecimal(1024));
+		InstanceInfoResponse.setGcLiveDataSize(gcLiveDataSizeNum);
+		
+		Map<String, Object> gcPause = restTemplate.getForObject("http://server-admin/instances/"+id+"/actuator/metrics/jvm.gc.pause", Map.class);
+		BigDecimal gcPauseNum = new BigDecimal((double)((List<Map<String, Object>>) gcPause.get("measurements")).get(0).get("value"));
+		InstanceInfoResponse.setGcPause(gcPauseNum);
 		return Result.build(InstanceInfoResponse);
 	}
 }

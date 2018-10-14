@@ -26,6 +26,7 @@ $(function() {
 				updatePlot();
 			}
 		});
+		$('.inbox-menu-item').eq(0).click();
 	});
 });
 
