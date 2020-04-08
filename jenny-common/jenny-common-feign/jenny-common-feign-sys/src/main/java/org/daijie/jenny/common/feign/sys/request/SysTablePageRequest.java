@@ -1,13 +1,10 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
-import org.daijie.jenny.common.feign.sys.response.SysTableResponse;
-import org.daijie.jenny.common.model.sys.SysTable;
-
 import io.swagger.annotations.ApiModelProperty;
+import org.daijie.swagger.result.Page;
 
 @SuppressWarnings("serial")
-public class SysTablePageRequest extends ExampleExecutePage<SysTable, SysTableResponse> {
+public class SysTablePageRequest extends Page {
 
 	/**
      * 表格编号

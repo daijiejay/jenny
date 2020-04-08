@@ -1,18 +1,16 @@
 package org.daijie.jenny.api.health;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.daijie.core.result.ModelResult;
-import org.daijie.core.result.PageResult;
-import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.discovery.shared.Application;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.daijie.jenny.common.feign.health.request.ServerMonitoringPageRequest;
 import org.daijie.jenny.common.feign.health.response.InstanceInfoResponse;
 import org.daijie.jenny.common.feign.health.response.ServerMonitoringResponse;
+import org.daijie.swagger.result.ModelResult;
+import org.daijie.swagger.result.PageResult;
+import org.daijie.swagger.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.discovery.shared.Application;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Api(description="服务监控")
 @RestController

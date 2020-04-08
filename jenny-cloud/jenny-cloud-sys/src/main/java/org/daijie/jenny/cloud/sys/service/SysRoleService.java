@@ -1,23 +1,11 @@
 package org.daijie.jenny.cloud.sys.service;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.daijie.core.controller.enums.ResultCode;
-import org.daijie.core.result.ApiResult;
-import org.daijie.core.result.ModelResult;
-import org.daijie.core.result.PageResult;
-import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
-import org.daijie.jdbc.mybatis.example.ExampleBuilder;
+import cn.hutool.core.bean.BeanUtil;
+import org.apache.commons.lang.StringUtils;
+import org.daijie.jdbc.scripting.Wrapper;
 import org.daijie.jenny.cloud.sys.mapper.SysRoleManagerMapper;
 import org.daijie.jenny.common.feign.sys.SysRoleFeign;
-import org.daijie.jenny.common.feign.sys.request.SysMenuAuthorizedAddRequest;
-import org.daijie.jenny.common.feign.sys.request.SysOperateAuthorizedAddRequest;
-import org.daijie.jenny.common.feign.sys.request.SysRoleAddRequest;
-import org.daijie.jenny.common.feign.sys.request.SysRoleAuthorizedSetRequest;
-import org.daijie.jenny.common.feign.sys.request.SysRolePageRequest;
-import org.daijie.jenny.common.feign.sys.request.SysRoleUpdateRequest;
+import org.daijie.jenny.common.feign.sys.request.*;
 import org.daijie.jenny.common.feign.sys.response.SysMenuSelectedResponse;
 import org.daijie.jenny.common.feign.sys.response.SysRoleResponse;
 import org.daijie.jenny.common.mapper.sys.SysMenuAuthorizedMapper;
@@ -26,12 +14,17 @@ import org.daijie.jenny.common.mapper.sys.SysRoleMapper;
 import org.daijie.jenny.common.model.sys.SysMenuAuthorized;
 import org.daijie.jenny.common.model.sys.SysOperateAuthorized;
 import org.daijie.jenny.common.model.sys.SysRole;
+import org.daijie.swagger.result.ModelResult;
+import org.daijie.swagger.result.PageResult;
+import org.daijie.swagger.result.Result;
+import org.daijie.swagger.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.hutool.core.bean.BeanUtil;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @RestController
 public class SysRoleService implements SysRoleFeign {
@@ -50,7 +43,13 @@ public class SysRoleService implements SysRoleFeign {
 
 	@Override
 	public ModelResult<PageResult<SysRoleResponse>> getRoleAll(SysRolePageRequest sysRolePageRequest) {
-		return Result.build(sysRolePageRequest.executePage(sysRoleMapper));
+		Wrapper conditions = Wrapper.newWrapper()
+				.and(StringUtils.isNotEmpty(sysRolePageRequest.getRoleCode()), wrapper -> wrapper.andEqualTo("roleCode", sysRolePageRequest.getRoleCode()))
+				.and(StringUtils.isNotEmpty(sysRolePageRequest.getRoleName()), wrapper -> wrapper.andEqualTo("roleName", sysRolePageRequest.getRoleName()))
+				.and(sysRolePageRequest.getRoleId() != null, wrapper -> wrapper.andEqualTo("roleId", sysRolePageRequest.getRoleId()))
+				.page(sysRolePageRequest.getPageNumber(), sysRolePageRequest.getPageSize());
+		org.daijie.jdbc.result.PageResult<SysRole> page = this.sysRoleMapper.selectPageByWrapper(conditions);
+		return Result.build(new PageResult<SysRoleResponse>(page.getRows(), page.getTotal(), SysRoleResponse.class));
 	}
 
 	@Override
@@ -68,11 +67,11 @@ public class SysRoleService implements SysRoleFeign {
 	@Transactional
 	public ModelResult<SysRoleResponse> updateRole(SysRoleUpdateRequest sysRoleRequest) {
 		if (sysRoleRequest.getRoleId() == null) {
-			return Result.build("缺少参数roleId，更新失败！", ApiResult.ERROR, ResultCode.CODE_102);
+			return Result.build("缺少参数roleId，更新失败！", Result.ERROR, ResultCode.CODE_102);
 		}
 		SysRole role = new SysRole();
 		BeanUtil.copyProperties(sysRoleRequest, role);
-		sysRoleMapper.updateByExampleSelective(role, ExampleBuilder.create(SysRole.class).andEqualTo("roleId", sysRoleRequest.getRoleId()).build());
+		sysRoleMapper.updateSelectiveByWrapper(role, Wrapper.newWrapper().andEqualTo("roleId", sysRoleRequest.getRoleId()));
 		SysRoleResponse sysRoleResponse = new SysRoleResponse();
 		BeanUtil.copyProperties(role, sysRoleResponse);
 		return Result.build(sysRoleResponse);
@@ -81,14 +80,14 @@ public class SysRoleService implements SysRoleFeign {
 	@Override
 	@Transactional
 	public ModelResult<SysRoleResponse> deleteRole(@PathVariable(name = "roleId") Integer roleId) {
-		List<SysRole> list = sysRoleMapper.selectByExample(ExampleBuilder.create(SysRole.class).andEqualTo("roleId", roleId).build());
+		List<SysRole> list = sysRoleMapper.selectByWrapper(Wrapper.newWrapper().andEqualTo("roleId", roleId));
 		if (list.size() == 1) {
-			sysRoleMapper.deleteByPrimaryKey(list.get(0).getRoleId());
+			sysRoleMapper.deleteById(list.get(0).getRoleId());
 			SysRoleResponse sysRoleResponse = new SysRoleResponse();
 			BeanUtil.copyProperties(list.get(0), sysRoleResponse);
 			return Result.build(sysRoleResponse);
 		}
-		return Result.build("无效的角色编号！", ApiResult.ERROR, ResultCode.CODE_102);
+		return Result.build("无效的角色编号！", Result.ERROR, ResultCode.CODE_102);
 	}
 
 	@Override
@@ -101,18 +100,18 @@ public class SysRoleService implements SysRoleFeign {
 	public ModelResult<Boolean> updateRoleMenu(@RequestBody SysRoleAuthorizedSetRequest sysRoleAuthorizedSetRequest) {
 		//更新菜单权限
 		if (sysRoleAuthorizedSetRequest.getMenuIds().isEmpty()) {
-			sysMenuAuthorizedMapper.deleteByExample(ExampleBuilder.create(SysMenuAuthorized.class)
-					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId()).build());
+			sysMenuAuthorizedMapper.deleteByWrapper(Wrapper.newWrapper()
+					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId()));
 			
 		} else {
-			sysMenuAuthorizedMapper.deleteByExample(ExampleBuilder.create(SysMenuAuthorized.class)
+			sysMenuAuthorizedMapper.deleteByWrapper(Wrapper.newWrapper()
 					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId())
-					.andNotIn("menuId", sysRoleAuthorizedSetRequest.getMenuIds()).build());
+					.andNotIn("menuId", sysRoleAuthorizedSetRequest.getMenuIds()));
 		}
 		for (SysMenuAuthorizedAddRequest sysMenuAuthorizedAddRequest : sysRoleAuthorizedSetRequest.getSysMenuAuthorizedRequests()) {
-			if (sysMenuAuthorizedMapper.selectByExample(ExampleBuilder.create(SysMenuAuthorized.class)
+			if (sysMenuAuthorizedMapper.selectCountByWrapper(Wrapper.newWrapper()
 					.andEqualTo("menuId", sysMenuAuthorizedAddRequest.getMenuId())
-					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId()).build()).size() > 0) {
+					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId())) > 0) {
 				continue;		
 			}
 			SysMenuAuthorized sysMenuAuthorized = new SysMenuAuthorized();
@@ -123,17 +122,17 @@ public class SysRoleService implements SysRoleFeign {
 		
 		//更新操作权限
 		if (sysRoleAuthorizedSetRequest.getMenuIds().isEmpty()) {
-			sysOperateAuthorizedMapper.deleteByExample(ExampleBuilder.create(SysOperateAuthorized.class)
-					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId()).build());
+			sysOperateAuthorizedMapper.deleteByWrapper(Wrapper.newWrapper()
+					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId()));
 		} else {
-			sysOperateAuthorizedMapper.deleteByExample(ExampleBuilder.create(SysOperateAuthorized.class)
+			sysOperateAuthorizedMapper.deleteByWrapper(Wrapper.newWrapper()
 					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId())
-					.andNotIn("operateId", sysRoleAuthorizedSetRequest.getOperateIds()).build());
+					.andNotIn("operateId", sysRoleAuthorizedSetRequest.getOperateIds()));
 		}
 		for (SysOperateAuthorizedAddRequest sysOperateAuthorizedAddRequest : sysRoleAuthorizedSetRequest.getSysOperateAuthorizedRequests()) {
-			if (sysOperateAuthorizedMapper.selectByExample(ExampleBuilder.create(SysOperateAuthorized.class)
+			if (sysOperateAuthorizedMapper.selectByWrapper(Wrapper.newWrapper()
 					.andEqualTo("operateId", sysOperateAuthorizedAddRequest.getOperateId())
-					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId()).build()).size() > 0) {
+					.andEqualTo("roleId", sysRoleAuthorizedSetRequest.getRoleId())).size() > 0) {
 				continue;		
 			}
 			SysOperateAuthorized sysOperateAuthorized = new SysOperateAuthorized();

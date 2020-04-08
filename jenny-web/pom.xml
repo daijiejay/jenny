@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.daijie</groupId>
     <artifactId>jenny</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>jenny-web</artifactId>
   <packaging>pom</packaging>

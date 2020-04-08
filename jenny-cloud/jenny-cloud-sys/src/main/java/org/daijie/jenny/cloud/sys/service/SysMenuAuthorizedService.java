@@ -1,38 +1,22 @@
 package org.daijie.jenny.cloud.sys.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.daijie.core.controller.enums.ResultCode;
-import org.daijie.core.result.ApiResult;
-import org.daijie.core.result.ModelResult;
-import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
-import org.daijie.jdbc.mybatis.example.ExampleBuilder;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
+import org.daijie.jdbc.scripting.Wrapper;
 import org.daijie.jenny.cloud.sys.mapper.SysRoleMenuAuthorizedMapper;
 import org.daijie.jenny.common.feign.sys.SysMenuAuthorizedFeign;
-import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
-import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
-import org.daijie.jenny.common.feign.sys.response.SysTableAuthorizedResponse;
-import org.daijie.jenny.common.feign.sys.response.SysTableColumnResponse;
-import org.daijie.jenny.common.feign.sys.response.SysTableResponse;
-import org.daijie.jenny.common.mapper.sys.SysMenuMapper;
-import org.daijie.jenny.common.mapper.sys.SysOperateAuthorizedMapper;
-import org.daijie.jenny.common.mapper.sys.SysRoleAuthorizedMapper;
-import org.daijie.jenny.common.mapper.sys.SysTableActionMapper;
-import org.daijie.jenny.common.mapper.sys.SysTableColumnMapper;
-import org.daijie.jenny.common.mapper.sys.SysTableMapper;
-import org.daijie.jenny.common.model.sys.SysMenu;
-import org.daijie.jenny.common.model.sys.SysOperateAuthorized;
-import org.daijie.jenny.common.model.sys.SysRoleAuthorized;
-import org.daijie.jenny.common.model.sys.SysTable;
-import org.daijie.jenny.common.model.sys.SysTableAction;
-import org.daijie.jenny.common.model.sys.SysTableColumn;
+import org.daijie.jenny.common.feign.sys.response.*;
+import org.daijie.jenny.common.mapper.sys.*;
+import org.daijie.jenny.common.model.sys.*;
+import org.daijie.swagger.result.ModelResult;
+import org.daijie.swagger.result.Result;
+import org.daijie.swagger.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
@@ -60,27 +44,27 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 
 	@Override
 	public ModelResult<List<SysMenuResponse>> getMenuAuthrozied(Integer userId) {
-		return Result.build(sysRoleMenuAuthorizedMapper.selectRoleMenuAuthorized(userId));
+		return Result.build(this.sysRoleMenuAuthorizedMapper.selectRoleMenuAuthorized(userId));
 	}
 
 	@Override
 	public ModelResult<SysTableAuthorizedResponse> getTableByMenu(Integer menuId) {
-		SysMenu sysMenu = sysMenuMapper.selectByPrimaryKey(menuId);
+		SysMenu sysMenu = this.sysMenuMapper.selectById(menuId);
 		if (sysMenu == null) {
-			return Result.build("菜单编号不存在", ApiResult.ERROR, ResultCode.CODE_102);
+			return Result.build("菜单编号不存在", Result.ERROR, ResultCode.CODE_102);
 		}
 		SysTableAuthorizedResponse sysTableAuthorizedResponse = new SysTableAuthorizedResponse();
-		List<SysTable> sysTables = sysTableMapper.selectByExample(
-				ExampleBuilder.create(SysTable.class).andEqualTo("menuId", menuId).build());
+		List<SysTable> sysTables = sysTableMapper.selectByWrapper(
+				Wrapper.newWrapper().andEqualTo("menuId", menuId));
 		
 		for (SysTable sysTable : sysTables) {
 			SysTableResponse sysTableResponse = new SysTableResponse();
 			BeanUtil.copyProperties(sysTable, sysTableResponse, CopyOptions.create().setIgnoreError(true));
 			sysTableAuthorizedResponse.getTables().add(sysTableResponse);
 			
-			List<SysTableColumn> sysTableColumns = sysTableConlumnMapper.selectByExample(
-					ExampleBuilder.create(SysTableColumn.class).andEqualTo("tableId", sysTable.getTableId())
-					.orderByAsc("showSort").build());
+			List<SysTableColumn> sysTableColumns = this.sysTableConlumnMapper.selectByWrapper(
+					Wrapper.newWrapper().andEqualTo("tableId", sysTable.getTableId())
+						.orderByAsc("showSort"));
 			List<SysTableColumnResponse> columns = new ArrayList<SysTableColumnResponse>();
 			sysTableColumns.forEach(sysTableConlumn -> {
 				SysTableColumnResponse sysTableConlumnResponse = new SysTableColumnResponse();
@@ -89,9 +73,9 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 			});
 			sysTableResponse.setColumns(columns);
 			
-			List<SysTableAction> sysTableActions = sysTableActionMapper.selectByExample(
-					ExampleBuilder.create(SysTableAction.class).andEqualTo("tableId", sysTable.getTableId())
-					.orderByAsc("showSort").build());
+			List<SysTableAction> sysTableActions = this.sysTableActionMapper.selectByWrapper(
+					Wrapper.newWrapper().andEqualTo("tableId", sysTable.getTableId())
+							.orderByAsc("showSort"));
 			List<SysTableActionResponse> actions = new ArrayList<SysTableActionResponse>();
 			sysTableActions.forEach(action -> {
 				SysTableActionResponse actionResponse = new SysTableActionResponse();
@@ -106,15 +90,13 @@ public class SysMenuAuthorizedService implements SysMenuAuthorizedFeign {
 	@Override
 	public ModelResult<SysTableAuthorizedResponse> getTableAuthrozied(Integer menuId, Integer userId) {
 		SysTableAuthorizedResponse sysTableAuthorizedResponse = getTableByMenu(menuId).getData();
-		List<SysRoleAuthorized> roles = sysRoleAuthorizedMapper.selectByExample(
-				ExampleBuilder.create(SysRoleAuthorized.class).andEqualTo("userId", userId).build());
+		List<SysRoleAuthorized> roles = sysRoleAuthorizedMapper.selectByWrapper(
+				Wrapper.newWrapper().andEqualTo("userId", userId));
 		List<Integer> roleIds = new ArrayList<>();
 		roles.forEach(role -> roleIds.add(role.getRoleId()));
-		List<SysOperateAuthorized> sysOperateAuthorizeds = sysOperateAuthorizedMapper.selectByExample(
-				ExampleBuilder.create(SysOperateAuthorized.class)
-				.andEqualTo("menuId", menuId)
-				.andIn("roleId", roleIds)
-				.build());
+		List<SysOperateAuthorized> sysOperateAuthorizeds = sysOperateAuthorizedMapper.selectByWrapper(
+				Wrapper.newWrapper().andEqualTo("menuId", menuId)
+				.andIn("roleId", roleIds));
 		sysTableAuthorizedResponse.getTables().forEach(table -> {
 			if (sysOperateAuthorizeds.isEmpty()) {
 				table.getActions().clear();

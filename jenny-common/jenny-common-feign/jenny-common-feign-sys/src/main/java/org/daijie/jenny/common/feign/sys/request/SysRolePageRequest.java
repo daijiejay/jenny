@@ -1,13 +1,10 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
-import org.daijie.jenny.common.feign.sys.response.SysRoleResponse;
-import org.daijie.jenny.common.model.sys.SysRole;
-
 import io.swagger.annotations.ApiModelProperty;
+import org.daijie.swagger.result.Page;
 
 @SuppressWarnings("serial")
-public class SysRolePageRequest extends ExampleExecutePage<SysRole, SysRoleResponse> {
+public class SysRolePageRequest extends Page {
     /**
      * 角色编号
      */

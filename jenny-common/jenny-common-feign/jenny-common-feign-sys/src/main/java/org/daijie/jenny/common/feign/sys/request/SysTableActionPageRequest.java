@@ -1,15 +1,14 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModelProperty;
 import org.daijie.jenny.common.feign.sys.enumtype.ActionType;
 import org.daijie.jenny.common.feign.sys.enumtype.MutualType;
-import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
-import org.daijie.jenny.common.model.sys.SysTableAction;
+import org.daijie.swagger.result.Page;
 
-import io.swagger.annotations.ApiModelProperty;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @SuppressWarnings("serial")
-public class SysTableActionPageRequest extends ExampleExecutePage<SysTableAction, SysTableActionResponse> {
+public class SysTableActionPageRequest extends Page {
 
 	/**
      * 功能编号

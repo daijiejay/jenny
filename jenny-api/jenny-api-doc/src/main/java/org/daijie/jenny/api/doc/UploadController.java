@@ -1,18 +1,17 @@
 package org.daijie.jenny.api.doc;
 
-import java.io.IOException;
-
-import org.daijie.core.result.ModelResult;
-import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
-import org.daijie.hadoop.dfs.HdfsUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.daijie.hadoop.HdfsUtil;
+import org.daijie.swagger.result.ModelResult;
+import org.daijie.swagger.result.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import java.io.IOException;
 
 @Api(description="文件上传")
 @RestController

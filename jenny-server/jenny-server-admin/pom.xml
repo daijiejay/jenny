@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.daijie</groupId>
 		<artifactId>jenny-server</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>jenny-server-admin</artifactId>
 	<name>jenny-server-admin</name>
@@ -17,13 +17,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.daijie</groupId>
-			<artifactId>daijie-core-spring-boot-starter</artifactId>
+			<artifactId>daijie-common-spring-boot-starter</artifactId>
 			<version>${daijie.version}</version>
 		</dependency>
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-server</artifactId>
-            <version>2.0.1</version>
+            <version>2.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

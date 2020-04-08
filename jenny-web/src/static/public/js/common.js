@@ -1,7 +1,7 @@
 /**
  * 存储服务名地址
  */
-var api_url = 'http://daijie.org:12000/';
+var api_url = 'http://127.0.0.1:12000/';
 
 /**
  * 获取当前访问静态资源地址
@@ -15,7 +15,6 @@ var ifm = window.parent.$('#page-wrapper .tab-content div.active iframe');
 if (ifm.length > 0) {
 	widget = window.parent.location;
 }
-
 /**
  * 存储请求地址缓存，请求完成后清除，防止重复请求
  */

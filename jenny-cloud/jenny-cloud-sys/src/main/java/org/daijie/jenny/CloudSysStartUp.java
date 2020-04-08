@@ -1,18 +1,12 @@
 package org.daijie.jenny;
 
-import org.daijie.core.annotation.EnableParametersFilter;
-import org.daijie.core.controller.EnableExceptionHandler;
-import org.daijie.core.swagger.EnableMySwagger;
-import org.daijie.jdbc.annotation.EnableMybatis;
+import org.daijie.swagger.EnableMySwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableMySwagger
-@EnableMybatis(basePackages = {"org.daijie.jenny.common.mapper.sys", "org.daijie.jenny.cloud.sys.mapper"})
-@EnableParametersFilter
 @EnableDiscoveryClient
-@EnableExceptionHandler
 @SpringBootApplication
 public class CloudSysStartUp {
 

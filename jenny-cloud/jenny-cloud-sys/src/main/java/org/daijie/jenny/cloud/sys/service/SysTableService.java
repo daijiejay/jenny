@@ -1,24 +1,11 @@
 package org.daijie.jenny.cloud.sys.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.daijie.core.result.ModelResult;
-import org.daijie.core.result.PageResult;
-import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
-import org.daijie.jdbc.mybatis.example.ExampleBuilder;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
+import org.apache.commons.lang.StringUtils;
+import org.daijie.jdbc.scripting.Wrapper;
 import org.daijie.jenny.common.feign.sys.SysTableFeign;
-import org.daijie.jenny.common.feign.sys.request.SysTableActionAddRequest;
-import org.daijie.jenny.common.feign.sys.request.SysTableActionPageRequest;
-import org.daijie.jenny.common.feign.sys.request.SysTableActionUpdateRequest;
-import org.daijie.jenny.common.feign.sys.request.SysTableAddRequest;
-import org.daijie.jenny.common.feign.sys.request.SysTableColumnAddRequest;
-import org.daijie.jenny.common.feign.sys.request.SysTableColumnPageRequest;
-import org.daijie.jenny.common.feign.sys.request.SysTableColumnUpdateRequest;
-import org.daijie.jenny.common.feign.sys.request.SysTablePageRequest;
-import org.daijie.jenny.common.feign.sys.request.SysTableUpdateRequest;
+import org.daijie.jenny.common.feign.sys.request.*;
 import org.daijie.jenny.common.feign.sys.response.SysMenuTreeResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableActionResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableColumnResponse;
@@ -29,11 +16,15 @@ import org.daijie.jenny.common.mapper.sys.SysTableMapper;
 import org.daijie.jenny.common.model.sys.SysTable;
 import org.daijie.jenny.common.model.sys.SysTableAction;
 import org.daijie.jenny.common.model.sys.SysTableColumn;
+import org.daijie.swagger.result.ModelResult;
+import org.daijie.swagger.result.PageResult;
+import org.daijie.swagger.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class SysTableService implements SysTableFeign {
@@ -49,7 +40,14 @@ public class SysTableService implements SysTableFeign {
 
 	@Override
 	public ModelResult<PageResult<SysTableResponse>> getTableByPage(SysTablePageRequest sysTableRequest) {
-		return Result.build(sysTableRequest.executePage(sysTableMapper));
+		Wrapper conditions = Wrapper.newWrapper()
+				.and(StringUtils.isNotEmpty(sysTableRequest.getInterfaceMethod()), wrapper -> wrapper.andEqualTo("interfaceMethod", sysTableRequest.getInterfaceMethod()))
+				.and(StringUtils.isNotEmpty(sysTableRequest.getInterfaceServerId()), wrapper -> wrapper.andEqualTo("interfaceServerId", sysTableRequest.getInterfaceServerId()))
+				.and(StringUtils.isNotEmpty(sysTableRequest.getInterfaceUrl()), wrapper -> wrapper.andEqualTo("interfaceUrl", sysTableRequest.getInterfaceUrl()))
+				.and(sysTableRequest.getTableId() != null, wrapper -> wrapper.andEqualTo("tableId", sysTableRequest.getTableId()))
+				.page(sysTableRequest.getPageNumber(), sysTableRequest.getPageSize());
+		org.daijie.jdbc.result.PageResult<SysTable> page = this.sysTableMapper.selectPageByWrapper(conditions);
+		return Result.build(new PageResult<SysTableResponse>(page.getRows(), page.getTotal(), SysTableResponse.class));
 	}
 
 	@Override
@@ -68,8 +66,8 @@ public class SysTableService implements SysTableFeign {
 	public ModelResult<SysTableResponse> updateTable(SysTableUpdateRequest sysTableRequest) {
 		SysTable sysTable = new SysTable();
 		BeanUtil.copyProperties(sysTableRequest, sysTable, CopyOptions.create().setIgnoreError(true));
-		sysTableMapper.updateByPrimaryKeySelective(sysTable);
-		sysTable = sysTableMapper.selectByPrimaryKey(sysTable.getTableId());
+		sysTableMapper.updateSelectiveById(sysTable);
+		sysTable = sysTableMapper.selectById(sysTable.getTableId());
 		SysTableResponse sysTableResponse = new SysTableResponse();
 		BeanUtil.copyProperties(sysTable, sysTableResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableResponse);
@@ -78,10 +76,10 @@ public class SysTableService implements SysTableFeign {
 	@Override
 	@Transactional
 	public ModelResult<SysTableResponse> deleteTable(Integer tableId) {
-		SysTable sysTable = sysTableMapper.selectByPrimaryKey(tableId);
-		sysTableMapper.deleteByPrimaryKey(tableId);
-		sysTableActionMapper.deleteByExample(ExampleBuilder.create(SysTableAction.class).andEqualTo("tableId", tableId).build());
-		sysTableColumnMapper.deleteByExample(ExampleBuilder.create(SysTableColumn.class).andEqualTo("tableId", tableId).build());
+		SysTable sysTable = sysTableMapper.selectById(tableId);
+		sysTableMapper.deleteById(tableId);
+		sysTableActionMapper.deleteByWrapper(Wrapper.newWrapper().andEqualTo("tableId", tableId));
+		sysTableColumnMapper.deleteByWrapper(Wrapper.newWrapper().andEqualTo("tableId", tableId));
 		SysTableResponse sysTableResponse = new SysTableResponse();
 		BeanUtil.copyProperties(sysTable, sysTableResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableResponse);
@@ -89,12 +87,18 @@ public class SysTableService implements SysTableFeign {
 
 	@Override
 	public ModelResult<PageResult<SysTableActionResponse>> getActionByPage(SysTableActionPageRequest sysActionRequest) {
-		return Result.build(sysActionRequest.executePage(sysTableActionMapper));
+		Wrapper conditions = Wrapper.newWrapper()
+				.and(StringUtils.isNotEmpty(sysActionRequest.getActionName()), wrapper -> wrapper.andEqualTo("actionName", sysActionRequest.getActionName()))
+				.and(StringUtils.isNotEmpty(sysActionRequest.getFormTarget()), wrapper -> wrapper.andEqualTo("formTarget", sysActionRequest.getFormTarget()))
+				.and(sysActionRequest.getActionId() != null, wrapper -> wrapper.andEqualTo("actionId", sysActionRequest.getActionId()))
+				.page(sysActionRequest.getPageNumber(), sysActionRequest.getPageSize());
+		org.daijie.jdbc.result.PageResult<SysTableAction> page = this.sysTableActionMapper.selectPageByWrapper(conditions);
+		return Result.build(new PageResult<SysTableActionResponse>(page.getRows(), page.getTotal(), SysTableActionResponse.class));
 	}
 	
 	@Override
 	public ModelResult<SysTableActionResponse> getActionById(Integer actionId) {
-		SysTableAction sysTableAction = sysTableActionMapper.selectByPrimaryKey(actionId);
+		SysTableAction sysTableAction = sysTableActionMapper.selectById(actionId);
 		SysTableActionResponse sysTableActionResponse = new SysTableActionResponse();
 		BeanUtil.copyProperties(sysTableAction, sysTableActionResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableActionResponse);
@@ -116,8 +120,8 @@ public class SysTableService implements SysTableFeign {
 	public ModelResult<SysTableActionResponse> updateAction(SysTableActionUpdateRequest sysActionRequest) {
 		SysTableAction sysTableAction = new SysTableAction();
 		BeanUtil.copyProperties(sysActionRequest, sysTableAction, CopyOptions.create().setIgnoreError(true));
-		sysTableActionMapper.updateByPrimaryKeySelective(sysTableAction);
-		sysTableAction = sysTableActionMapper.selectByPrimaryKey(sysTableAction.getTableId());
+		sysTableActionMapper.updateSelectiveById(sysTableAction);
+		sysTableAction = sysTableActionMapper.selectById(sysTableAction.getTableId());
 		SysTableActionResponse sysTableActionResponse = new SysTableActionResponse();
 		BeanUtil.copyProperties(sysTableAction, sysTableActionResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableActionResponse);
@@ -126,8 +130,8 @@ public class SysTableService implements SysTableFeign {
 	@Override
 	@Transactional
 	public ModelResult<SysTableActionResponse> deleteAction(Integer actionId) {
-		SysTableAction sysTableAction = sysTableActionMapper.selectByPrimaryKey(actionId);
-		sysTableActionMapper.deleteByPrimaryKey(actionId);
+		SysTableAction sysTableAction = sysTableActionMapper.selectById(actionId);
+		sysTableActionMapper.deleteById(actionId);
 		SysTableActionResponse sysTableActionResponse = new SysTableActionResponse();
 		BeanUtil.copyProperties(sysTableAction, sysTableActionResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableActionResponse);
@@ -135,7 +139,13 @@ public class SysTableService implements SysTableFeign {
 
 	@Override
 	public ModelResult<PageResult<SysTableColumnResponse>> getColumnByPage(SysTableColumnPageRequest sysColumnRequest) {
-		return Result.build(sysColumnRequest.executePage(sysTableColumnMapper));
+		Wrapper conditions = Wrapper.newWrapper()
+				.and(StringUtils.isNotEmpty(sysColumnRequest.getField()), wrapper -> wrapper.andEqualTo("field", sysColumnRequest.getField()))
+				.and(StringUtils.isNotEmpty(sysColumnRequest.getTitle()), wrapper -> wrapper.andEqualTo("title", sysColumnRequest.getTitle()))
+				.and(sysColumnRequest.getTableId() != null, wrapper -> wrapper.andEqualTo("tableId", sysColumnRequest.getTableId()))
+				.page(sysColumnRequest.getPageNumber(), sysColumnRequest.getPageSize());
+		org.daijie.jdbc.result.PageResult<SysTableColumn> page = this.sysTableColumnMapper.selectPageByWrapper(conditions);
+		return Result.build(new PageResult<SysTableColumnResponse>(page.getRows(), page.getTotal(), SysTableColumnResponse.class));
 	}
 
 	@Override
@@ -154,8 +164,8 @@ public class SysTableService implements SysTableFeign {
 	public ModelResult<SysTableColumnResponse> updateColumn(SysTableColumnUpdateRequest sysColumnRequest) {
 		SysTableColumn sysTableColumn = new SysTableColumn();
 		BeanUtil.copyProperties(sysColumnRequest, sysTableColumn, CopyOptions.create().setIgnoreError(true));
-		sysTableColumnMapper.updateByPrimaryKeySelective(sysTableColumn);
-		sysTableColumn = sysTableColumnMapper.selectByPrimaryKey(sysTableColumn.getTableId());
+		sysTableColumnMapper.updateSelectiveById(sysTableColumn);
+		sysTableColumn = sysTableColumnMapper.selectById(sysTableColumn.getTableId());
 		SysTableColumnResponse sysTableColumnResponse = new SysTableColumnResponse();
 		BeanUtil.copyProperties(sysTableColumn, sysTableColumnResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableColumnResponse);
@@ -164,8 +174,8 @@ public class SysTableService implements SysTableFeign {
 	@Override
 	@Transactional
 	public ModelResult<SysTableColumnResponse> deleteColumn(Integer columnId) {
-		SysTableColumn sysTableColumn = sysTableColumnMapper.selectByPrimaryKey(columnId);
-		sysTableColumnMapper.deleteByPrimaryKey(columnId);
+		SysTableColumn sysTableColumn = sysTableColumnMapper.selectById(columnId);
+		sysTableColumnMapper.deleteById(columnId);
 		SysTableColumnResponse sysTableColumnResponse = new SysTableColumnResponse();
 		BeanUtil.copyProperties(sysTableColumn, sysTableColumnResponse, CopyOptions.create().setIgnoreError(true));
 		return Result.build(sysTableColumnResponse);

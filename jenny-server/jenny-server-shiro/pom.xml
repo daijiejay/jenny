@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.daijie</groupId>
 		<artifactId>jenny-server</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>jenny-server-shiro</artifactId>
 	<name>jenny-server-shiro</name>
@@ -17,13 +17,18 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.daijie</groupId>
-			<artifactId>daijie-shiro-security-spring-boot-starter</artifactId>
+			<artifactId>daijie-shiro-security-spring-cloud-starter</artifactId>
 			<version>${daijie.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
+			<version>1.9.6</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.daijie</groupId>
 		<artifactId>jenny-common</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>jenny-common-core</artifactId>
 	<name>jenny-common-core</name>
@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.daijie</groupId>
-			<artifactId>daijie-core-spring-boot-starter</artifactId>
+			<artifactId>daijie-common-spring-boot-starter</artifactId>
 			<version>${daijie.version}</version>
 		</dependency>
 	</dependencies>

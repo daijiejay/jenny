@@ -1,24 +1,20 @@
 package org.daijie.jenny.api.sys;
 
-import java.util.List;
-
-import org.daijie.core.result.ModelResult;
-import org.daijie.core.result.PageResult;
-import org.daijie.core.result.factory.ModelResultInitialFactory.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.daijie.jenny.common.feign.sys.SysIconFeign;
 import org.daijie.jenny.common.feign.sys.request.SysIconAddRequest;
 import org.daijie.jenny.common.feign.sys.request.SysIconPageRequest;
 import org.daijie.jenny.common.feign.sys.request.SysIconUpdateRequest;
 import org.daijie.jenny.common.feign.sys.response.SysIconPickerResponse;
 import org.daijie.jenny.common.feign.sys.response.SysIconResponse;
+import org.daijie.swagger.result.ModelResult;
+import org.daijie.swagger.result.PageResult;
+import org.daijie.swagger.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.List;
 
 @Api(description="系统图标管理")
 @RestController
@@ -30,7 +26,7 @@ public class SysIconController {
 
 	@ApiOperation(value = "条件查询图标")
 	@RequestMapping(value = "/query", method = RequestMethod.GET)
-	public ModelResult<PageResult<SysIconResponse>> getIcon(SysIconPageRequest sysIconRequest) {
+	public ModelResult<PageResult<SysIconResponse>> getIcon(@RequestBody SysIconPageRequest sysIconRequest) {
 		return sysIconFeign.getIcon(sysIconRequest);
 	}
 	
@@ -48,13 +44,13 @@ public class SysIconController {
 	
 	@ApiOperation(value = "添加图标")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ModelResult<SysIconResponse> addIcon(SysIconAddRequest sysIconRequest) {
+	public ModelResult<SysIconResponse> addIcon(@RequestBody SysIconAddRequest sysIconRequest) {
 		return sysIconFeign.addIcon(sysIconRequest);
 	}
 
 	@ApiOperation(value = "更新图标")
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ModelResult<SysIconResponse> updateIcon(SysIconUpdateRequest sysIconRequest) {
+	public ModelResult<SysIconResponse> updateIcon(@RequestBody SysIconUpdateRequest sysIconRequest) {
 		return sysIconFeign.updateIcon(sysIconRequest);
 	}
 

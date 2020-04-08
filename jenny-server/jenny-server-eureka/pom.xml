@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.daijie</groupId>
 		<artifactId>jenny-server</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>jenny-server-eureka</artifactId>
 	<name>jenny-server-eureka</name>

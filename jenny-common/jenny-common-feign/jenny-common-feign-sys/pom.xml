@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.daijie</groupId>
 		<artifactId>jenny-common-feign</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>jenny-common-feign-sys</artifactId>
 	<name>jenny-common-feign-sys</name>
@@ -17,27 +17,13 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.daijie</groupId>
-			<artifactId>daijie-core-spring-boot-starter</artifactId>
+			<artifactId>daijie-common-spring-boot-starter</artifactId>
 			<version>${daijie.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.daijie</groupId>
-			<artifactId>jenny-common-model-sys</artifactId>
-			<version>${daijie.jenny.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-jdbc</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-data-jpa</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>tk.mybatis</groupId>
-					<artifactId>mapper-spring-boot-starter</artifactId>
-				</exclusion>
-			</exclusions>
+			<artifactId>daijie-swagger-spring-boot-starter</artifactId>
+			<version>${daijie.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

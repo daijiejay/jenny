@@ -1,12 +1,9 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
-import org.daijie.jenny.common.feign.sys.response.SysRoleAuthorizedReponse;
-import org.daijie.jenny.common.model.sys.SysRoleAuthorized;
-
 import io.swagger.annotations.ApiModelProperty;
+import org.daijie.swagger.result.Page;
 
-public class SysRoleAuthorizedPageRequest extends ExampleExecutePage<SysRoleAuthorized, SysRoleAuthorizedReponse> {
+public class SysRoleAuthorizedPageRequest extends Page {
 
 	private static final long serialVersionUID = 1L;
 

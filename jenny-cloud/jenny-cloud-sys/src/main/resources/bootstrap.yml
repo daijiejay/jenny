@@ -26,6 +26,8 @@ ribbon.ReadTimeout: 1000
 #ribbon.MaxAutoRetries: 1
 ##对下个实例的重试次数
 #ribbon.MaxAutoRetriesNextServer: 2
+#springboot从2.1.0版本加上这个bean可以重写注入
+spring.main.allow-bean-definition-overriding: true
 
 #读取mapper路径
 mybatis.mapperLocations: classpath:/mybatis-mapper/*.xml
@@ -33,7 +35,7 @@ mybatis.mapperLocations: classpath:/mybatis-mapper/*.xml
 mybatis.typeAliasesPackage: org.daijie.jenny.common.model.sys
 
 spring.datasource.driver-class-name: com.mysql.jdbc.Driver
-spring.datasource.url: jdbc:mysql://localhost:3306/jenny_sys?characterEncoding=UTF-8
+spring.datasource.url: jdbc:mysql://localhost:3306/jenny_sys?characterEncoding=UTF-8&serverTimezone=UTC
 spring.datasource.username: root
 spring.datasource.password: 123456
 spring.datasource.initialSize: 5
@@ -67,3 +69,13 @@ logging.level.org.daijie: DEBUG
 
 management.endpoints.web.exposure.include: "*"
 management.endpoint.health.show-details: ALWAYS
+
+#文档生成需要扫描的包路径，多个以“,”号隔开
+swagger.basePackage: org.daijie.jenny.cloud.sys.service
+swagger.groupName:
+swagger.title:
+swagger.description:
+swagger.termsOfServiceUrl:
+swagger.contact:
+swagger.version: 1.0
+

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.daijie</groupId>
 		<artifactId>jenny-cloud</artifactId>
-		<version>1.0.0-RELEASE</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>jenny-cloud-sys</artifactId>
 	<name>jenny-cloud-sys</name>
@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.daijie</groupId>
-			<artifactId>daijie-core-spring-boot-starter</artifactId>
+			<artifactId>daijie-common-spring-boot-starter</artifactId>
 			<version>${daijie.version}</version>
 		</dependency>
 		<dependency>
@@ -28,6 +28,11 @@
 		<dependency>
 			<groupId>org.daijie</groupId>
 			<artifactId>jenny-common-feign-sys</artifactId>
+			<version>${daijie.jenny.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.daijie</groupId>
+			<artifactId>jenny-common-model-sys</artifactId>
 			<version>${daijie.jenny.version}</version>
 		</dependency>
         <dependency>
@@ -42,6 +47,11 @@
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 			<version>2.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>swagger-bootstrap-ui</artifactId>
+			<version>1.9.6</version>
 		</dependency>
 	</dependencies>
 </project>

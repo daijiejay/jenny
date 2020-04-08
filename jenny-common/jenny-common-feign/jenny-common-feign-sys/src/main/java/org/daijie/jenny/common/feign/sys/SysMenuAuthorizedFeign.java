@@ -1,17 +1,16 @@
 package org.daijie.jenny.common.feign.sys;
 
-import java.util.List;
-
-import org.daijie.core.result.ModelResult;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
 import org.daijie.jenny.common.feign.sys.response.SysTableAuthorizedResponse;
+import org.daijie.swagger.result.ModelResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.List;
 
 @Api(description="系统菜单权限授权管理")
 @FeignClient(value="${feign.sys}")

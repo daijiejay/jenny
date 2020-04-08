@@ -1,16 +1,12 @@
 package org.daijie.jenny.common.feign.sys.request;
 
+import io.swagger.annotations.ApiModelProperty;
+import org.daijie.swagger.result.Page;
+
 import java.util.Date;
 
-import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
-import org.daijie.jenny.common.feign.sys.response.SysUserResponse;
-import org.daijie.jenny.common.model.sys.SysUser;
-
-import io.swagger.annotations.ApiModelProperty;
-import tk.mybatis.mapper.entity.Example.Criteria;
-
 @SuppressWarnings("serial")
-public class SysUserPageRequest extends ExampleExecutePage<SysUser, SysUserResponse> {
+public class SysUserPageRequest extends Page {
 
 	@ApiModelProperty(value = "用户编号")
 	private Integer userId;
@@ -142,10 +138,5 @@ public class SysUserPageRequest extends ExampleExecutePage<SysUser, SysUserRespo
 
 	public void setCancel(Boolean cancel) {
 		this.cancel = cancel;
-	}
-	
-	@Override
-	public void extendConditions(Criteria example) {
-		example.andEqualTo("admin", false);
 	}
 }

@@ -8,8 +8,8 @@ import java.io.Serializable;
  * @author 86189
  * @date 2020年02月19日
  */
-@Table(name = "sys_table_action")
-public class SysTableAction implements Serializable {
+@Table(name = "sys_action")
+public class SysAction implements Serializable {
 
 	/**
 	 * 功能编号	
@@ -31,34 +31,22 @@ public class SysTableAction implements Serializable {
 	public String formTarget;
 
 	/**
-	 * 展示排序	
-	 */
-	@Column(name = "show_sort")
-	public Integer showSort;
-
-	/**
-	 * 交互类型：确认,表单,扩展	
+	 * 交互类型：确认,表单	
 	 */
 	@Column(name = "mutual_type")
 	public String mutualType;
+
+	/**
+	 * 菜单编号	
+	 */
+	@Column(name = "menu_id")
+	public Integer menuId;
 
 	/**
 	 * 接口地址	
 	 */
 	@Column(name = "interface_url")
 	public String interfaceUrl;
-
-	/**
-	 * 表格编号	
-	 */
-	@Column(name = "table_id")
-	public Integer tableId;
-
-	/**
-	 * 图标	
-	 */
-	@Column(name = "icon")
-	public String icon;
 
 	/**
 	 * 功能名称	
@@ -111,23 +99,7 @@ public class SysTableAction implements Serializable {
 	}
 
 	/**
-	 * 设置展示排序	
-	 * @param showSort 展示排序	
-	 */
-	public void setShowSort(Integer showSort) {	
-		this.showSort = showSort;	
-	}
-
-	/**
-	 * 获取展示排序	
-	 * @return show_sort 展示排序	
-	 */
-	public Integer getShowSort() {	
-		return this.showSort;	
-	}
-
-	/**
-	 * 设置交互类型：确认,表单,扩展	
+	 * 设置交互类型：确认,表单	
 	 * @param mutualType	
 	 */
 	public void setMutualType(String mutualType) {	
@@ -135,11 +107,27 @@ public class SysTableAction implements Serializable {
 	}
 
 	/**
-	 * 获取交互类型：确认,表单,扩展	
+	 * 获取交互类型：确认,表单	
 	 * @return mutual_type 交互类型：确认	
 	 */
 	public String getMutualType() {	
 		return this.mutualType;	
+	}
+
+	/**
+	 * 设置菜单编号	
+	 * @param menuId 菜单编号	
+	 */
+	public void setMenuId(Integer menuId) {	
+		this.menuId = menuId;	
+	}
+
+	/**
+	 * 获取菜单编号	
+	 * @return menu_id 菜单编号	
+	 */
+	public Integer getMenuId() {	
+		return this.menuId;	
 	}
 
 	/**
@@ -156,38 +144,6 @@ public class SysTableAction implements Serializable {
 	 */
 	public String getInterfaceUrl() {	
 		return this.interfaceUrl;	
-	}
-
-	/**
-	 * 设置表格编号	
-	 * @param tableId 表格编号	
-	 */
-	public void setTableId(Integer tableId) {	
-		this.tableId = tableId;	
-	}
-
-	/**
-	 * 获取表格编号	
-	 * @return table_id 表格编号	
-	 */
-	public Integer getTableId() {	
-		return this.tableId;	
-	}
-
-	/**
-	 * 设置图标	
-	 * @param icon 图标	
-	 */
-	public void setIcon(String icon) {	
-		this.icon = icon;	
-	}
-
-	/**
-	 * 获取图标	
-	 * @return icon 图标	
-	 */
-	public String getIcon() {	
-		return this.icon;	
 	}
 
 	/**
@@ -261,11 +217,9 @@ public class SysTableAction implements Serializable {
 		result = prime * result + ((this.actionId == null) ? 0 : this.actionId.hashCode());
 		result = prime * result + ((this.interfaceMethod == null) ? 0 : this.interfaceMethod.hashCode());
 		result = prime * result + ((this.formTarget == null) ? 0 : this.formTarget.hashCode());
-		result = prime * result + ((this.showSort == null) ? 0 : this.showSort.hashCode());
 		result = prime * result + ((this.mutualType == null) ? 0 : this.mutualType.hashCode());
+		result = prime * result + ((this.menuId == null) ? 0 : this.menuId.hashCode());
 		result = prime * result + ((this.interfaceUrl == null) ? 0 : this.interfaceUrl.hashCode());
-		result = prime * result + ((this.tableId == null) ? 0 : this.tableId.hashCode());
-		result = prime * result + ((this.icon == null) ? 0 : this.icon.hashCode());
 		result = prime * result + ((this.actionName == null) ? 0 : this.actionName.hashCode());
 		result = prime * result + ((this.interfaceServerId == null) ? 0 : this.interfaceServerId.hashCode());
 		result = prime * result + ((this.actionType == null) ? 0 : this.actionType.hashCode());
@@ -281,11 +235,9 @@ public class SysTableAction implements Serializable {
 		sb.append(", actionId=").append(this.actionId);
 		sb.append(", interfaceMethod=").append(this.interfaceMethod);
 		sb.append(", formTarget=").append(this.formTarget);
-		sb.append(", showSort=").append(this.showSort);
 		sb.append(", mutualType=").append(this.mutualType);
+		sb.append(", menuId=").append(this.menuId);
 		sb.append(", interfaceUrl=").append(this.interfaceUrl);
-		sb.append(", tableId=").append(this.tableId);
-		sb.append(", icon=").append(this.icon);
 		sb.append(", actionName=").append(this.actionName);
 		sb.append(", interfaceServerId=").append(this.interfaceServerId);
 		sb.append(", actionType=").append(this.actionType);
@@ -304,15 +256,13 @@ public class SysTableAction implements Serializable {
 		if (getClass() != that.getClass()) {
 			return false;
 		}
-		SysTableAction other = (SysTableAction) that;
+		SysAction other = (SysAction) that;
 		return (this.getActionId() == null ? other.getActionId() == null : this.getActionId().equals(other.getActionId()))
 			&& (this.getInterfaceMethod() == null ? other.getInterfaceMethod() == null : this.getInterfaceMethod().equals(other.getInterfaceMethod()))
 			&& (this.getFormTarget() == null ? other.getFormTarget() == null : this.getFormTarget().equals(other.getFormTarget()))
-			&& (this.getShowSort() == null ? other.getShowSort() == null : this.getShowSort().equals(other.getShowSort()))
 			&& (this.getMutualType() == null ? other.getMutualType() == null : this.getMutualType().equals(other.getMutualType()))
+			&& (this.getMenuId() == null ? other.getMenuId() == null : this.getMenuId().equals(other.getMenuId()))
 			&& (this.getInterfaceUrl() == null ? other.getInterfaceUrl() == null : this.getInterfaceUrl().equals(other.getInterfaceUrl()))
-			&& (this.getTableId() == null ? other.getTableId() == null : this.getTableId().equals(other.getTableId()))
-			&& (this.getIcon() == null ? other.getIcon() == null : this.getIcon().equals(other.getIcon()))
 			&& (this.getActionName() == null ? other.getActionName() == null : this.getActionName().equals(other.getActionName()))
 			&& (this.getInterfaceServerId() == null ? other.getInterfaceServerId() == null : this.getInterfaceServerId().equals(other.getInterfaceServerId()))
 			&& (this.getActionType() == null ? other.getActionType() == null : this.getActionType().equals(other.getActionType()));

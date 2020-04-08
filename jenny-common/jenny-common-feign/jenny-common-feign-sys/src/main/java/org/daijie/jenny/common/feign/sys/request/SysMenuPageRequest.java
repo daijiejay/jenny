@@ -1,13 +1,10 @@
 package org.daijie.jenny.common.feign.sys.request;
 
-import org.daijie.jdbc.mybatis.example.ExampleExecutePage;
-import org.daijie.jenny.common.feign.sys.response.SysMenuResponse;
-import org.daijie.jenny.common.model.sys.SysMenu;
-
 import io.swagger.annotations.ApiModelProperty;
+import org.daijie.swagger.result.Page;
 
 @SuppressWarnings("serial")
-public class SysMenuPageRequest extends ExampleExecutePage<SysMenu, SysMenuResponse> {
+public class SysMenuPageRequest extends Page {
 
 	/**
      * 菜单编号

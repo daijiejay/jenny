@@ -1,8 +1,7 @@
 package org.daijie.jenny.common.feign.health.request;
 
-import org.daijie.core.result.Page;
-
 import io.swagger.annotations.ApiModelProperty;
+import org.daijie.swagger.result.Page;
 
 @SuppressWarnings("serial")
 public class ServerMonitoringPageRequest extends Page {

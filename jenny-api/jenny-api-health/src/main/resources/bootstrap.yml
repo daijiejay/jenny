@@ -33,6 +33,8 @@ ribbon.ReadTimeout: 5000
 spring.jackson.date-format: yyyy-MM-dd HH\:mm\:ss
 #指定jackson日期转换时区
 spring.jackson.time-zone: Asia/Shanghai
+#springboot从2.1.0版本加上这个bean可以重写注入
+spring.main.allow-bean-definition-overriding: true
 
 #是否开启redis集群
 shiro.redis.cluster: false
